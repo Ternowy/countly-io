@@ -3,5 +3,4 @@ import Root from './components/Root.vue';
 
 Vue.component('root', Root)
 
-new Vue({
-}).$mount('#app');
+new Vue({}).$mount('#app');
