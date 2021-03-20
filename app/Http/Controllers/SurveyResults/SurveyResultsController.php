@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 
 class SurveyResultsController extends Controller
 {
-    public function results()
+    public function results($id)
     {
         return view('user.survey.results');
     }
 
-    public function media()
+    public function media($id)
     {
 
     }
