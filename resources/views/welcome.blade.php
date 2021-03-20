@@ -22,7 +22,7 @@
     </head>
     <body class="antialiased">
         <div id="app">
-            <hello-world/>
+            <root/>
         </div>
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
             @if (Route::has('login'))
@@ -134,9 +134,3 @@
         <script src="{{ mix('js/app.js') }}"></script>
     </body>
 </html>
-<script>
-  import HelloWorld from '../js/components/HelloWorld';
-  export default {
-    components: {HelloWorld},
-  };
-</script>
