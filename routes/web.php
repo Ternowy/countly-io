@@ -10,7 +10,9 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Survey\SharedSurveyController;
 
 Route::get('/', [HomeController::class, 'home']);
-Route::post('/authenticate', [AuthController::class, 'authenticate']);
+
+Route::post('/auth/{method}', [AuthController::class, 'authenticate']);
+Route::post('/auth/{method}/callback', [AuthController::class, 'callback']);
 
 Route::middleware([])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);

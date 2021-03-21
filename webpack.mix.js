@@ -14,14 +14,14 @@ const mix = require('laravel-mix');
 mix
   .webpackConfig({
     devServer: {
-      host: 'countly-io.test',
+      host: 'laravel.test',
       port: 8080,
     }
   })
   .js('resources/js/app.js', 'public/js')
   .options({
     hmrOptions: {
-      host: 'countly-io.test',
+      host: 'laravel.test',
       port: 8080,
     }
   })
