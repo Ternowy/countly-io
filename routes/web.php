@@ -9,7 +9,7 @@ use App\Http\Controllers\SurveyResults\SurveyResultsController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Survey\SharedSurveyController;
 
-Route::get('/home', [HomeController::class, 'home']);
+Route::get('/', [HomeController::class, 'home']);
 Route::post('/authenticate', [AuthController::class, 'authenticate']);
 
 Route::middleware([])->group(function () {
