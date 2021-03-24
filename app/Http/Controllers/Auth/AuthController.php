@@ -6,15 +6,19 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Service\Auth\AuthService;
+use App\Service\Auth\Driver\DriverFactory;
 use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
     protected AuthService $authService;
 
-    public function __construct(AuthService $authService)
+    protected DriverFactory $driverFactory;
+
+    public function __construct(AuthService $authService, DriverFactory $driverFactory)
     {
         $this->authService = $authService;
+        $this->driverFactory = $driverFactory;
     }
 
     public function authenticate($method)
@@ -27,15 +31,11 @@ class AuthController extends Controller
     {
         $this->authService->validateMethod($method);
 
-        $user = Socialite::driver($method)->user();
+        $user = $this->authService->continueWith(
+            $this->driverFactory->createInstance($method)
+        );
 
-        $token = $user->token;
-        $refreshToken = $user->refreshToken;
-        $expiresIn = $user->expiresIn;
-
-        $user->getName();
-        $user->getEmail();
-        $user->getAvatar();
+        return redirect()->route('surveys');
     }
 
     public function logout()

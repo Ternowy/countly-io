@@ -9,16 +9,16 @@ use App\Http\Controllers\SurveyResults\SurveyResultsController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Survey\SharedSurveyController;
 
-Route::get('/', [HomeController::class, 'home']);
+Route::get('/', [HomeController::class, 'home'])->name('home');
 
-Route::post('/auth/{method}', [AuthController::class, 'authenticate']);
-Route::post('/auth/{method}/callback', [AuthController::class, 'callback']);
+Route::get('/auth/{method}', [AuthController::class, 'authenticate'])->name('auth');
+Route::get('/auth/{method}/callback', [AuthController::class, 'callback']);
 
 Route::middleware([])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::prefix('surveys')->group(function () {
-        Route::get('/', [SurveyController::class, 'surveys']);
+        Route::get('/', [SurveyController::class, 'surveys'])->name('surveys');
         Route::get('/{id}', [SurveyController::class, 'builder']);
         Route::post('/', [SurveyController::class, 'create']);
         Route::put('/{id}', [SurveyController::class, 'edit']);
