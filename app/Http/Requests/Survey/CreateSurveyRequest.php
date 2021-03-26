@@ -2,29 +2,53 @@
 
 namespace App\Http\Requests\Survey;
 
+use App\Helper\Survey\SurveyEnumHelper;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateSurveyRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
-        return false;
+        //TODO check limit
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
+        $optionRules = array_map(
+            function (string $type) {
+                return 'required_if:structure.*.type,'.$type;
+            },
+            SurveyEnumHelper::inputsWithOptions()
+        );
+
+        $placeholderRules = array_map(
+            function (string $type) {
+                return 'required_if:structure.*.type,'.$type;
+            },
+            SurveyEnumHelper::inputsWithText()
+        );
+
         return [
-            //
+            'name' => 'required|string|max:100',
+            'description' => 'required|string|max:280',
+            'structure' => 'required|array|min:1|max:15',
+            'structure.*.type' => [
+                'required',
+                Rule::in(
+                    [
+                        ...SurveyEnumHelper::inputsWithOptions(),
+                        ...SurveyEnumHelper::inputsWithText()
+                    ]
+                )
+            ],
+            'structure.*.label' => 'required|string|max:100',
+            'structure.*.placeholder' => [
+                'string|max:100',
+                ...$placeholderRules
+            ],
+            'structure.*.options' => $optionRules
         ];
     }
 }

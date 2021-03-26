@@ -11,11 +11,13 @@ use App\Http\Controllers\Survey\SharedSurveyController;
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
-Route::get('/auth/{method}', [AuthController::class, 'authenticate'])->name('auth');
-Route::get('/auth/{method}/callback', [AuthController::class, 'callback']);
+Route::middleware(['guest'])->group(function () {
+    Route::get('/auth/{method}', [AuthController::class, 'authenticate'])->name('auth');
+    Route::get('/auth/{method}/callback', [AuthController::class, 'callback']);
+});
 
-Route::middleware([])->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
+Route::middleware(['auth'])->group(function () {
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::prefix('surveys')->group(function () {
         Route::get('/', [SurveyController::class, 'surveys'])->name('surveys');

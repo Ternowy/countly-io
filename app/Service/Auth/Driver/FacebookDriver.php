@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Service\Auth\Driver;
 
 use Laravel\Socialite\Contracts\User;
+use Laravel\Socialite\Facades\Socialite;
 
 class FacebookDriver implements DriverInterface
 {
     public function getUser(): User
     {
-        // TODO: Implement getUser() method.
+        return Socialite::driver('facebook')->user();
     }
 }

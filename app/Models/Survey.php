@@ -16,7 +16,7 @@ class Survey extends Model
         'description',
         'structure',
         'access_code',
-        'answers',
+        'answers_counter',
         'status'
     ];
 }
