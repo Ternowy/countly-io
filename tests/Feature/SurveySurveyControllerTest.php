@@ -11,20 +11,16 @@ class SurveySurveyControllerTest extends TestCase
 {
     private function getUser()
     {
-        return User::factory()->create(
-            [
-                'id' => 3262021,
-            ]
-        );
+        return User::factory()->create();
     }
 
-    private function processRequest(User $user, array $data): TestResponse
+    private function processRequest(User $user, array $data = []): TestResponse
     {
         return $this
-            ->actingAs($user)
-            ->post(
+            ->actingAs($user, 'web')
+            ->postJson(
                 '/surveys',
-                []
+                $data
             );
     }
 

@@ -2,29 +2,17 @@
 
 namespace App\Http\Requests\Survey;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class EditSurveyRequest extends FormRequest
+class EditSurveyRequest extends CreateSurveyRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
         return [
-            //
+
         ];
     }
 }

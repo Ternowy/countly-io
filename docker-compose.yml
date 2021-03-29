@@ -3,8 +3,8 @@ version: '3'
 services:
     laravel.test:
         build:
-            context: ./resources/docker/8.0
-            dockerfile: Dockerfile
+            context: ./docker/8.0
+            dockerfile: docker/8.0/Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
                 XDEBUG: ${APP_DEBUG}

@@ -1,3 +1,5 @@
 <x-app-layout title="builder">
-    BUILDER
+    <div id="app">
+        <root/>
+    </div>
 </x-app-layout>

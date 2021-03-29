@@ -21,7 +21,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('surveys')->group(function () {
         Route::get('/', [SurveyController::class, 'surveys'])->name('surveys');
-        Route::get('/{id}', [SurveyController::class, 'builder']);
+        Route::get('/builder', [SurveyController::class, 'builder'])->name('builder');
         Route::post('/', [SurveyController::class, 'create']);
         Route::put('/{id}', [SurveyController::class, 'edit']);
         Route::delete('/{id}', [SurveyController::class, 'delete']);

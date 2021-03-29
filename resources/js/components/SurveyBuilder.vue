@@ -1,10 +1,10 @@
 <template>
-<h1>1234</h1>
+
 </template>
 
 <script>
 export default {
-  name: "Root.vue"
+  name: "SurveyBuilder"
 }
 </script>
 

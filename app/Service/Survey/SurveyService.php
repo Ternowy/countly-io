@@ -6,8 +6,9 @@ namespace App\Service\Survey;
 
 use App\Enum\Survey\SurveyStatusEnum;
 use App\Models\Survey;
-use App\Models\User;
+use App\Repository\Survey\SurveyRepository;
 use App\Service\Common\UniqueIdService;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 class SurveyService
 {
@@ -15,13 +16,16 @@ class SurveyService
 
     protected UniqueIdService $uniqueIdService;
 
-    public function __construct(Survey $survey, UniqueIdService $uniqueIdService)
+    protected SurveyRepository $surveyRepository;
+
+    public function __construct(Survey $survey, UniqueIdService $uniqueIdService, SurveyRepository $surveyRepository)
     {
         $this->survey = $survey;
         $this->uniqueIdService = $uniqueIdService;
+        $this->surveyRepository = $surveyRepository;
     }
 
-    public function create(array $data, User $user): Survey
+    public function create(array $data, $user): Survey
     {
         return $this->survey->create(
             array_merge(
@@ -33,5 +37,16 @@ class SurveyService
                 ]
             )
         );
+    }
+
+    public function update(int $id, array $data, Authenticatable $user): Survey
+    {
+        $survey = $this->surveyRepository->getById($user, $id);
+
+        $survey->fill($data);
+
+        $survey->save();
+
+        return $survey;
     }
 }
