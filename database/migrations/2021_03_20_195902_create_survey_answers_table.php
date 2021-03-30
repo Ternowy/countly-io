@@ -18,6 +18,7 @@ class CreateSurveyAnswersTable extends Migration
             $table->integer('survey_id');
             $table->json('answer');
             $table->string('ip_address')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

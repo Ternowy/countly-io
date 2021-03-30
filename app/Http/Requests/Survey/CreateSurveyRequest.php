@@ -8,13 +8,13 @@ use Illuminate\Validation\Rule;
 
 class CreateSurveyRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize(): bool
     {
         //TODO check limit
         return true;
     }
 
-    public function rules()
+    public function rules(): array
     {
         $optionRules = array_map(
             function (string $type) {

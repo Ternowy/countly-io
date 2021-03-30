@@ -18,7 +18,7 @@ class CreateSurveysTable extends Migration
             $table->id();
             $table->integer('created_by');
             $table->string('name');
-            $table->text('description')->nullable();
+            $table->longText('description')->nullable();
             $table->json('structure');
             $table->string('access_code');
             $table->string('status')->default(SurveyStatusEnum::ACTIVE);

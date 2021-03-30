@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository\Survey;
 
+use App\Enum\Survey\SurveyStatusEnum;
 use App\Models\Survey\Survey;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Collection;
@@ -34,6 +35,18 @@ class SurveyRepository
                     'created_by' => $user->id
                 ]
             )
-            ->get();
+            ->first();
+    }
+
+    public function getByCode(string $code): Survey
+    {
+        return $this->survey
+            ->where(
+                [
+                    'access_code' => $code,
+                    'status' => SurveyStatusEnum::ACTIVE
+                ]
+            )
+            ->first();
     }
 }

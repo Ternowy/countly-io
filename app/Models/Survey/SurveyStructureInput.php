@@ -6,8 +6,9 @@ namespace App\Models\Survey;
 
 use App\Helper\Survey\SurveyEnumHelper;
 use BadFunctionCallException;
+use Illuminate\Contracts\Support\Arrayable;
 
-class SurveyStructureInput
+class SurveyStructureInput implements Arrayable
 {
     public function __construct(
         protected string $type,

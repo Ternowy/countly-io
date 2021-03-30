@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Models\Survey;
 
-class SurveyStructure
+use Illuminate\Contracts\Support\Arrayable;
+
+class SurveyStructure implements Arrayable
 {
     /* @var $inputs SurveyStructureInput[] */
     protected array $inputs;
@@ -12,6 +14,11 @@ class SurveyStructure
     public function __construct(array $inputs)
     {
         $this->inputs = $this->wrapInputs($inputs);;
+    }
+
+    public function __toString(): string
+    {
+        return json_encode($this->toArray());
     }
 
     public function toArray(): array
@@ -71,7 +78,7 @@ class SurveyStructure
                     $inputData['options'] ?? [],
                     $inputData['placeholder'] ?? '',
                     $inputData['name'] ?? '',
-                    (bool)$inputData['required']
+                    $inputData['required'] ?? false
                 );
             },
             $inputs

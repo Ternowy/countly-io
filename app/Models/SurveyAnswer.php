@@ -12,7 +12,10 @@ class SurveyAnswer extends Model
 
     protected $fillable = [
         'survey_id',
-        'answer',
         'ip_address'
+    ];
+
+    protected $casts = [
+        'answer' => 'array'
     ];
 }

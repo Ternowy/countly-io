@@ -12,8 +12,11 @@ class Survey extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $hidden = [
+        'created_by'
+    ];
+
     protected $fillable = [
-        'created_by',
         'name',
         'description',
         'access_code',
