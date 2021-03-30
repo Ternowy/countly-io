@@ -21,7 +21,6 @@ class CreateSurveysTable extends Migration
             $table->text('description')->nullable();
             $table->json('structure');
             $table->string('access_code');
-            $table->integer('answers_counter')->default(0);
             $table->string('status')->default(SurveyStatusEnum::ACTIVE);
             $table->softDeletes();
             $table->timestamps();

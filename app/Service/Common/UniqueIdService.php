@@ -19,4 +19,14 @@ class UniqueIdService
     {
         return $this->hashidsManager->encode($params);
     }
+
+    public function random(): string
+    {
+        return $this->hashidsManager->encode(
+            rand(1, 10),
+            rand(1, 10),
+            rand(1, 10),
+            rand(1, 10)
+        );
+    }
 }

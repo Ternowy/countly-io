@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Survey;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Survey\CreateSurveyRequest;
-use App\Http\Requests\Survey\EditSurveyRequest;
+use App\Http\Requests\Survey\UpdateSurveyRequest;
+use App\Http\Requests\Survey\UpdateSurveyStatusRequest;
+use App\Models\Survey\Factory\SurveyStructureFactory;
 use App\Repository\Survey\SurveyRepository;
 use App\Service\Survey\SurveyService;
 use Illuminate\Support\Facades\Auth;
@@ -15,10 +17,16 @@ class SurveyController extends Controller
 
     protected SurveyRepository $surveyRepository;
 
-    public function __construct(SurveyService $surveyService, SurveyRepository $surveyRepository)
-    {
+    protected SurveyStructureFactory $surveyStructureFactory;
+
+    public function __construct(
+        SurveyService $surveyService,
+        SurveyRepository $surveyRepository,
+        SurveyStructureFactory $surveyStructureFactory
+    ) {
         $this->surveyService = $surveyService;
         $this->surveyRepository = $surveyRepository;
+        $this->surveyStructureFactory = $surveyStructureFactory;
     }
 
     public function surveys()
@@ -36,34 +44,45 @@ class SurveyController extends Controller
     public function create(CreateSurveyRequest $request)
     {
         return $this->surveyService->create(
-            [
-                'name' => $request->get('name'),
-                'description' => $request->get('description'),
-                'structure' => $request->get('structure'),
-            ],
+            $request->get('name'),
+            $request->get('description'),
+            $this->surveyStructureFactory->createInstance(
+                $request->get('structure')
+            ),
             Auth::user()
         );
     }
 
-    public function edit(EditSurveyRequest $request, $id)
+    public function update(UpdateSurveyRequest $request, $id)
     {
         return $this->surveyService->update(
             (int)$id,
-            [
-                'name' => $request->get('name'),
-                'description' => $request->get('description'),
-                'structure' => $request->get('structure')
-            ],
+            $request->get('name'),
+            $request->get('description'),
+            $this->surveyStructureFactory->createInstance(
+                $request->get('structure')
+            ),
+            Auth::user()
+        );
+    }
+
+    public function updateStatus(UpdateSurveyStatusRequest $request, $id)
+    {
+        return $this->surveyService->updateStatus(
+            (int)$id,
+            $request->get('status'),
             Auth::user()
         );
     }
 
     public function delete($id)
     {
+        return $this->surveyService->delete((int)$id, Auth::user());
     }
 
     public function clear($id)
     {
+        return $this->surveyService->clearSurveyResults((int)$id, Auth::user());
     }
 
 }

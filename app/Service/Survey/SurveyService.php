@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Service\Survey;
 
 use App\Enum\Survey\SurveyStatusEnum;
-use App\Models\Survey;
+use App\Models\Survey\Survey;
+use App\Models\Survey\SurveyStructure;
 use App\Repository\Survey\SurveyRepository;
 use App\Service\Common\UniqueIdService;
+use App\Service\Survey\Results\SurveyResultsService;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 class SurveyService
@@ -18,34 +20,92 @@ class SurveyService
 
     protected SurveyRepository $surveyRepository;
 
-    public function __construct(Survey $survey, UniqueIdService $uniqueIdService, SurveyRepository $surveyRepository)
-    {
+    protected SurveyStructureFormatter $surveyStructureFormatter;
+
+    protected SurveyResultsService $surveyResultsService;
+
+    public function __construct(
+        Survey $survey,
+        UniqueIdService $uniqueIdService,
+        SurveyRepository $surveyRepository,
+        SurveyStructureFormatter $surveyStructureFormatter,
+        SurveyResultsService $surveyResultsService
+    ) {
         $this->survey = $survey;
         $this->uniqueIdService = $uniqueIdService;
         $this->surveyRepository = $surveyRepository;
+        $this->surveyStructureFormatter = $surveyStructureFormatter;
+        $this->surveyResultsService = $surveyResultsService;
     }
 
-    public function create(array $data, $user): Survey
-    {
+    public function create(
+        string $name,
+        string $description,
+        SurveyStructure $structure,
+        Authenticatable $user
+    ): Survey {
         return $this->survey->create(
-            array_merge(
-                $data,
-                [
-                    'created_by' => $user->id,
-                    'access_code' => $this->uniqueIdService->encode(1, 2, 3),
-                    'status' => SurveyStatusEnum::ACTIVE,
-                ]
-            )
+            [
+                'name' => $name,
+                'description' => $description,
+                'structure' => $this->surveyStructureFormatter->prepareStructure(
+                    $structure
+                ),
+                'created_by' => $user->id,
+                'access_code' => $this->uniqueIdService->encode($user->id, rand(1, 10), rand(1, 10)),
+                'status' => SurveyStatusEnum::ACTIVE,
+            ]
         );
     }
 
-    public function update(int $id, array $data, Authenticatable $user): Survey
+    public function update(
+        int $id,
+        string $name,
+        string $description,
+        SurveyStructure $structure,
+        Authenticatable $user
+    ): Survey {
+        $survey = $this->surveyRepository->getById($user, $id);
+
+        $survey->fill(
+            [
+                'name' => $name,
+                'description' => $description,
+                'structure' => $this->surveyStructureFormatter->prepareStructure(
+                    $structure
+                )
+            ]
+        );
+
+        $survey->save();
+
+        return $survey;
+    }
+
+    public function updateStatus(
+        int $id,
+        string $status,
+        Authenticatable $user
+    ): Survey {
+        $survey = $this->surveyRepository->getById($user, $id);
+
+        $survey->setAttribute('status', $status);
+
+        $survey->save();
+
+        return $survey;
+    }
+
+    public function delete(int $id, Authenticatable $user): ?bool
+    {
+        return $this->clearSurveyResults($id, $user)->delete();
+    }
+
+    public function clearSurveyResults(int $id, Authenticatable $user): Survey
     {
         $survey = $this->surveyRepository->getById($user, $id);
 
-        $survey->fill($data);
-
-        $survey->save();
+        $this->surveyResultsService->clearSurveyResults($survey);
 
         return $survey;
     }

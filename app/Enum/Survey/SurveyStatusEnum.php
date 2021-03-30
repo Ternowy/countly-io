@@ -7,4 +7,5 @@ namespace App\Enum\Survey;
 class SurveyStatusEnum
 {
     public const ACTIVE = 'active';
+    public const INACTIVE = 'inactive';
 }
