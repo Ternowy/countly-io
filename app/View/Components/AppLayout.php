@@ -10,7 +10,7 @@ class AppLayout extends Component
 {
     public string $title;
 
-    public function __construct($title = 'app')
+    public function __construct(string $title = 'app')
     {
         $this->title = $title;
     }

@@ -1,5 +1,5 @@
 <x-app-layout title="surveys">
     <a href="{{ route('builder') }}">Builder</a>
 
-    {{ $surveys }}
+    <x-user.surveys.survey-list :survey-list="$surveys"/>
 </x-app-layout>

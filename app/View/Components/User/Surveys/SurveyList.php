@@ -6,14 +6,11 @@ use Illuminate\View\Component;
 
 class SurveyList extends Component
 {
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public array $surveyList;
+
+    public function __construct(array $surveyList)
     {
-        //
+        $this->surveyList = $surveyList;
     }
 
     /**

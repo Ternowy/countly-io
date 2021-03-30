@@ -32,7 +32,7 @@ class SurveyController extends Controller
     public function surveys()
     {
         return view('user.surveys', [
-            'surveys' => $this->surveyRepository->allOfUser(Auth::user())
+            'surveys' => $this->surveyRepository->allOfUser(Auth::user())->toArray()
         ]);
     }
 
