@@ -4,8 +4,8 @@
 
 <script>
 export default {
-  name: 'SurveyBuilder',
-};
+name: "SquareButton"
+}
 </script>
 
 <style scoped>

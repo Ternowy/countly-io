@@ -4,8 +4,8 @@
 
 <script>
 export default {
-  name: 'SurveyBuilder',
-};
+name: "InputTypeSelector"
+}
 </script>
 
 <style scoped>

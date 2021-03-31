@@ -22,4 +22,9 @@ class SurveyListItem extends Component
     {
         return view('components.user.surveys.survey-list-item');
     }
+
+    public function getAccessLink(): string
+    {
+        return $this->survey['access_code'];
+    }
 }

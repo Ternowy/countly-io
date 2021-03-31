@@ -11,6 +11,6 @@ class FacebookDriver implements DriverInterface
 {
     public function getUser(): User
     {
-        return Socialite::driver('facebook')->user();
+        return Socialite::driver('facebook')->stateless()->user();
     }
 }

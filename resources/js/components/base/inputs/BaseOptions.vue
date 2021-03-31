@@ -3,8 +3,9 @@
 </template>
 
 <script>
+//RADIO and CHECKBOXES
 export default {
-  name: 'SurveyBuilder',
+  name: 'BaseOptions',
 };
 </script>
 
