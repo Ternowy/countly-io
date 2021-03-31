@@ -1,5 +1,5 @@
 <x-app-layout title="builder">
     <div id="app">
-        <root/>
+        <survey-builder/>
     </div>
 </x-app-layout>

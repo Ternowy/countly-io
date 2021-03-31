@@ -1,3 +1,5 @@
 <x-main-layout title="FORM NAME">
-    Form loading... (no)
+    <div id="app">
+        <survey-preview/>
+    </div>
 </x-main-layout>

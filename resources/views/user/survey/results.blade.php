@@ -1,3 +1,5 @@
 <x-app-layout title="results">
-    RESULTS
+    <div id="app">
+        <survey-results/>
+    </div>
 </x-app-layout>
