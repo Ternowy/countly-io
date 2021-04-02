@@ -3,7 +3,7 @@
                  @input-label="onLabelInput" @input-type="onTypeInput" @input-is-required="onIsRequiredInput"
   >
     <template #input>
-      <component :is="componentName" v-bind="$props"/>
+      <component :is="componentName" v-bind="$props" @input="onInputChange"/>
     </template>
   </input-wrapper>
 </template>
@@ -30,13 +30,13 @@ export default {
     value: Object
   },
   emits: ['input'],
-  data: () => ({
-    typesWithText: ['text', 'textarea'],
-  }),
   computed: {
     componentName() {
       return `input-${this.value.type}`;
     },
+    isTextComponent() {
+      return ['text', 'textarea'].includes(this.value.type);
+    }
   },
   methods: {
     onInput(value) {
@@ -50,6 +50,10 @@ export default {
     },
     onIsRequiredInput(required) {
       this.onInput({required});
+    },
+    onInputChange(value) {
+      const relevantOption = this.isTextComponent ? 'placeholder' : 'options';
+      this.onInput({[relevantOption]: value});
     }
   },
 };
