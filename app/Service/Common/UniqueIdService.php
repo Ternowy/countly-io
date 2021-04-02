@@ -4,29 +4,28 @@ declare(strict_types=1);
 
 namespace App\Service\Common;
 
-use Vinkla\Hashids\HashidsManager;
+use Hashids\Hashids;
 
 class UniqueIdService
 {
-    protected HashidsManager $hashidsManager;
+    protected Hashids $hashids;
 
-    public function __construct(HashidsManager $hashidsManager)
+    public function __construct(Hashids $hashids)
     {
-        $this->hashidsManager = $hashidsManager;
+        $this->hashids = $hashids;
     }
 
     public function encode(mixed ...$params): string
     {
-        return $this->hashidsManager->encode($params);
+        return $this->hashids->encode($params);
     }
 
     public function random(): string
     {
-        return $this->hashidsManager->encode(
+        return $this->hashids->encode(
             rand(1, 10),
-            rand(1, 10),
-            rand(1, 10),
-            rand(1, 10)
+            rand(1, 100),
+            rand(),
         );
     }
 }

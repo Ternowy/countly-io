@@ -31,10 +31,6 @@ class SurveyStructureInput implements Arrayable
 
     public function getName(): string
     {
-        if (empty($name)) {
-            throw new BadFunctionCallException('name is not set');
-        }
-
         return $this->name;
     }
 

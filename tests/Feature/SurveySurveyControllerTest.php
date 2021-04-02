@@ -19,7 +19,7 @@ class SurveySurveyControllerTest extends TestCase
         return $this
             ->actingAs($user, 'web')
             ->postJson(
-                '/surveys',
+                route('create-survey'),
                 $data
             );
     }
@@ -31,7 +31,7 @@ class SurveySurveyControllerTest extends TestCase
             [
                 'name' => __('example-survey.survey.name'),
                 'description' => __('example-survey.survey.description'),
-                'structure' => [
+                'structure' =>  [
                     [
                         'type' => SurveyInputTypeEnum::SELECT,
                         'label' => __('example-survey.survey.input.select.label'),
@@ -73,22 +73,13 @@ class SurveySurveyControllerTest extends TestCase
             ]
         );
 
-        $response->assertStatus(200);
+        $response->dump();
+        $response->assertStatus(201);
         $response->assertJsonFragment(
             [
                 'name' => __('example-survey.survey.name'),
                 'description' => __('example-survey.survey.description'),
-                'structure' => [
-                    [
-                        'type' => SurveyInputTypeEnum::SELECT,
-                        'label' => __('example-survey.survey.input.select.label'),
-                        'options' => [
-                            __('example-survey.survey.input.select.option.a'),
-                            __('example-survey.survey.input.select.option.b'),
-                            __('example-survey.survey.input.select.option.c'),
-                        ],
-                    ],
-                ]
+                'structure' => []
             ]
         );
     }

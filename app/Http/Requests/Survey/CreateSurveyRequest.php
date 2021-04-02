@@ -31,8 +31,8 @@ class CreateSurveyRequest extends FormRequest
         );
 
         return [
-            'name' => 'required|string|max:100',
-            'description' => 'required|string|max:280',
+            'name' => 'required|max:100',
+            'description' => 'required|max:280',
             'structure' => 'required|array|min:1|max:15',
             'structure.*.type' => [
                 'required',
@@ -43,9 +43,9 @@ class CreateSurveyRequest extends FormRequest
                     ]
                 )
             ],
-            'structure.*.label' => 'required|string|max:100',
+            'structure.*.label' => 'required|max:100',
             'structure.*.placeholder' => [
-                'string|max:100',
+                'max:100',
                 ...$placeholderRules
             ],
             'structure.*.options' => $optionRules

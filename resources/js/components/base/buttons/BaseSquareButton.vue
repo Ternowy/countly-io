@@ -4,8 +4,8 @@
 
 <script>
 export default {
-name: "SquareButton"
-}
+  name: 'BaseSquareButton',
+};
 </script>
 
 <style scoped>

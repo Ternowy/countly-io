@@ -42,7 +42,7 @@ class SurveyService
         string $name,
         string $description,
         SurveyStructure $structure,
-        Authenticatable $user
+        $user
     ): Survey {
         return $this->survey->create(
             [

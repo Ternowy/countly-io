@@ -4,8 +4,8 @@
 
 <script>
 export default {
-name: "ItemInput"
-}
+  name: 'EditorPreviewSurveyDescription',
+};
 </script>
 
 <style scoped>

@@ -1,11 +1,11 @@
 <template>
-
+  <input-text/>
 </template>
 
 <script>
 export default {
-name: "InputTitle"
-}
+  name: 'InputText',
+};
 </script>
 
 <style scoped>

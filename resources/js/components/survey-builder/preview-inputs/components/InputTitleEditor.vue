@@ -4,8 +4,8 @@
 
 <script>
 export default {
-name: "InputText"
-}
+  name: 'InputTitleEditor',
+};
 </script>
 
 <style scoped>
