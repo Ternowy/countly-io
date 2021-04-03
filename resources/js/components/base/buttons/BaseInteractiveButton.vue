@@ -1,5 +1,5 @@
 <template>
-  <button>
+  <button v-bind="$attrs">
     <slot>
       {{ label }}
     </slot>
@@ -8,17 +8,12 @@
 
 <script>
 export default {
-  name: 'BaseButton',
+  name: 'BaseInteractiveButton',
   props: {
     label: {
       type: String,
       default: 'This is a button'
     },
-    color: {
-      type: String,
-      default: 'green',
-      validator: (value) => ['green', 'gray', 'red'].includes(value)
-    }
   }
 };
 </script>

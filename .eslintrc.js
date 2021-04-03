@@ -22,6 +22,7 @@ module.exports = {
     'vue/require-default-prop': 'off',
     'vue/singleline-html-element-content-newline': 'off',
     //TODO keep in mind during migration
-    'vue/no-deprecated-dollar-listeners-api': 'off'
+    'vue/no-deprecated-dollar-listeners-api': 'off',
+    'vue/no-deprecated-v-on-native-modifier': 'off'
   },
 };

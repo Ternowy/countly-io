@@ -24,6 +24,7 @@
     },
     "dependencies": {
         "vue": "^2.6.12",
+        "vue-tippy": "^4.10.0",
         "vue-toggles": "^1.1.3"
     }
 }

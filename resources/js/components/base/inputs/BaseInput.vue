@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input ref="input" :value="value" type="text" @blur="onBlur" @input="onInput">
+    <input ref="input" v-bind="$attrs" :value="value" type="text" @blur="onBlur" @input="onInput">
     <slot name="right-corner"/>
   </div>
 </template>

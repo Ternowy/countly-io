@@ -4,12 +4,18 @@
     <input-type-selector v-model="inputData.type" :options="inputTypes" @input="onInput"/>
     <base-switch v-model="inputData.required" @input="onInput"/>
     <component :is="componentName" v-bind="$props" v-model="inputValue" @input="onInput"/>
-    <base3-dots-menu>
+    <base-popover>
+      <template #trigger>
+        <button>
+          <base-icon name="vertical-dots"/>
+        </button>
+      </template>
+
       <base-item-list>
         <base-item label="copy" icon="copy" @click.native="copy"/>
         <base-item label="delete" icon="delete" @click.native="remove"/>
       </base-item-list>
-    </base3-dots-menu>
+    </base-popover>
   </div>
 </template>
 

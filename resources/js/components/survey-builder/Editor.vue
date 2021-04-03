@@ -5,14 +5,15 @@
     </header>
 
     <editor-preview>
-      <editor-preview-survey-description :name="surveyName" :description="surveyDescription"/>
-      <editor-preview-input
-        v-for="(item, index) in reactiveStructure"
-        :key="index"
-        v-bind="item"
-        @input="onInput($event, index)"
-        @copy="copyInput(index)"
-        @remove="removeInput(index)"
+      <editor-preview-survey-description v-model="nameAndDescription"/>
+      <editor-preview-input v-for="(item, index) in reactiveStructure" :key="index"
+                            v-bind="item"
+                            @copy="copyInput(index)"
+                            @input="onInput($event, index)"
+                            @remove="removeInput(index)"
+      />
+      <base-interactive-button :disabled="reactiveStructure.length >= 15" label="+"
+                               @click.native="addInput"
       />
     </editor-preview>
   </div>
@@ -23,7 +24,6 @@ import EditorPreview from './EditorPreview';
 import EditorPreviewInput from './EditorPreviewInput';
 import EditorPreviewSurveyDescription from './EditorPreviewSurveyDescription';
 
-
 export default {
   name: 'Editor',
   components: {EditorPreviewSurveyDescription, EditorPreviewInput, EditorPreview},
@@ -31,27 +31,46 @@ export default {
   data: () => ({
     surveyName: 'Sample name',
     surveyDescription: 'Sample description',
-    structure: [
-      {
-        'type': 'select',
-        'label': 'example-survey.survey.input.select.label',
-        'required': false,
-        'options': [
-          'example-survey.survey.input.select.option.a',
-          'example-survey.survey.input.select.option.b',
-          'example-survey.survey.input.select.option.c',
-        ],
-      },
-    ],
+    structure: [],
+    defaultInput: {
+      type: 'select',
+      label: 'This is a new input!',
+      required: false,
+      options: [
+        'Option 1',
+        'Option 2',
+        'Option 3',
+      ],
+      placeholder: 'placeholder'
+    },
   }),
   computed: {
     reactiveStructure() {
       return this.structure;
-    }
+    },
+    nameAndDescription: {
+      get() {
+        return {
+          name: this.surveyName,
+          description: this.surveyDescription,
+        };
+      },
+      set(value) {
+        const {name, description} = value;
+        this.surveyName = name;
+        this.surveyDescription = description;
+      },
+    },
+  },
+  created() {
+    this.addInput();
   },
   methods: {
     onInput(data, index) {
       this.$set(this.structure, index, data);
+    },
+    addInput() {
+      this.structure.push(this.defaultInput);
     },
     copyInput(index) {
       this.structure.push(this.structure[index]);
