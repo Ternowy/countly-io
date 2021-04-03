@@ -1,11 +1,10 @@
 <template>
-  <input-wrapper :is-required="value.required" :type="value.type" :label="value.label"
-                 @input-label="onLabelInput" @input-type="onTypeInput" @input-is-required="onIsRequiredInput"
-  >
-    <template #input>
-      <component :is="componentName" v-bind="$props" @input="onInputChange"/>
-    </template>
-  </input-wrapper>
+  <div>
+    <input-label-editor v-model="inputData.label" @input="onInput"/>
+    <input-type-selector v-model="inputData.type" :options="inputTypes" @input="onInput"/>
+    <base-switch v-model="inputData.required" @input="onInput"/>
+    <component :is="componentName" v-bind="$props" v-model="inputValue" @input="onInput"/>
+  </div>
 </template>
 
 <script>
@@ -14,12 +13,16 @@ import InputRadio from './preview-inputs/InputRadio';
 import InputSelect from './preview-inputs/InputSelect';
 import InputText from './preview-inputs/InputText';
 import InputTextarea from './preview-inputs/InputTextarea';
-import InputWrapper from './preview-inputs/InputWrapper';
+import InputLabelEditor from './preview-inputs/components/InputLabelEditor';
+import InputTypeSelector from './preview-inputs/components/InputTypeSelector';
+import BaseSwitch from '../base/inputs/BaseSwitch';
 
 export default {
   name: 'EditorPreviewInput',
   components: {
-    InputWrapper,
+    BaseSwitch,
+    InputTypeSelector,
+    InputLabelEditor,
     InputCheckbox,
     InputRadio,
     InputSelect,
@@ -27,34 +30,60 @@ export default {
     InputTextarea,
   },
   props: {
-    value: Object
+    required: Boolean,
+    label: String,
+    type: String,
+    options: {
+      type: Array,
+      default: () => []
+    },
+    placeholder: {
+      type: String,
+      default: ''
+    }
   },
   emits: ['input'],
+  data: () => ({
+    inputData: {
+      required: null,
+      label: null,
+      type: null,
+      options: null,
+      placeholder: null
+    },
+    inputTypes: ['checkbox', 'radio', 'select', 'text', 'textarea']
+  }),
   computed: {
     componentName() {
-      return `input-${this.value.type}`;
+      return `input-${this.type}`;
     },
     isTextComponent() {
-      return ['text', 'textarea'].includes(this.value.type);
+      return ['text', 'textarea'].includes(this.type);
+    },
+    inputValue: {
+      get() {
+        const relevantOption = this.isTextComponent ? 'placeholder' : 'options';
+        return this.inputData[relevantOption];
+      },
+      set(value) {
+        const relevantOption = this.isTextComponent ? 'placeholder' : 'options';
+        this.inputData[relevantOption] = value;
+      }
+    }
+  },
+  created() {
+    this.inputData = {
+      required: this.required,
+      label: this.label,
+      type: this.type,
+      options: this.options,
+      placeholder: this.placeholder
     }
   },
   methods: {
-    onInput(value) {
-      this.$emit('input', Object.assign(this.value, value));
+    onInput() {
+      this.$emit('input', this.inputData);
     },
-    onLabelInput(label) {
-      this.onInput({label});
-    },
-    onTypeInput(type) {
-      this.onInput({type});
-    },
-    onIsRequiredInput(required) {
-      this.onInput({required});
-    },
-    onInputChange(value) {
-      const relevantOption = this.isTextComponent ? 'placeholder' : 'options';
-      this.onInput({[relevantOption]: value});
-    }
   },
 };
 </script>

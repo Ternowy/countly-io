@@ -9,7 +9,7 @@
       <editor-preview-input
         v-for="(item, index) in structure"
         :key="index"
-        :value="item"
+        v-bind="item"
         @input="onInput($event, index)"
       />
     </editor-preview>
@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     onInput(data, index) {
-      this.structure[index] = data;
+      this.$set(this.structure, index, data);
     },
     create() {
       this.api.survey.create({

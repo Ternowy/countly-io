@@ -21,5 +21,7 @@ module.exports = {
     'vue/max-attributes-per-line': 'off',
     'vue/require-default-prop': 'off',
     'vue/singleline-html-element-content-newline': 'off',
+    //TODO keep in mind during migration
+    'vue/no-deprecated-dollar-listeners-api': 'off'
   },
 };
