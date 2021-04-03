@@ -13,6 +13,8 @@ import BaseItemList from './base/info/BaseItemList';
 import BaseItem from './base/info/BaseItem';
 import BasePopover from './base/interactive/BasePopover';
 import BaseInteractiveButton from './base/buttons/BaseInteractiveButton';
+import HeaderUserPicture from './common/HeaderUserPicture';
+import HeaderLogo from './common/HeaderLogo';
 
 export default {
   install(Vue) {
@@ -30,9 +32,11 @@ export default {
     Vue.component('BaseInteractiveButton', BaseInteractiveButton);
     //common
     Vue.component('Header', Header);
+    Vue.component('HeaderLogo', HeaderLogo);
+    Vue.component('HeaderUserPicture', HeaderUserPicture);
     //modules
     Vue.component('SurveyBuilder', SurveyBuilder);
     Vue.component('SurveyResults', SurveyResults);
     Vue.component('SurveyPreview', SurveyPreview);
-  }
-}
+  },
+};

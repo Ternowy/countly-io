@@ -1,22 +1,16 @@
 <template>
-  <div>
-    <header>
-      Hello
-    </header>
-
-    <editor-preview>
-      <editor-preview-survey-description v-model="nameAndDescription"/>
-      <editor-preview-input v-for="(item, index) in reactiveStructure" :key="index"
-                            v-bind="item"
-                            @copy="copyInput(index)"
-                            @input="onInput($event, index)"
-                            @remove="removeInput(index)"
-      />
-      <base-interactive-button :disabled="reactiveStructure.length >= 15" label="+"
-                               @click.native="addInput"
-      />
-    </editor-preview>
-  </div>
+  <editor-preview>
+    <editor-preview-survey-description v-model="nameAndDescription"/>
+    <editor-preview-input v-for="(item, index) in reactiveStructure" :key="index"
+                          v-bind="item"
+                          @copy="copyInput(index)"
+                          @input="onInput($event, index)"
+                          @remove="removeInput(index)"
+    />
+    <base-interactive-button :disabled="reactiveStructure.length >= 15" label="+"
+                             @click.native="addInput"
+    />
+  </editor-preview>
 </template>
 
 <script>
@@ -27,7 +21,7 @@ import EditorPreviewSurveyDescription from './EditorPreviewSurveyDescription';
 export default {
   name: 'Editor',
   components: {EditorPreviewSurveyDescription, EditorPreviewInput, EditorPreview},
-  inject: ['api'],
+  emits: ['survey-created', 'input'],
   data: () => ({
     surveyName: 'Sample name',
     surveyDescription: 'Sample description',
@@ -62,6 +56,11 @@ export default {
       },
     },
   },
+  watch: {
+    structure: 'onStateChange',
+    surveyName: 'onStateChange',
+    surveyDescription: 'onStateChange'
+  },
   created() {
     this.addInput();
   },
@@ -78,19 +77,16 @@ export default {
     removeInput(index) {
       this.structure.splice(index, 1);
     },
-    create() {
-      this.api.survey.create({
+    getState() {
+      return {
         name: this.surveyName,
         description: this.surveyDescription,
         structure: this.structure,
-      }).then((data) => {
-        debugger
-        let a = data;
-      }).catch((err) => {
-        debugger
-        let a = err;
-      });
+      };
     },
+    onStateChange() {
+      this.$emit('input', this.getState());
+    }
   },
 };
 </script>
