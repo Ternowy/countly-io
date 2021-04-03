@@ -31,14 +31,40 @@ class SurveyController extends Controller
 
     public function surveys()
     {
-        return view('user.surveys', [
-            'surveys' => $this->surveyRepository->allOfUser(Auth::user())->toArray()
-        ]);
+        return view(
+            'user.surveys',
+            [
+                'surveys' => $this->surveyRepository->allOfUser(Auth::user())->toArray()
+            ]
+        );
     }
 
     public function builder()
     {
-        return view('user.survey.builder');
+        return view(
+            'user.survey.builder',
+            [
+                'builderConfig' => [
+                    'create-survey-uri' => route('create-survey'),
+                    'home-uri' => route('surveys'),
+                    'user-pic' => Auth::user()->avatar,
+                    'mode' => 'create'
+                ]
+            ]
+        );
+    }
+
+    public function edit($id)
+    {
+        return view('user.survey.builder', [
+            'builderConfig' => [
+                'update-survey-uri' => route('update-survey', ['id' => $id]),
+                'home-uri' => route('surveys'),
+                'user-pic' => Auth::user()->avatar,
+                'mode' => 'edit',
+                'survey' => $this->surveyRepository->getById(Auth::user(), $id, true)->toArray()
+            ]
+        ]);
     }
 
     public function create(CreateSurveyRequest $request)

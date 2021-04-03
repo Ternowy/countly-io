@@ -8,7 +8,7 @@ export default ($axios, config) => ({
   },
   update: (survey) => {
     return new Promise((resolve, reject) => {
-      $axios.post(config.update, survey)
+      $axios.put(config.update, survey)
         .then(({data}) => resolve(data))
         .catch(reject);
     });

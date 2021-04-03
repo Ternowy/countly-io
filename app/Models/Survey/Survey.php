@@ -7,7 +7,11 @@ use App\Models\SurveyAnswer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * @mixin Builder
+ */
 class Survey extends Model
 {
     use HasFactory, SoftDeletes;

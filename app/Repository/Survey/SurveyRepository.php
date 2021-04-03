@@ -26,16 +26,20 @@ class SurveyRepository
             ->get();
     }
 
-    public function getById(Authenticatable $user, int $id): Survey
+    public function getById(Authenticatable $user, int $id, bool $strict = false): Survey
     {
-        return $this->survey
-            ->where(
+        $query = $this->survey->where(
                 [
                     'id' => $id,
                     'created_by' => $user->id
                 ]
-            )
-            ->first();
+            );
+
+        if ($strict) {
+            return $query->firstOrFail();
+        }
+
+        return $query->first();
     }
 
     public function getByCode(string $code): Survey

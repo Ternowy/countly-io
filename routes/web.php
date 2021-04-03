@@ -22,12 +22,15 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('surveys')->group(function () {
         Route::get('/', [SurveyController::class, 'surveys'])->name('surveys');
         Route::get('/builder', [SurveyController::class, 'builder'])->name('builder');
+        Route::get('/{id}', [SurveyController::class, 'edit'])->name('edit-survey');
+
         Route::post('/', [SurveyController::class, 'create'])->name('create-survey');
         Route::put('/{id}', [SurveyController::class, 'update'])->name('update-survey');
-        Route::put('/{id}/status', [SurveyController::class, 'updateStatus'])->name('update-survey-status');
         Route::delete('/{id}', [SurveyController::class, 'delete'])->name('delete-survey');
-        Route::post('/{id}/clear', [SurveyController::class, 'clear'])->name('clear-survey-results');
+        Route::put('/{id}/status', [SurveyController::class, 'updateStatus'])->name('update-survey-status');
+
         Route::get('/{id}/results', [SurveyResultsController::class, 'results'])->name('survey-results');
+        Route::post('/{id}/clear', [SurveyController::class, 'clear'])->name('clear-survey-results');
         Route::get('/{id}/results/media', [SurveyResultsController::class, 'media'])->name('survey-results-media');
     });
 });

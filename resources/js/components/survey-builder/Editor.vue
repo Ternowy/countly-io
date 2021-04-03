@@ -21,6 +21,9 @@ import EditorPreviewSurveyDescription from './EditorPreviewSurveyDescription';
 export default {
   name: 'Editor',
   components: {EditorPreviewSurveyDescription, EditorPreviewInput, EditorPreview},
+  props: {
+    survey: Object
+  },
   emits: ['survey-created', 'input'],
   data: () => ({
     surveyName: 'Sample name',
@@ -53,20 +56,25 @@ export default {
         const {name, description} = value;
         this.surveyName = name;
         this.surveyDescription = description;
+
+        this.onStateChange();
       },
     },
   },
-  watch: {
-    structure: 'onStateChange',
-    surveyName: 'onStateChange',
-    surveyDescription: 'onStateChange'
-  },
   created() {
-    this.addInput();
+    if (this.survey) {
+      const {name, description, structure} = this.survey;
+      this.surveyName = name;
+      this.surveyDescription = description;
+      this.structure = structure;
+    } else {
+      this.addInput();
+    }
   },
   methods: {
     onInput(data, index) {
       this.$set(this.structure, index, data);
+      this.onStateChange();
     },
     addInput() {
       this.structure.push(this.defaultInput);

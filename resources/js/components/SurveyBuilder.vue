@@ -10,7 +10,7 @@
       <base-button v-if="!isEditMode" label="save" @click.native="onSave"/>
       <header-user-picture :src="userPic"/>
     </header>
-    <editor ref="editor" @input="onInput"/>
+    <editor ref="editor" :survey="survey" @input="onInput"/>
   </div>
 </template>
 
@@ -33,7 +33,8 @@ export default {
       default: 'create',
       validate: (value) => ['create', 'edit'].includes(value),
     },
-    userPic: String
+    userPic: String,
+    survey: Object
   },
   data() {
     const surveyApi = survey(getAxios(), {
@@ -53,6 +54,9 @@ export default {
       return this.mode === 'edit';
     }
   },
+  created() {
+
+  },
   methods: {
     onInput(state) {
       if (this.isEditMode) {
@@ -70,8 +74,7 @@ export default {
     },
     update: debounce(function(state) {
       this.setUpdateStatus('saving');
-
-      this.api.survey.create(state).finally(() => {
+      this.api.survey.update(state).finally(() => {
         this.setUpdateStatus('saved');
       });
     }, 1000),
