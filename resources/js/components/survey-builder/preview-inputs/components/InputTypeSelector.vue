@@ -1,7 +1,8 @@
 <template>
   <div>
-    <base-square-button v-for="(option, index) in options" :key="index"
-                        @click="onSelect(option)"
+    <base-square-button v-for="(option, index) in options" :key="index" :selected="option === value"
+                        :icon="`input-${option}`"
+                        @click.native="onSelect(option)"
     />
   </div>
 </template>
@@ -12,17 +13,16 @@ export default {
   props: {
     options: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
+    value: String,
   },
-  data: () => ({
-    current: null,
-  }),
+  emits: ['input'],
   methods: {
     onSelect(type) {
-
-    }
-  }
+      this.$emit('input', type);
+    },
+  },
 };
 </script>
 

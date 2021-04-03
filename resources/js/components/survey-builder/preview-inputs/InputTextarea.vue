@@ -1,13 +1,18 @@
 <template>
-  <input-text/>
+  <base-textarea v-model="vValue">
+    <template #right-corner>
+      <base-counter :limit="1000"/>
+    </template>
+  </base-textarea>
 </template>
 
 <script>
-import InputText from './InputText';
+import vValueMixin from '../../../mixins/helpers/v-value-mixin';
+
 export default {
-name: "InputTextarea",
-  components: {InputText},
-}
+  name: 'InputTextarea',
+  mixins: [vValueMixin]
+};
 </script>
 
 <style scoped>

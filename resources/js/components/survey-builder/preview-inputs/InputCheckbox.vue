@@ -1,5 +1,5 @@
 <template>
-  <input-with-options/>
+  <input-with-options v-bind="$attrs" v-on="$listeners"/>
 </template>
 
 <script>

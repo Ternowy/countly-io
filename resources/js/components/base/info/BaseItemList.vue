@@ -1,10 +1,12 @@
 <template>
-  <p>Descibe</p>
+  <div>
+    <slot/>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'EditorPreviewSurveyDescription',
+  name: 'BaseItemList',
 };
 </script>
 

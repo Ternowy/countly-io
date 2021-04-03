@@ -1,11 +1,13 @@
 <template>
-
+  <div>
+    <slot/>
+  </div>
 </template>
 
 <script>
 export default {
-name: "InputOptionList"
-}
+  name: 'InputOptionList',
+};
 </script>
 
 <style scoped>

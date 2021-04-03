@@ -4,18 +4,24 @@
     <input-type-selector v-model="inputData.type" :options="inputTypes" @input="onInput"/>
     <base-switch v-model="inputData.required" @input="onInput"/>
     <component :is="componentName" v-bind="$props" v-model="inputValue" @input="onInput"/>
+    <base3-dots-menu>
+      <base-item-list>
+        <base-item label="copy" icon="copy" @click.native="copy"/>
+        <base-item label="delete" icon="delete" @click.native="remove"/>
+      </base-item-list>
+    </base3-dots-menu>
   </div>
 </template>
 
 <script>
-import InputCheckbox from './preview-inputs/InputCheckbox';
-import InputRadio from './preview-inputs/InputRadio';
-import InputSelect from './preview-inputs/InputSelect';
-import InputText from './preview-inputs/InputText';
-import InputTextarea from './preview-inputs/InputTextarea';
-import InputLabelEditor from './preview-inputs/components/InputLabelEditor';
-import InputTypeSelector from './preview-inputs/components/InputTypeSelector';
-import BaseSwitch from '../base/inputs/BaseSwitch';
+import InputCheckbox from './preview-inputs/InputCheckbox.vue';
+import InputRadio from './preview-inputs/InputRadio.vue';
+import InputSelect from './preview-inputs/InputSelect.vue';
+import InputText from './preview-inputs/InputText.vue';
+import InputTextarea from './preview-inputs/InputTextarea.vue';
+import InputLabelEditor from './preview-inputs/components/InputLabelEditor.vue';
+import InputTypeSelector from './preview-inputs/components/InputTypeSelector.vue';
+import BaseSwitch from '../base/inputs/BaseSwitch.vue';
 
 export default {
   name: 'EditorPreviewInput',
@@ -42,7 +48,7 @@ export default {
       default: ''
     }
   },
-  emits: ['input'],
+  emits: ['input', 'copy', 'remove'],
   data: () => ({
     inputData: {
       required: null,
@@ -57,17 +63,15 @@ export default {
     componentName() {
       return `input-${this.type}`;
     },
-    isTextComponent() {
-      return ['text', 'textarea'].includes(this.type);
+    relevantInputValue() {
+      return ['text', 'textarea'].includes(this.type) ? 'placeholder' : 'options';
     },
     inputValue: {
       get() {
-        const relevantOption = this.isTextComponent ? 'placeholder' : 'options';
-        return this.inputData[relevantOption];
+        return this.inputData[this.relevantInputValue];
       },
       set(value) {
-        const relevantOption = this.isTextComponent ? 'placeholder' : 'options';
-        this.inputData[relevantOption] = value;
+        this.inputData[this.relevantInputValue] = value;
       }
     }
   },
@@ -84,6 +88,12 @@ export default {
     onInput() {
       this.$emit('input', this.inputData);
     },
+    copy() {
+      this.$emit('copy');
+    },
+    remove() {
+      this.$emit('remove');
+    }
   },
 };
 </script>

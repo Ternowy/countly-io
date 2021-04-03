@@ -1,7 +1,7 @@
 <template>
   <div>
     <base-input v-show="active" ref="input" v-model="vValue" @blur="toggleActive"/>
-    <div v-show="!active" @click="activate">> {{ vValue }}</div>
+    <div v-show="!active" @click="activate">>{{ vValue }}</div>
   </div>
 </template>
 

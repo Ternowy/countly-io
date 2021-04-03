@@ -1,23 +1,20 @@
 <template>
   <div>
-    <input ref="input" :value="value" type="text" @blur="onBlur" @input="onInput">
+    <textarea ref="textarea" :value="value" @input="onInput"/>
     <slot name="right-corner"/>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'BaseInput',
+  name: 'BaseTextarea',
   props: {
     value: String,
   },
-  emits: ['input', 'blur'],
+  emits: ['input'],
   methods: {
     focus() {
-      this.$refs.input.focus();
-    },
-    onBlur() {
-      this.$emit('blur');
+      this.$refs.textarea.focus();
     },
     onInput(event) {
       this.$emit('input', event.target.value);
