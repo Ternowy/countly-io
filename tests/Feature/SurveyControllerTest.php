@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
-class SurveySurveyControllerTest extends TestCase
+class SurveyControllerTest extends TestCase
 {
     private function getUser()
     {

@@ -17,19 +17,26 @@ export default {
   emits: ['input'],
   data: () => ({
     active: false,
+    vValue: null
   }),
-  computed: {
-    vValue: {
-      get() {
-        return this.value;
-      },
-      set(value) {
-        this.$emit('input', value);
-      },
-    },
+  watch: {
+    value: {
+      immediate: true,
+      handler(val) {
+        this.vValue = val;
+      }
+    }
   },
   methods: {
     toggleActive() {
+      if (!this.vValue) {
+        this.vValue = this.value;
+      }
+
+      if (this.vValue !== this.value) {
+        this.$emit('input', this.vValue);
+      }
+
       this.active = !this.active;
     },
     activate() {

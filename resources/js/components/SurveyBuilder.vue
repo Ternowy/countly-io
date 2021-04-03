@@ -1,15 +1,25 @@
 <template>
   <div>
     <header>
-      <base-button v-if="homeUri" @click.native="quit">
-        <base-icon name="left-arrow"/> Back to home
+      <base-button v-if="homeUri" :disabled="updateStatus === 'saving'" @click.native="quit">
+        <base-icon name="left-arrow"/>
+        Back to home
       </base-button>
-      <saving-status :status="updateStatus"/>
+
+      <saving-status v-if="isEditMode" :status="updateStatus"/>
+
       <header-logo/>
-      {{ isEditMode ? '- STATS - SHARING' : '' }}
-      <base-button v-if="!isEditMode" label="save" @click.native="onSave"/>
+
+      <base-button v-if="isEditMode" @click.native="onStats">
+        <base-icon name="stats"/>
+      </base-button>
+
+      <base-button v-if="isEditMode" label="Share" @click.native="onShare"/>
+      <base-button v-if="!isEditMode" label="Save" @click.native="onSave"/>
+
       <header-user-picture :src="userPic"/>
     </header>
+
     <editor ref="editor" :survey="survey" @input="onInput"/>
   </div>
 </template>
@@ -27,6 +37,8 @@ export default {
   props: {
     createSurveyUri: String,
     updateSurveyUri: String,
+    surveyStatsUri: String,
+    surveySharingUri: String,
     homeUri: String,
     mode: {
       type: String,
@@ -34,28 +46,25 @@ export default {
       validate: (value) => ['create', 'edit'].includes(value),
     },
     userPic: String,
-    survey: Object
+    survey: Object,
   },
   data() {
     const surveyApi = survey(getAxios(), {
       create: this.createSurveyUri,
-      update: this.updateSurveyUri
+      update: this.updateSurveyUri,
     });
 
     return {
       api: {
         survey: surveyApi,
       },
-      updateStatus: 'saved'
+      updateStatus: 'saved',
     };
   },
   computed: {
     isEditMode() {
       return this.mode === 'edit';
-    }
-  },
-  created() {
-
+    },
   },
   methods: {
     onInput(state) {
@@ -65,6 +74,12 @@ export default {
     },
     onSave() {
       this.create();
+    },
+    onShare() {
+      window.open(this.surveySharingUri, '_blank');
+    },
+    onStats() {
+      window.open(this.surveyStatsUri, '_blank');
     },
     setUpdateStatus(status) {
       this.updateStatus = status;
@@ -77,7 +92,7 @@ export default {
       this.api.survey.update(state).finally(() => {
         this.setUpdateStatus('saved');
       });
-    }, 1000),
+    }, 800),
     quit() {
       if (!this.isEditMode) {
         window.location.href = this.homeUri;

@@ -78,6 +78,7 @@ export default {
     },
     addInput() {
       this.structure.push(this.defaultInput);
+      this.onStateChange();
     },
     copyInput(index) {
       this.structure.push(this.structure[index]);

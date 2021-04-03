@@ -1,5 +1,5 @@
 <template>
-  <button>
+  <button v-bind="$attrs">
     <slot>
       {{ label }}
     </slot>

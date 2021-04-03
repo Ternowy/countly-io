@@ -56,13 +56,17 @@ class SurveyController extends Controller
 
     public function edit($id)
     {
+        $survey = $this->surveyRepository->getById(Auth::user(), $id, true);
+
         return view('user.survey.builder', [
             'builderConfig' => [
                 'update-survey-uri' => route('update-survey', ['id' => $id]),
+                'survey-stats-uri' => route('survey-results', ['id' => $id]),
+                'survey-sharing-uri' => route('load-survey', ['code' => $survey->access_code]),
                 'home-uri' => route('surveys'),
                 'user-pic' => Auth::user()->avatar,
                 'mode' => 'edit',
-                'survey' => $this->surveyRepository->getById(Auth::user(), $id, true)->toArray()
+                'survey' => $survey->toArray()
             ]
         ]);
     }
