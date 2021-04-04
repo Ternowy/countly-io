@@ -92,7 +92,7 @@ export default {
       this.api.survey.update(state).finally(() => {
         this.setUpdateStatus('saved');
       });
-    }, 800),
+    }, 500),
     quit() {
       if (!this.isEditMode) {
         window.location.href = this.homeUri;

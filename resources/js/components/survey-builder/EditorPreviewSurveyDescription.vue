@@ -1,7 +1,7 @@
 <template>
   <div>
-    <base-input v-model="name"/>
-    <base-input v-model="description"/>
+    <base-input v-model="name" @blur="onNameBlur"/>
+    <base-input v-model="description" @blur="onDescriptionBlur"/>
   </div>
 </template>
 
@@ -12,24 +12,44 @@ export default {
     value: Object,
   },
   emits: ['input'],
-  computed: {
-    name: {
-      get() {
-        return this.value.name;
-      },
-      set(name) {
-        this.$emit('input', Object.assign({}, this.value, {name}));
-      },
-    },
-    description: {
-      get() {
-        return this.value.description;
-      },
-      set(description) {
-        this.$emit('input', Object.assign({}, this.value, {description}));
-      },
-    },
+  data: () => ({
+    name: null,
+    description: null
+  }),
+  watch: {
+    value: {
+      immediate: true,
+      deep: true,
+      handler(val) {
+        const {name, description} = val;
+        this.name = name;
+        this.description = description;
+      }
+    }
   },
+  methods: {
+    onNameBlur() {
+      if (!this.name) {
+        this.name = this.value.name;
+      }
+
+      if (this.name !== this.value.name) {
+        this.onInput({name: this.name});
+      }
+    },
+    onDescriptionBlur() {
+      if (!this.description) {
+        this.description = this.value.description;
+      }
+
+      if (this.description !== this.value.description) {
+        this.onInput({description: this.description});
+      }
+    },
+    onInput(data) {
+      this.$emit('input', Object.assign({}, this.value, data));
+    }
+  }
 };
 </script>
 

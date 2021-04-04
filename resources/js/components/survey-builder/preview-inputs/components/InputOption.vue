@@ -1,17 +1,39 @@
 <template>
   <div>
-    <base-input v-model="vValue"/>
+    <base-input v-model="vValue" @blur="onBlur"/>
     <base-icon name="input-option-remove" @click.native="$emit('remove')"/>
   </div>
 </template>
 
 <script>
-import vValueMixin from '../../../../mixins/helpers/v-value-mixin';
-
 export default {
   name: 'InputOption',
-  mixins: [vValueMixin],
-  emits: ['remove'],
+  props: {
+    value: String,
+  },
+  emits: ['remove', 'input'],
+  data: () => ({
+    vValue: null,
+  }),
+  watch: {
+    value: {
+      immediate: true,
+      handler(val) {
+        this.vValue = val;
+      },
+    },
+  },
+  methods: {
+    onBlur() {
+      if (!this.vValue) {
+        this.vValue = this.value;
+      }
+
+      if (this.vValue !== this.value) {
+        this.$emit('input', this.vValue);
+      }
+    },
+  },
 };
 </script>
 
