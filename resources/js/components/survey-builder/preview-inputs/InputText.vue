@@ -1,5 +1,5 @@
 <template>
-  <base-input v-model="vValue">
+  <base-input v-model="vValue" :maxlength="100">
     <template #right-corner>
       <base-counter :limit="200"/>
     </template>

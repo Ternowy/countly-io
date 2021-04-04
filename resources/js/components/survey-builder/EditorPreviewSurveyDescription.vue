@@ -1,7 +1,7 @@
 <template>
   <div>
-    <base-input v-model="name" @blur="onNameBlur"/>
-    <base-input v-model="description" @blur="onDescriptionBlur"/>
+    <base-input v-model="name" :maxlength="100" @blur="onNameBlur"/>
+    <base-input v-model="description" :maxlength="280" @blur="onDescriptionBlur"/>
   </div>
 </template>
 

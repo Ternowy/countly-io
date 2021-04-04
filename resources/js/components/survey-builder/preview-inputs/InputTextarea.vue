@@ -1,5 +1,5 @@
 <template>
-  <base-textarea v-model="vValue">
+  <base-textarea v-model="vValue" :maxlength="100">
     <template #right-corner>
       <base-counter :limit="1000"/>
     </template>
