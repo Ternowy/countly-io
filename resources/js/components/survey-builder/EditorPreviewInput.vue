@@ -42,9 +42,10 @@ export default {
     InputTextarea,
   },
   props: {
-    required: Boolean,
-    label: String,
+    name: String,
     type: String,
+    label: String,
+    required: Boolean,
     options: {
       type: Array,
       default: () => []
@@ -57,9 +58,10 @@ export default {
   emits: ['input', 'copy', 'remove'],
   data: () => ({
     inputData: {
-      required: null,
-      label: null,
+      name: null,
       type: null,
+      label: null,
+      required: null,
       options: null,
       placeholder: null
     },
@@ -83,9 +85,10 @@ export default {
   },
   created() {
     this.inputData = {
-      required: this.required,
-      label: this.label,
+      name: this.name,
       type: this.type,
+      label: this.label,
+      required: this.required,
       options: this.options,
       placeholder: this.placeholder
     }

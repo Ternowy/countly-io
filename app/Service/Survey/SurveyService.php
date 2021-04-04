@@ -20,21 +20,17 @@ class SurveyService
 
     protected SurveyRepository $surveyRepository;
 
-    protected SurveyStructureFormatter $surveyStructureFormatter;
-
     protected SurveyResultsService $surveyResultsService;
 
     public function __construct(
         Survey $survey,
         UniqueIdService $uniqueIdService,
         SurveyRepository $surveyRepository,
-        SurveyStructureFormatter $surveyStructureFormatter,
         SurveyResultsService $surveyResultsService
     ) {
         $this->survey = $survey;
         $this->uniqueIdService = $uniqueIdService;
         $this->surveyRepository = $surveyRepository;
-        $this->surveyStructureFormatter = $surveyStructureFormatter;
         $this->surveyResultsService = $surveyResultsService;
     }
 
@@ -48,9 +44,7 @@ class SurveyService
             [
                 'name' => $name,
                 'description' => $description,
-                'structure' => $this->surveyStructureFormatter->prepareStructure(
-                    $structure
-                ),
+                'structure' => $structure,
                 'created_by' => $user->id,
                 'access_code' => $this->uniqueIdService->encode($user->id, rand(1, 10), rand(1, 10)),
                 'status' => SurveyStatusEnum::ACTIVE,
@@ -71,9 +65,7 @@ class SurveyService
             [
                 'name' => $name,
                 'description' => $description,
-                'structure' => $this->surveyStructureFormatter->prepareStructure(
-                    $structure
-                )
+                'structure' => $structure
             ]
         );
 

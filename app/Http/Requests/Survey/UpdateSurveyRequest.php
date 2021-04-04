@@ -8,13 +8,4 @@ class UpdateSurveyRequest extends CreateSurveyRequest
     {
         return true;
     }
-
-    public function rules(): array
-    {
-        $rules = parent::rules();
-
-        return array_merge($rules, [
-            'structure.*.name' => 'string|max:30'
-        ]);
-    }
 }

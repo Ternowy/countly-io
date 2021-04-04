@@ -17,6 +17,7 @@
 import EditorPreview from './EditorPreview';
 import EditorPreviewInput from './EditorPreviewInput';
 import EditorPreviewSurveyDescription from './EditorPreviewSurveyDescription';
+import UniqueNameService from '../../service/unique-name-service';
 
 export default {
   name: 'Editor',
@@ -32,6 +33,7 @@ export default {
     defaultInput: {
       type: 'select',
       label: 'This is a new input!',
+      name: UniqueNameService.generate(),
       required: false,
       options: [
         'Option 1',
@@ -77,7 +79,7 @@ export default {
       this.onStateChange();
     },
     addInput() {
-      this.structure.push(this.defaultInput);
+      this.structure.push(Object.assign({}, this.defaultInput, {name: UniqueNameService.generate()}));
       this.onStateChange();
     },
     copyInput(index) {

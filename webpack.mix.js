@@ -16,6 +16,12 @@ mix
     devServer: {
       host: 'laravel.test',
       port: 8080,
+    },
+    resolve: {
+      fallback: {
+        'crypto': require.resolve('crypto-browserify'),
+        'stream': require.resolve('stream-browserify')
+      }
     }
   })
   .js('resources/js/app.js', 'public/js')
