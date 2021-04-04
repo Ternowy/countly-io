@@ -46,7 +46,7 @@ class SurveyResultsService
     public function clearSurveyResults(Survey $survey): ?bool
     {
         //TODO create cleanup job queue
-        $this->surveyAnswer
+        return (bool)$this->surveyAnswer
             ->where('survey_id', $survey->getAttribute('id'))
             ->delete();
     }

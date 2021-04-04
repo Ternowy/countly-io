@@ -7,6 +7,7 @@ use App\Http\Requests\Survey\CreateSurveyRequest;
 use App\Http\Requests\Survey\UpdateSurveyRequest;
 use App\Http\Requests\Survey\UpdateSurveyStatusRequest;
 use App\Models\Survey\Factory\SurveyStructureFactory;
+use App\Models\Survey\Survey;
 use App\Repository\Survey\SurveyRepository;
 use App\Service\Survey\SurveyService;
 use Illuminate\Support\Facades\Auth;
@@ -31,10 +32,15 @@ class SurveyController extends Controller
 
     public function surveys()
     {
+        $surveys = $this->surveyRepository->allOfUser(Auth::user())->each(function (Survey $survey) {
+            $survey->removeLink = route('delete-survey', ['id' => $survey->id]);
+            $survey->editLink = route('edit-survey', ['id' => $survey->id]);
+        });
+
         return view(
             'user.surveys',
             [
-                'surveys' => $this->surveyRepository->allOfUser(Auth::user())->toArray()
+                'surveys' => $surveys->toArray()
             ]
         );
     }

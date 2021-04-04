@@ -1,5 +1,3 @@
 <x-app-layout title="surveys">
-    <a href="{{ route('builder') }}">Builder</a>
-
-    <x-user.surveys.survey-list :survey-list="$surveys"/>
+     <survey-list :survey-list="{{ json_encode($surveys) }}" create-survey-link="{{ route('builder') }}"/>
 </x-app-layout>

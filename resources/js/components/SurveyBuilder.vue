@@ -26,7 +26,7 @@
 
 <script>
 import Editor from './survey-builder/Editor';
-import survey from '../api/survey';
+import survey from '../api/survey/survey.js';
 import {getAxios} from '../api/axios';
 import debounce from 'lodash/debounce.js';
 import SavingStatus from './survey-builder/header/SavingStatus';
@@ -94,9 +94,7 @@ export default {
       });
     }, 500),
     quit() {
-      if (!this.isEditMode) {
-        window.location.href = this.homeUri;
-      }
+      window.location.href = this.homeUri;
     },
   },
 };

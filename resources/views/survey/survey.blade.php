@@ -1,6 +1,4 @@
 <x-main-layout title="FORM NAME">
     @json($survey)
-    <div id="app">
-        <survey-preview/>
-    </div>
+    <survey-preview/>
 </x-main-layout>

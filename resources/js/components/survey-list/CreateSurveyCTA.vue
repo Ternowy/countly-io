@@ -1,14 +1,12 @@
 <template>
-  <modal :name="name" v-bind="$attrs">
-    <slot/>
-  </modal>
+  <a :href="action">CREATE NEW SURVEY</a>
 </template>
 
 <script>
 export default {
-  name: 'BaseModal',
+  name: 'CreateSurveyCTA',
   props: {
-    name: {
+    action: {
       type: String,
       required: true
     }

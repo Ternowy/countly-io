@@ -29,8 +29,17 @@ class Survey extends Model
         'structure' => SurveyStructureCast::class
     ];
 
+    protected $appends = [
+        'accessLink'
+    ];
+
     public function answers()
     {
         return $this->hasMany(SurveyAnswer::class, 'survey_id');
+    }
+
+    public function getAccessLinkAttribute(): string
+    {
+        return $this->getAttribute('access_code');
     }
 }
