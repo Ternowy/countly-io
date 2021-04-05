@@ -21,20 +21,46 @@ export default {
     alert: Boolean,
     confirmText: {
       type: String,
-      default: 'yes'
+      default: 'Yes'
     },
     declineText: {
       type: String,
-      default: 'no'
+      default: 'No'
     },
+    hideOnDecline: {
+      type: Boolean,
+      default: true
+    }
   },
-  emits: ['confirm', 'decline'],
+  data() {
+    return {
+      resolvePromise: null,
+      rejectPromise: null
+    }
+  },
   methods: {
+    show() {
+      this.$modal.show(this.name);
+      
+      return new Promise((resolve, reject) => {
+        this.resolvePromise = () => resolve();
+        this.rejectPromise = () => {
+          if (this.hideOnDecline) {
+            this.hide();
+          }
+
+          reject();
+        };
+      });
+    },
+    hide() {
+      this.$modal.hide(this.name);
+    },
     confirm() {
-      this.$emit('confirm');
+      this.resolvePromise();
     },
     decline() {
-      this.$emit('decline');
+      this.rejectPromise();
     },
   },
 };

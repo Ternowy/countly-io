@@ -1,5 +1,5 @@
 <template>
-  <modal :name="name" v-bind="$attrs">
+  <modal :name="name" v-bind="$attrs" v-on="$listeners">
     <slot/>
   </modal>
 </template>

@@ -4,8 +4,8 @@
     {{ status }}
     {{ accessLink }}
     <a :href="editLink">Edit</a>
-    <button @click="showRemovalConfirmation">Delete</button>
-    <confirmation-modal :name="removalModalName" @confirm="remove" @decline="hideRemovalConfirmation"/>
+    <button @click="requestSurveyRemoval">Delete</button>
+    <confirmation-modal ref="removalConfirmationModal" :name="`delete-survey-${this._uid}`"/>
   </div>
 </template>
 
@@ -21,21 +21,11 @@ export default {
     editLink: String,
   },
   emits: ['remove'],
-  data() {
-    return {
-      removalModalName: `delete-survey-${this._uid}`
-    }
-  },
   methods: {
-    showRemovalConfirmation() {
-      this.$modal.show(this.removalModalName);
-    },
-    hideRemovalConfirmation() {
-      this.$modal.hide(this.removalModalName);
-    },
-    remove() {
-      this.hideRemovalConfirmation();
-      this.$emit('remove');
+    requestSurveyRemoval() {
+      this.$refs.removalConfirmationModal.show().then(() => {
+        this.$emit('remove');
+      }).catch(() => {});
     },
   },
 };

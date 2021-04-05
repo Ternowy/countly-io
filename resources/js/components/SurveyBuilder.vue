@@ -1,7 +1,8 @@
 <template>
   <div>
+    <confirmation-modal ref="exitConfirmationModal" name="exit-confirmation-modal"/>
     <header>
-      <base-button v-if="homeUri" :disabled="updateStatus === 'saving'" @click.native="quit">
+      <base-button v-if="homeUri" :disabled="updateStatus === 'saving'" @click.native="exit">
         <base-icon name="left-arrow"/>
         Back to home
       </base-button>
@@ -93,8 +94,14 @@ export default {
         this.setUpdateStatus('saved');
       });
     }, 500),
-    quit() {
-      window.location.href = this.homeUri;
+    exit() {
+      if (!this.isEditMode) {
+        this.$refs.exitConfirmationModal.show().then(() => {
+          window.location.href = this.homeUri;
+        }).catch(() => {});
+      } else if(this.isEditMode) {
+        window.location.href = this.homeUri;
+      }
     },
   },
 };
