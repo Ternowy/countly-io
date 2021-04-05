@@ -1,8 +1,8 @@
 import VueLodash from 'vue-lodash';
-import debounce from 'lodash/debounce.js';
+//import copyArray from 'lodash/_copyArray.js';
 
 export default {
   install(Vue) {
-    Vue.use(VueLodash, { name: 'custom', lodash: { debounce } });
+    //Vue.use(VueLodash, { name: 'custom', lodash: { copyArray } });
   }
 };

@@ -1,7 +1,7 @@
 <template>
   <div>
     <survey v-for="(survey, index) in surveys" :key="`survey-${index}`" v-bind="survey"
-            @remove="deleteSurvey(survey, index)"
+            @remove="deleteSurvey(survey.removeLink, index)"
     />
     <create-survey-c-t-a v-for="n in ctaNumber" :key="n" :action="createSurveyLink"/>
   </div>
@@ -48,9 +48,8 @@ export default {
     this.surveys = this.surveyList;
   },
   methods: {
-    deleteSurvey({removeLink}, index) {
-      debugger
-      this.api.survey.delete(removeLink).then(() => {
+    deleteSurvey(endpoint, index) {
+      this.api.survey.delete(endpoint).then(() => {
         this.surveys.splice(index, 1);
       });
     },
