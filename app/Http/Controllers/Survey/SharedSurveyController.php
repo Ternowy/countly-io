@@ -23,8 +23,15 @@ class SharedSurveyController extends Controller
 
     public function load($code)
     {
+        $survey = $this->surveyRepository->getByCode(
+            $code,
+            ['structure', 'name', 'description', 'access_code']
+        );
+
+        $survey->submitSurveyUri = route('submit-survey', ['code' => $survey->getAttribute('access_code')]);
+
         return view('survey.survey', [
-            'survey' => $this->surveyRepository->getByCode($code)
+            'survey' => $survey
         ]);
     }
 

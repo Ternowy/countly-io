@@ -42,7 +42,7 @@ class SurveyRepository
         return $query->first();
     }
 
-    public function getByCode(string $code): Survey
+    public function getByCode(string $code, array $columns = ['*']): Survey
     {
         return $this->survey
             ->where(
@@ -51,6 +51,6 @@ class SurveyRepository
                     'status' => SurveyStatusEnum::ACTIVE
                 ]
             )
-            ->first();
+            ->first($columns);
     }
 }

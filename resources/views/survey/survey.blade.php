@@ -1,4 +1,3 @@
 <x-main-layout title="FORM NAME">
-    @json($survey)
-    <survey-preview/>
+    <survey-preview v-bind="{{ json_encode($survey) }}"/>
 </x-main-layout>

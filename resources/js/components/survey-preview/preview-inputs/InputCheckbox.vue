@@ -1,10 +1,10 @@
 <template>
-
+  <div>Checkbox</div>
 </template>
 
 <script>
 export default {
-  name: 'InputTextarea',
+  name: 'InputCheckbox',
 };
 </script>
 

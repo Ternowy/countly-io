@@ -46,17 +46,12 @@ sail artisan migrate
 
 ## Contributing
 
-All processes should correspond to Gitflow standard. 
-
-### Branch naming
-
-- Feature ```feature/TICKET_NUMBER_IN_VCS```
-- Bugfix ```bugfix/TICKET_NUMBER_IN_VCS```
-
-### Commiting
+All processes should correspond to Gitflow standard.
 
 All commits related to tickets have to include [#ticket_number] at the beginning of commit message, in order
 to be automatically fetched by Github, all commits will be displayed in corresponding ticket.
+
+```[#255] added signup survey```
 
 ## Security Vulnerabilities
 

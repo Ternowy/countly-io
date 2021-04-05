@@ -16,21 +16,7 @@ class CreateSurveyRequest extends FormRequest
 
     public function rules(): array
     {
-        $optionRules = array_map(
-            function (string $type) {
-                return 'required_if:structure.*.type,'.$type;
-            },
-            SurveyEnumHelper::inputsWithOptions()
-        );
-
-        $placeholderRules = array_map(
-            function (string $type) {
-                return 'required_if:structure.*.type,'.$type;
-            },
-            SurveyEnumHelper::inputsWithText()
-        );
-
-        return [
+       return [
             'name' => 'required|max:100',
             'description' => 'required|max:280',
             'structure' => 'required|array|min:1|max:15',
@@ -46,11 +32,8 @@ class CreateSurveyRequest extends FormRequest
                 )
             ],
             'structure.*.label' => 'required|max:100',
-            'structure.*.placeholder' => [
-                'max:100',
-                ...$placeholderRules
-            ],
-            'structure.*.options' => $optionRules
+            'structure.*.placeholder' => 'present|max:100',
+            'structure.*.options' => 'present|max:15'
         ];
     }
 }

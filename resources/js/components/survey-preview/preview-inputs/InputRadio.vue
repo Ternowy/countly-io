@@ -1,10 +1,10 @@
 <template>
-
+  <div>Radio</div>
 </template>
 
 <script>
 export default {
-  name: 'ItemInput',
+  name: 'InputRadio',
 };
 </script>
 

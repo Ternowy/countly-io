@@ -1,10 +1,10 @@
 <template>
-
+  <div>Textarea</div>
 </template>
 
 <script>
 export default {
-  name: 'InputRadio',
+  name: 'InputTextarea',
 };
 </script>
 
