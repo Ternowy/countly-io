@@ -1,5 +1,7 @@
 <template>
-  <div>Select</div>
+  <input-base>
+
+  </input-base>
 </template>
 
 <script>

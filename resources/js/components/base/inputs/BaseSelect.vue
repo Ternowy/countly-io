@@ -1,11 +1,46 @@
 <template>
-
+  <select v-model="vValue" :name="name" class="form-select w-100" @change="onInput">
+    <option value="" disabled :selected="!value">{{ placeholder }}</option>
+    <option v-for="(option, index) in options" :key="index" :disabled="!!option.disabled" :value="option.value">
+      {{ option.label }}
+    </option>
+  </select>
 </template>
 
 <script>
 export default {
-name: "BaseSelect"
-}
+  name: 'BaseSelect',
+  props: {
+    options: Array,
+    name: String,
+    value: String,
+    placeholder: {
+      type: String,
+      default: 'Choose option'
+    }
+  },
+  emits: ['input'],
+  data: () => ({
+    vValue: '',
+  }),
+  watch: {
+    value(val) {
+      if (val !== this.vValue) {
+        this.vValue = val;
+      }
+    },
+  },
+  created() {
+    if (this.value) {
+      this.vValue = this.value;
+    }
+  },
+  methods: {
+    onInput(event) {
+      this.$emit('input', event.target.value);
+    },
+  },
+};
 </script>
 
 <style scoped>

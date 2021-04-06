@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <component :is="componentName" v-model="vValue"/>
-  </div>
+  <component :is="componentName" v-model="vValue"/>
 </template>
 
 <script>
