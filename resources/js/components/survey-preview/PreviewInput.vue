@@ -1,5 +1,5 @@
 <template>
-  <component :is="componentName" v-model="vValue"/>
+  <component :is="componentName" v-model="vValue" v-bind="$attrs" v-on="$listeners"/>
 </template>
 
 <script>

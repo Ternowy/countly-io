@@ -18,6 +18,8 @@ import HeaderLogo from './common/HeaderLogo';
 import BaseModal from './base/modals/BaseModal';
 import ConfirmationModal from './common/ConfirmationModal';
 import SurveyList from './SurveyList';
+import BaseSelect from './base/inputs/BaseSelect';
+import BaseOptions from './base/inputs/BaseOptions';
 
 export default {
   install(Vue) {
@@ -34,6 +36,8 @@ export default {
     Vue.component('BasePopover', BasePopover);
     Vue.component('BaseInteractiveButton', BaseInteractiveButton);
     Vue.component('BaseModal', BaseModal);
+    Vue.component('BaseSelect', BaseSelect);
+    Vue.component('BaseOptions', BaseOptions);
     //common
     Vue.component('Header', Header);
     Vue.component('HeaderLogo', HeaderLogo);

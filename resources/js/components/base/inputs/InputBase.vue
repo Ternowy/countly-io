@@ -9,8 +9,14 @@ export default {
   name: 'InputBase',
   props: {
     name: String,
-    rules: Object,
-    rulesMessages: Object
+    rules: {
+      type: Object,
+      default: () => ({})
+    },
+    rulesMessages: {
+      type: Object,
+      default: () => ({})
+    }
   }
 };
 </script>

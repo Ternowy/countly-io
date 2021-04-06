@@ -1,10 +1,12 @@
 <template>
-  <select v-model="vValue" :name="name" class="form-select w-100" @change="onInput">
-    <option value="" disabled :selected="!value">{{ placeholder }}</option>
-    <option v-for="(option, index) in options" :key="index" :disabled="!!option.disabled" :value="option.value">
-      {{ option.label }}
-    </option>
-  </select>
+  <input-base :name="name" v-bind="$attrs">
+    <select v-model="vValue" :name="name" class="form-select w-100" @change="onInput">
+      <option value="" disabled :selected="!value">{{ placeholder }}</option>
+      <option v-for="(option, index) in options" :key="index" :value="option">
+        {{ option }}
+      </option>
+    </select>
+  </input-base>
 </template>
 
 <script>

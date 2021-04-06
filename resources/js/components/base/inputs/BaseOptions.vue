@@ -1,11 +1,20 @@
 <template>
+  <input-base :name="name" v-bind="$attrs">
 
+  </input-base>
 </template>
 
 <script>
-//RADIO and CHECKBOXES
 export default {
   name: 'BaseOptions',
+  props: {
+    name: String,
+    options: Array,
+    multiple: {
+      type: Boolean,
+      default: false
+    }
+  }
 };
 </script>
 
