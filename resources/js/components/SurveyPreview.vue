@@ -39,7 +39,9 @@ export default {
     };
   },
   created() {
-    this.structure.forEach(({name}) => this.$set(this.surveyData, name, ''));
+    this.structure.forEach(({name, type}) => {
+      this.$set(this.surveyData, name, type === 'checkbox' ? [] : '');
+    });
   },
   methods: {
     onInput() {
