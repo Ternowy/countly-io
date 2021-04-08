@@ -1,7 +1,7 @@
 <template>
   <div>
     <textarea ref="textarea" :value="value" @input="onInput"/>
-    <slot name="right-corner"/>
+    <slot/>
   </div>
 </template>
 

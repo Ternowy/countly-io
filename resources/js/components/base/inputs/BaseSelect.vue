@@ -1,7 +1,7 @@
 <template>
   <input-base :name="name" v-bind="$attrs">
     <select v-model="vValue" :name="name" class="form-select w-100" @change="onInput">
-      <option value="" disabled :selected="!value">{{ placeholder }}</option>
+      <option value="" disabled :selected="!value">{{ defaultLabel }}</option>
       <option v-for="(option, index) in options" :key="index" :value="option">
         {{ option }}
       </option>
@@ -16,7 +16,7 @@ export default {
     options: Array,
     name: String,
     value: String,
-    placeholder: {
+    defaultLabel: {
       type: String,
       default: 'Choose option'
     }

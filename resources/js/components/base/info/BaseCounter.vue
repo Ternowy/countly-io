@@ -10,7 +10,7 @@ export default {
   props: {
     limit: {
       type: Number,
-      default: 200
+      default: 100
     },
     value: {
       type: Number,

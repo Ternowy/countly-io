@@ -10,7 +10,8 @@
 cp .env.example .env
 ```
 2. You have to have [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) installed
-3. Open the project folder and start [sail](https://laravel.com/docs/8.x/sail) 
+3. Install dependencies with ```composer install``` in order to get [sail](https://laravel.com/docs/8.x/sail) 
+Open the project folder and start sail
 ```bash
 ./vendor/bin/sail up
 ```

@@ -29,9 +29,6 @@ export default {
       return `input-${this.type}`;
     },
   },
-  methods: {
-
-  },
 };
 </script>
 

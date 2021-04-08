@@ -1,15 +1,22 @@
 <template>
-  <div>
-    <input ref="input" v-bind="$attrs" :value="value" type="text" @blur="onBlur" @input="onInput">
-    <slot name="right-corner"/>
-  </div>
+  <input-base v-bind="$attrs" :name="name">
+    <input ref="input" v-bind="$attrs" :placeholder="placeholder" :value="value" type="text"
+           @blur="onBlur" @input="onInput"
+    >
+    <slot/>
+  </input-base>
 </template>
 
 <script>
 export default {
   name: 'BaseInput',
   props: {
+    name: String,
     value: String,
+    placeholder: {
+      type: String,
+      default: '',
+    },
   },
   emits: ['input', 'blur'],
   methods: {

@@ -1,10 +1,10 @@
 <template>
-  <preview>
+  <preview ref="form">
     <preview-survey-description :name="name" :description="description"/>
     <preview-input v-for="(input, index) in structure" :key="index" v-bind="input"
-                   @input="onInput($event, input.name)"
+                   v-model="surveyData[input.name]" @input="onInput"
     />
-    <base-button :disabled="surveyValid" label="🖐 Submit" @click="onSubmit"/>
+    <base-button :disabled="!surveyValid" label="🖐 Submit" @click="onSubmit"/>
   </preview>
 </template>
 
@@ -38,9 +38,14 @@ export default {
       surveyValid: false,
     };
   },
+  created() {
+    this.structure.forEach(({name}) => this.$set(this.surveyData, name, ''));
+  },
   methods: {
-    onInput(data, input) {
-      this.surveyData[input] = data;
+    onInput() {
+      this.$nextTick(
+          () => this.$refs.form.validate().then(valid => this.surveyValid = valid)
+      );
     },
     onSubmit() {
       this.api.survey.submit(this.surveyData).then(() => {
