@@ -1,6 +1,6 @@
 <template>
   <base-textarea v-bind="Object.assign({}, $attrs, $props, {rules: vRules})" :maxlength="vRules.max" v-on="$listeners">
-    <base-counter :limit="vRules.max" :value="value.length"/>
+    <base-counter :limit="vRules.max" :value="vLength"/>
   </base-textarea>
 </template>
 
@@ -18,6 +18,9 @@ export default {
         max: 1000,
       };
     },
+    vLength() {
+      return this.value ? this.value.length : 0;
+    }
   },
 };
 </script>

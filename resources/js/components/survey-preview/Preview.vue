@@ -1,5 +1,5 @@
 <template>
-  <validation-observer ref="form" tag="form">
+  <validation-observer ref="form" v-bind="$attrs" tag="form" v-on="$listeners">
     <slot/>
   </validation-observer>
 </template>
@@ -10,8 +10,8 @@ export default {
   methods: {
     validate() {
       return this.$refs.form.validate();
-    }
-  }
+    },
+  },
 };
 </script>
 

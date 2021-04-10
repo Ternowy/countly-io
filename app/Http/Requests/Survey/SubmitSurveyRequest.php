@@ -11,7 +11,7 @@ class SubmitSurveyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'answers' => 'required|json'
+            'answers' => 'required|array'
         ];
     }
 }

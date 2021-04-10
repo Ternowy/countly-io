@@ -16,7 +16,8 @@ class SurveyAnswer extends Model
 
     protected $fillable = [
         'survey_id',
-        'ip_address'
+        'ip_address',
+        'answer'
     ];
 
     protected $casts = [

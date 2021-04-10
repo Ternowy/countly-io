@@ -27,8 +27,8 @@ class SurveyInputValidationService
                 }
 
                 $additionalRules = match ($input->getType()) {
-                    SurveyInputTypeEnum::TEXT => ['string|max:255'],
-                    SurveyInputTypeEnum::TEXTAREA => ['string|max:1000'],
+                    SurveyInputTypeEnum::TEXT => ['max:200'],
+                    SurveyInputTypeEnum::TEXTAREA => ['max:1000'],
                     SurveyInputTypeEnum::CHECKBOX => ['array'],
                     //default for 2 cases SurveyInputTypeEnum::RADIO, SurveyInputTypeEnum::SELECT
                     default => [Rule::in($input->getOptions())]
