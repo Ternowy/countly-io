@@ -5,49 +5,97 @@ declare(strict_types=1);
 namespace App\Service\Survey\Results;
 
 use App\Models\Survey\Survey;
-use App\Models\SurveyAnswer;
+use App\Models\Survey\SurveyStructureInput;
+use App\Models\SurveyAnswer\SurveyAnswer;
+use App\Models\SurveyAnswer\SurveyAnswerInput;
+use App\Repository\Survey\SurveyAnswerRepository;
+use Illuminate\Support\Collection;
 
 class SurveyResultsService
 {
     protected SurveyAnswer $surveyAnswer;
 
-    public function __construct(SurveyAnswer $surveyAnswer)
-    {
+    protected SurveyAnswerRepository $surveyAnswerRepository;
+
+    public function __construct(
+        SurveyAnswer $surveyAnswer,
+        SurveyAnswerRepository $surveyAnswerRepository,
+    ) {
         $this->surveyAnswer = $surveyAnswer;
+        $this->surveyAnswerRepository = $surveyAnswerRepository;
     }
 
-    public function getResultsMap(Survey $survey): array
+    public function getResultsCollection(Survey $survey): Collection
     {
-        //TODO complete this
-        /*
-         * [
-         *  [
-         *     'title' => 'bla bla bla',
-         *     'type' => 'STATS TYPE',
-         *     'answers_number' => 400,
-         *     'answers' => [
-         *          if (text)
-         *              'bla BLA',
-         *              'BLA BLA',
-         *          else
-                        'option1' => 10,
-                        'option2' => 20,
-               ]
-         *  ]
-         * ]
-         *
-         */
+        $preparedAnswers = [];
 
-        $answers = $this->surveyAnswer->where('survey_id', $survey->getAttribute('id'));
+        $survey->structure->getInputs()->each(
+            function (SurveyStructureInput $surveyStructureInput) use ($survey, &$preparedAnswers) {
+                $statistics = [];
 
-        return [];
+                $allInputs = $this->surveyAnswerRepository->getSurveyQuestionInputs(
+                    $survey,
+                    $surveyStructureInput->getName()
+                );
+
+                if ($surveyStructureInput->isTextInput()) {
+                    $allInputs->each(function (SurveyAnswerInput $surveyAnswerInput) use (&$statistics) {
+                        $value = $surveyAnswerInput->value;
+                        if (is_string($value)) {
+                            $statistics[] = $value;
+                        }
+                    });
+                } elseif ($surveyStructureInput->isInputWithOptions()) {
+                    foreach ($surveyStructureInput->getOptions() as $option) {
+                        $statistics[$option] = 0;
+                    }
+
+                    if ($surveyStructureInput->canHaveMultipleAnswers()) {
+                        $allInputs->each(
+                            function (SurveyAnswerInput $surveyAnswerInput) use (&$statistics) {
+                                $value = $surveyAnswerInput->value;
+                                if (is_array($value)) {
+                                    foreach ($value as $answer) {
+                                        if (in_array($answer, array_keys($statistics))) {
+                                            $statistics[$answer] = $statistics[$answer] + 1;
+                                        }
+                                    }
+                                }
+                            }
+                        );
+                    } else {
+                        $allInputs->each(
+                            function (SurveyAnswerInput $surveyAnswerInput) use (&$statistics) {
+                                $value = $surveyAnswerInput->value;
+                                if (in_array($value, array_keys($statistics))) {
+                                    $statistics[$value] = $statistics[$value] + 1;
+                                }
+                            }
+                        );
+                    }
+                }
+
+                $preparedAnswers[$surveyStructureInput->getName()] = [
+                    'label' => $surveyStructureInput->getLabel(),
+                    'type' => $surveyStructureInput->getType(),
+                    'answers_number' => $allInputs->count(),
+                    'answers' => $statistics
+                ];
+            }
+        );
+
+
+        return collect($preparedAnswers);
     }
 
     public function clearSurveyResults(Survey $survey): ?bool
     {
-        //TODO create cleanup job queue
-        return (bool)$this->surveyAnswer
-            ->where('survey_id', $survey->getAttribute('id'))
-            ->delete();
+        $surveyAnswer = $this->surveyAnswer->where('survey_id', $survey->id)->firstOrFail();
+
+        $surveyAnswer->inputs()->delete();
+
+        //TODO create cleanup job queue to delete instantly
+        //if needed
+        return (bool)$surveyAnswer->delete();
     }
 }

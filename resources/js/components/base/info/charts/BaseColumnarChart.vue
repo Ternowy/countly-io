@@ -1,12 +1,15 @@
 <template>
   <div>
-    <slot/>
+
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Results',
+  name: 'BaseColumnarChart',
+  props: {
+    answers: Object
+  }
 };
 </script>
 

@@ -4,8 +4,8 @@
 
 <script>
 export default {
-name: "StoriesPreview"
-}
+  name: 'StoriesPreview',
+};
 </script>
 
 <style scoped>

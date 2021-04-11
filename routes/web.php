@@ -21,10 +21,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('surveys')->group(function () {
         Route::get('/', [SurveyController::class, 'surveys'])->name('surveys');
-        Route::get('/builder', [SurveyController::class, 'builder'])->name('builder');
+        Route::get('/create', [SurveyController::class, 'create'])->name('create-survey');
         Route::get('/{id}', [SurveyController::class, 'edit'])->name('edit-survey');
 
-        Route::post('/', [SurveyController::class, 'create'])->name('create-survey');
+        Route::post('/', [SurveyController::class, 'create'])->name('save-survey');
         Route::put('/{id}', [SurveyController::class, 'update'])->name('update-survey');
         Route::delete('/{id}', [SurveyController::class, 'delete'])->name('delete-survey');
         Route::put('/{id}/status', [SurveyController::class, 'updateStatus'])->name('update-survey-status');

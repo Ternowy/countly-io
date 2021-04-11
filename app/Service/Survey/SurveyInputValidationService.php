@@ -15,15 +15,14 @@ class SurveyInputValidationService
     {
         $rules = [];
 
-        $surveyStructureInputs = $surveyStructure->getInputs();
-
-        array_walk(
-            $surveyStructureInputs,
+        $surveyStructure->getInputs()->each(
             function (SurveyStructureInput $input) use (&$rules) {
                 $inputRules = [];
 
                 if ($input->isRequired()) {
                     array_push($inputRules, 'required');
+                } else {
+                    array_push($inputRules, 'nullable');
                 }
 
                 $additionalRules = match ($input->getType()) {
@@ -35,13 +34,12 @@ class SurveyInputValidationService
                 };
 
                 if ($input->getType() === SurveyInputTypeEnum::CHECKBOX) {
-                    $rules[$input->getName() . '.*'] = [Rule::in($input->getOptions())];
+                    $rules[$input->getName().'.*'] = [Rule::in($input->getOptions())];
                 }
 
                 $rules[$input->getName()] = array_merge($inputRules, $additionalRules);
             }
         );
-
 
         return $rules;
     }

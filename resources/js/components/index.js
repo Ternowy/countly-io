@@ -20,6 +20,8 @@ import ConfirmationModal from './common/ConfirmationModal';
 import SurveyList from './SurveyList';
 import BaseSelect from './base/inputs/BaseSelect';
 import BaseOptions from './base/inputs/BaseOptions';
+import ColumnarChart from './base/info/charts/ColumnarChart';
+import TextualChart from './base/info/charts/TextualChart';
 
 export default {
   install(Vue) {
@@ -38,6 +40,8 @@ export default {
     Vue.component('BaseModal', BaseModal);
     Vue.component('BaseSelect', BaseSelect);
     Vue.component('BaseOptions', BaseOptions);
+    Vue.component('ColumnarChart', ColumnarChart);
+    Vue.component('TextualChart', TextualChart);
     //common
     Vue.component('Header', Header);
     Vue.component('HeaderLogo', HeaderLogo);
