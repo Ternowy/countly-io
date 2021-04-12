@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p v-for="(answer, index) in Object.values(answers)" :key="index">
+    <p v-for="(answer, index) in answers" :key="index">
       {{ index }}) {{ answer }}
     </p>
   </div>
@@ -10,7 +10,7 @@
 export default {
   name: 'BaseTextualChart',
   props: {
-    answers: Object
+    answers: Array
   }
 };
 </script>

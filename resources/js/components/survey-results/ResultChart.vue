@@ -11,7 +11,7 @@ export default {
     label: String,
     type: String,
     answersNumber: Number,
-    answers: Array
+    answers: [Array, Object]
   },
   computed: {
     componentName() {

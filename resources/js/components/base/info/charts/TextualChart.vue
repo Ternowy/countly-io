@@ -1,7 +1,7 @@
 <template>
   <div>
     <p>{{ label }} --- {{ answersNumber }}</p>
-    <br>------<br>
+    <br>------  -<br>
     <base-textual-chart :answers="answers"/>
   </div>
 </template>
@@ -14,7 +14,7 @@ export default {
   props: {
     label: String,
     answersNumber: Number,
-    answers: Object
+    answers: Array
   }
 };
 </script>

@@ -65,7 +65,7 @@ class AuthController extends Controller
 
         Auth::login($userModel);
 
-        return redirect()->route('surveys');
+        return redirect()->intended('surveys');
     }
 
     public function logout()

@@ -2,15 +2,16 @@
   <div>
     <p>{{ label }} --- {{ answersNumber }}</p>
     <br>------<br>
-    <base-columnar-chart :answers="answers"/>
+    <v-chart :answers="answers"/>
   </div>
 </template>
 
 <script>
-import BaseColumnarChart from './BaseColumnarChart';
+import VChart from './vChart';
+
 export default {
   name: 'ColumnChart',
-  components: {BaseColumnarChart},
+  components: {VChart},
   props: {
     label: String,
     answersNumber: Number,
