@@ -35,12 +35,15 @@ class SurveyController extends Controller
         $surveys = $this->surveyRepository->allOfUser(Auth::user())->each(function (Survey $survey) {
             $survey->removeLink = route('delete-survey', ['id' => $survey->id]);
             $survey->editLink = route('edit-survey', ['id' => $survey->id]);
+            $survey->resultsLink = route('survey-results', ['id' => $survey->id]);
         });
 
         return view(
             'user.surveys',
             [
-                'surveys' => $surveys->toArray()
+                'surveys' => $surveys->toArray(),
+                'answersLimit' => 5000,
+                'answersNumber' => 4000
             ]
         );
     }
@@ -51,7 +54,7 @@ class SurveyController extends Controller
             'user.survey.builder',
             [
                 'builderConfig' => [
-                    'create-survey-uri' => route('create-survey'),
+                    'create-survey-uri' => route('save-survey'),
                     'home-uri' => route('surveys'),
                     'user-pic' => Auth::user()->avatar,
                     'mode' => 'create'

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models\Survey;
 
+use App\Enum\Survey\SurveyInputTypeEnum;
 use App\Helper\Survey\SurveyEnumHelper;
-use BadFunctionCallException;
 use Illuminate\Contracts\Support\Arrayable;
 
 class SurveyStructureInput implements Arrayable
@@ -29,6 +29,11 @@ class SurveyStructureInput implements Arrayable
         return $this->required;
     }
 
+    public function getLabel(): string
+    {
+        return $this->label;
+    }
+
     public function getName(): string
     {
         return $this->name;
@@ -49,6 +54,11 @@ class SurveyStructureInput implements Arrayable
         return $this->options;
     }
 
+    public function getPlaceholder(): string
+    {
+        return $this->placeholder;
+    }
+
     public function toArray(): array
     {
         $inputData = [
@@ -65,5 +75,20 @@ class SurveyStructureInput implements Arrayable
         }
 
         return $inputData;
+    }
+
+    public function isTextInput(): bool
+    {
+        return in_array($this->getType(), SurveyEnumHelper::inputsWithText());
+    }
+
+    public function isInputWithOptions(): bool
+    {
+        return in_array($this->getType(), SurveyEnumHelper::inputsWithOptions());
+    }
+
+    public function canHaveMultipleAnswers(): bool
+    {
+        return $this->getType() === SurveyInputTypeEnum::CHECKBOX;
     }
 }

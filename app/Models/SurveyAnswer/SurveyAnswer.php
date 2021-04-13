@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\SurveyAnswer;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,10 +16,11 @@ class SurveyAnswer extends Model
 
     protected $fillable = [
         'survey_id',
-        'ip_address'
+        'ip_address',
     ];
 
-    protected $casts = [
-        'answer' => 'array'
-    ];
+    public function inputs()
+    {
+        return $this->hasMany(SurveyAnswerInput::class, 'answer_id');
+    }
 }

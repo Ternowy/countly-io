@@ -1,7 +1,7 @@
 <template>
   <div>
-    <textarea ref="textarea" :value="value" @input="onInput"/>
-    <slot name="right-corner"/>
+    <textarea ref="textarea" v-bind="$attrs" :value="value" @input="onInput"/>
+    <slot/>
   </div>
 </template>
 

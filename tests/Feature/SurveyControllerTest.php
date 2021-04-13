@@ -19,7 +19,7 @@ class SurveyControllerTest extends TestCase
         return $this
             ->actingAs($user, 'web')
             ->postJson(
-                route('create-survey'),
+                route('save-survey'),
                 $data
             );
     }

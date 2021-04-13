@@ -3,7 +3,7 @@
 namespace App\Models\Survey;
 
 use App\Casts\SurveyStructureCast;
-use App\Models\SurveyAnswer;
+use App\Models\SurveyAnswer\SurveyAnswer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

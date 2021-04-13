@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Survey\Shared;
 
 use App\Models\Survey\Survey;
-use App\Models\SurveyAnswer;
+use App\Models\SurveyAnswer\SurveyAnswer;
 use App\Service\Survey\SurveyInputValidationService;
 use Illuminate\Support\Facades\Validator;
 
@@ -32,12 +32,32 @@ class SharedSurveyService
             )
         );
 
-        return $this->surveyAnswer->create(
+        $surveyAnswer = $this->surveyAnswer->create(
             [
-                'survey_id' => $survey->getAttribute('id'),
-                'answer' => $answers,
+                'survey_id' => $survey->id,
                 'ip_address' => $ip
             ]
         );
+
+        $surveyAnswer->inputs()->createMany(
+            $this->prepareAnswersToSave($answers, $survey->id)
+        );
+
+        return $surveyAnswer;
+    }
+
+    private function prepareAnswersToSave(array $answers, int $surveyId): array
+    {
+        $preparedAnswers = [];
+
+        foreach ($answers as $inputName => $value) {
+            $preparedAnswers[] = [
+                'survey_id' => $surveyId,
+                'input_name' => $inputName,
+                'value' => $value
+            ];
+        }
+
+        return $preparedAnswers;
     }
 }

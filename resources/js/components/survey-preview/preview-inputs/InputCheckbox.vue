@@ -14,8 +14,8 @@ export default {
   computed: {
     vRules() {
       return {
-        'oneOf': this.options,
-        'required': this.required,
+        oneOf: this.options,
+        required: this.required,
       };
     },
   },

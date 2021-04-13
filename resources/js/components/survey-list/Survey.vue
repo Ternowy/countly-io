@@ -4,6 +4,7 @@
     {{ status }}
     {{ accessLink }}
     <a :href="editLink">Edit</a>
+    <a :href="resultsLink" target="_blank">Results</a>
     <button @click="requestSurveyRemoval">Delete</button>
     <confirmation-modal ref="removalConfirmationModal" :name="`delete-survey-${this._uid}`"/>
   </div>
@@ -19,6 +20,7 @@ export default {
     accessLink: String,
     status: String,
     editLink: String,
+    resultsLink: String,
   },
   emits: ['remove'],
   methods: {

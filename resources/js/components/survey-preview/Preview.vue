@@ -1,12 +1,17 @@
 <template>
-  <div>
+  <validation-observer ref="form" v-bind="$attrs" tag="form" v-on="$listeners">
     <slot/>
-  </div>
+  </validation-observer>
 </template>
 
 <script>
 export default {
   name: 'Preview',
+  methods: {
+    validate() {
+      return this.$refs.form.validate();
+    },
+  },
 };
 </script>
 

@@ -31,7 +31,7 @@ class SharedSurveyController extends Controller
         $survey->submitSurveyUri = route('submit-survey', ['code' => $survey->getAttribute('access_code')]);
 
         return view('survey.survey', [
-            'survey' => $survey
+            'survey' => $survey->toArray()
         ]);
     }
 

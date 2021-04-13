@@ -20,9 +20,9 @@ export default ($axios, config) => ({
         .catch(reject);
     });
   },
-  submit: (data) => {
+  submit: (answers) => {
     return new Promise((resolve, reject) => {
-      $axios.post(config.submit, data)
+      $axios.post(config.submit, {answers})
         .then(({data}) => resolve(data))
         .catch(reject);
     });

@@ -15,33 +15,31 @@ class SurveyInputValidationService
     {
         $rules = [];
 
-        $surveyStructureInputs = $surveyStructure->getInputs();
-
-        array_walk(
-            $surveyStructureInputs,
+        $surveyStructure->getInputs()->each(
             function (SurveyStructureInput $input) use (&$rules) {
                 $inputRules = [];
 
                 if ($input->isRequired()) {
                     array_push($inputRules, 'required');
+                } else {
+                    array_push($inputRules, 'nullable');
                 }
 
                 $additionalRules = match ($input->getType()) {
-                    SurveyInputTypeEnum::TEXT => ['string|max:255'],
-                    SurveyInputTypeEnum::TEXTAREA => ['string|max:1000'],
+                    SurveyInputTypeEnum::TEXT => ['max:200'],
+                    SurveyInputTypeEnum::TEXTAREA => ['max:1000'],
                     SurveyInputTypeEnum::CHECKBOX => ['array'],
                     //default for 2 cases SurveyInputTypeEnum::RADIO, SurveyInputTypeEnum::SELECT
                     default => [Rule::in($input->getOptions())]
                 };
 
                 if ($input->getType() === SurveyInputTypeEnum::CHECKBOX) {
-                    $rules[$input->getName() . '.*'] = [Rule::in($input->getOptions())];
+                    $rules[$input->getName().'.*'] = [Rule::in($input->getOptions())];
                 }
 
                 $rules[$input->getName()] = array_merge($inputRules, $additionalRules);
             }
         );
-
 
         return $rules;
     }

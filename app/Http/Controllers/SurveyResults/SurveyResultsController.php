@@ -23,12 +23,13 @@ class SurveyResultsController extends Controller
 
     public function results($id)
     {
+        $survey = $this->surveyRepository->getById(Auth::user(), (int)$id);
+
         return view(
             'user.survey.results',
             [
-                'results' => $this->surveyResultsService->getResultsMap(
-                    $this->surveyRepository->getById(Auth::user(), (int)$id)
-                )
+                'survey' => $survey->toArray(),
+                'results' => $this->surveyResultsService->getResultsCollection($survey)->toArray(),
             ]
         );
     }

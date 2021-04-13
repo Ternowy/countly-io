@@ -1,10 +1,11 @@
 <template>
-  <preview>
+  <success-window v-if="isSubmitted"/>
+  <preview v-else ref="form" @submit.prevent="onSubmit">
     <preview-survey-description :name="name" :description="description"/>
     <preview-input v-for="(input, index) in structure" :key="index" v-bind="input"
-                   @input="onInput($event, input.name)"
+                   v-model="surveyData[input.name]" @input="onInput"
     />
-    <base-button :disabled="surveyValid" label="🖐 Submit" @click="onSubmit"/>
+    <base-button :disabled="!surveyValid" label="🖐 Submit" @click="onSubmit"/>
   </preview>
 </template>
 
@@ -14,10 +15,11 @@ import survey from '../api/survey/survey';
 import {getAxios} from '../api/axios';
 import PreviewSurveyDescription from './survey-preview/PreviewSurveyDescription';
 import PreviewInput from './survey-preview/PreviewInput';
+import SuccessWindow from './survey-preview/SuccessWindow';
 
 export default {
   name: 'SurveyPreview',
-  components: {PreviewInput, PreviewSurveyDescription, Preview},
+  components: {SuccessWindow, PreviewInput, PreviewSurveyDescription, Preview},
   props: {
     name: String,
     description: String,
@@ -36,16 +38,22 @@ export default {
       },
       surveyData: {},
       surveyValid: false,
+      isSubmitted: false
     };
   },
+  created() {
+    this.structure.forEach(({name, type}) => {
+      this.$set(this.surveyData, name, type === 'checkbox' ? [] : null);
+    });
+  },
   methods: {
-    onInput(data, input) {
-      this.surveyData[input] = data;
+    onInput() {
+      this.$nextTick(
+          () => this.$refs.form.validate().then(valid => this.surveyValid = valid)
+      );
     },
     onSubmit() {
-      this.api.survey.submit(this.surveyData).then(() => {
-        //Internal view routing to success page
-      });
+      this.api.survey.submit(this.surveyData).then(() => this.isSubmitted = true);
     },
   },
 };

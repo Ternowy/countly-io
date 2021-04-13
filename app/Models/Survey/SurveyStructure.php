@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models\Survey;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Collection;
 
 class SurveyStructure implements Arrayable
 {
@@ -13,7 +14,7 @@ class SurveyStructure implements Arrayable
 
     public function __construct(array $inputs)
     {
-        $this->inputs = $this->wrapInputs($inputs);;
+        $this->inputs = $this->wrapInputs($inputs);
     }
 
     public function __toString(): string
@@ -23,41 +24,23 @@ class SurveyStructure implements Arrayable
 
     public function toArray(): array
     {
-        return array_map(function (SurveyStructureInput $input) {
-            return $input->toArray();
-        }, $this->inputs);
+        return array_map(
+            function (SurveyStructureInput $input) {
+                return $input->toArray();
+            },
+            array_values($this->inputs)
+        );
     }
 
-    public function setInputsFromArray(array $inputs): self
+    public function getInputs(mixed ...$types): Collection
     {
-        $this->inputs = $this->wrapInputs($inputs);
+        $inputs = collect(array_values($this->inputs));
 
-        return $this;
-    }
-
-    /**
-     * @param SurveyStructureInput[] $inputs
-     * @return $this
-     */
-    public function setInputs(array $inputs): self
-    {
-        $this->inputs = $inputs;
-
-        return $this;
-    }
-
-    /**
-     * @param  mixed  ...$types
-     * @return SurveyStructureInput[]
-     */
-    public function getInputs(mixed ...$types): array
-    {
         if (empty($params)) {
-            return $this->inputs;
+            return $inputs;
         }
 
-        return array_filter(
-            $this->inputs,
+        return $inputs->filter(
             function (SurveyStructureInput $input) use ($types) {
                 return in_array($input->getType(), $types);
             }
@@ -70,18 +53,19 @@ class SurveyStructure implements Arrayable
      */
     protected function wrapInputs(array $inputs): array
     {
-        return array_map(
-            function ($inputData) {
-                return new SurveyStructureInput(
-                    $inputData['type'],
-                    $inputData['label'],
-                    $inputData['options'] ?? [],
-                    $inputData['placeholder'] ?? '',
-                    $inputData['name'] ?? '',
-                    $inputData['required'] ?? false
-                );
-            },
-            $inputs
-        );
+        $map = [];
+
+        foreach ($inputs as $input) {
+            $map[$input['name']] = new SurveyStructureInput(
+                $input['type'],
+                $input['label'],
+                $input['options'] ?? [],
+                $input['placeholder'] ?? '',
+                $input['name'],
+                $input['required'] ?? false
+            );
+        }
+
+        return $map;
     }
 }

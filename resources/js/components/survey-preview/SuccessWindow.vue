@@ -1,10 +1,12 @@
 <template>
-
+  <div>
+    <p>Thank You!</p>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'ResultChartList',
+  name: 'SuccessWindow',
 };
 </script>
 

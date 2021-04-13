@@ -25,6 +25,7 @@ mix
     }
   })
   .js('resources/js/app.js', 'public/js')
+  .sass('resources/sass/app.scss', 'public/css')
   .options({
     hmrOptions: {
       host: 'laravel.test',
@@ -32,4 +33,5 @@ mix
     }
   })
   .setPublicPath('./public')
-  .vue();
+  .vue()
+  .sourceMaps();
