@@ -1,7 +1,7 @@
 <template>
   <div>
     <confirmation-modal ref="exitConfirmationModal" name="exit-confirmation-modal"/>
-    <header>
+    <base-header>
       <base-button v-if="homeUri" :disabled="updateStatus === 'saving'" @click.native="exit">
         <base-icon name="left-arrow"/>
         Back to home
@@ -19,7 +19,7 @@
       <base-button v-if="!isEditMode" label="Save" @click.native="onSave"/>
 
       <header-user-picture :src="userPic"/>
-    </header>
+    </base-header>
 
     <editor ref="editor" :survey="survey" @input="onInput"/>
   </div>

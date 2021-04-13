@@ -41,7 +41,9 @@ class SurveyController extends Controller
         return view(
             'user.surveys',
             [
-                'surveys' => $surveys->toArray()
+                'surveys' => $surveys->toArray(),
+                'answersLimit' => 5000,
+                'answersNumber' => 4000
             ]
         );
     }

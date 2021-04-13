@@ -1,4 +1,4 @@
-<html>
+ <html>
     <head>
         <title>
             {{ config('app.name') }} | {{ $title }}

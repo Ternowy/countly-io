@@ -1,4 +1,4 @@
-import Header from './common/Header';
+import BaseHeader from './common/BaseHeader';
 import SurveyBuilder from './SurveyBuilder';
 import SurveyResults from './SurveyResults';
 import SurveyPreview from './SurveyPreview';
@@ -43,7 +43,7 @@ export default {
     Vue.component('ColumnarChart', ColumnarChart);
     Vue.component('TextualChart', TextualChart);
     //common
-    Vue.component('Header', Header);
+    Vue.component('BaseHeader', BaseHeader);
     Vue.component('HeaderLogo', HeaderLogo);
     Vue.component('HeaderUserPicture', HeaderUserPicture)
     Vue.component('ConfirmationModal', ConfirmationModal);
