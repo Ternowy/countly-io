@@ -36,6 +36,7 @@ class SurveyController extends Controller
             $survey->removeLink = route('delete-survey', ['id' => $survey->id]);
             $survey->editLink = route('edit-survey', ['id' => $survey->id]);
             $survey->resultsLink = route('survey-results', ['id' => $survey->id]);
+            $survey->answersNumber = $survey->answers_count;
         });
 
         return view(

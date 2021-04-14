@@ -25,13 +25,19 @@ mix
     }
   })
   .js('resources/js/app.js', 'public/js')
-  .sass('resources/sass/app.scss', 'public/css')
+  .sass('resources/css/app.scss', 'public/css')
   .options({
     hmrOptions: {
       host: 'laravel.test',
       port: 8080,
-    }
+    },
+    processCssUrls: false
   })
   .setPublicPath('./public')
   .vue()
-  .sourceMaps();
+  .sourceMaps()
+  .disableNotifications();
+
+if (mix.inProduction()) {
+  mix.version();
+}
