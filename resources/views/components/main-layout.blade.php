@@ -1,5 +1,6 @@
  <html>
     <head>
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
         <title>
             {{ config('app.name') }} | {{ $title }}
         </title>

@@ -4,6 +4,7 @@
              answers-number="{{ $answersNumber }}"
              logo="{{ url('/images/logo.svg') }}"
              user-pic="{{ Auth::user()->avatar }}"
+             logout-link="{{ route('logout') }}"
      ></base-header>
 
      <survey-list

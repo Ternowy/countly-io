@@ -3,6 +3,7 @@
     {{ name }}
     {{ status }}
     {{ accessLink }}
+    Answers - {{ answersNumber }}
     <a :href="editLink">Edit</a>
     <a :href="resultsLink" target="_blank">Results</a>
     <button @click="requestSurveyRemoval">Delete</button>
@@ -17,6 +18,8 @@ export default {
     name: String,
     description: String,
     structure: Array,
+    answersNumber: Number,
+    //it is OK to recieve only code here//use surveys.laravel.test/CODE to access the survey
     accessLink: String,
     status: String,
     editLink: String,
