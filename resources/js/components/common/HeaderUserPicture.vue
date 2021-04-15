@@ -1,15 +1,13 @@
 <template>
-    <div>
-        <img v-if="src" :src="src"/>
-    </div>
+  <img v-if="src" :src="src" alt="User Image">
 </template>
 
 <script>
 export default {
-    name: 'HeaderUserPicture',
-    props: {
-        src: String
-    }
+  name: 'HeaderUserPicture',
+  props: {
+    src: String,
+  },
 };
 </script>
 

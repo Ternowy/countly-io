@@ -1,69 +1,90 @@
 <template>
-    <div>
-        <a v-if="link" :href="link" v-bind="$attrs" :class="[rounded? 'rounded':'', icon?'icon':'', 'bg-'+background, shadow?'shadow-'+shadow:'' ]" >
-            <slot name="pre-icon"></slot>
-            <slot name="text">
-                <span>
-                    {{ label }}
-                </span>
-            </slot>
-            <slot name="post-icon"></slot>
-        </a>
-        <button @click="$emit('clicked')" v-else v-bind="$attrs" :class="[rounded? 'rounded':'', icon?'icon':'', 'bg-'+background, shadow?'shadow-'+shadow:'' ]" >
-            <slot name="pre-icon"></slot>
-            <slot name="text">
-            <span>
-                {{ label }}
-            </span>
-            </slot>
-            <slot name="post-icon"></slot>
-        </button>
+  <div>
+    <a v-if="link" v-bind="$attrs"
+       :class="[roundedClass, iconClass, bgClass, shadowClass ]"
+       :href="link"
+    >
+      <slot name="pre-icon"/>
 
-    </div>
+      <slot name="text">
+        <span>{{ label }}</span>
+      </slot>
+
+      <slot name="post-icon"/>
+    </a>
+
+    <button
+      v-else
+      v-bind="$attrs"
+      :class="[roundedClass, iconClass, bgClass, shadowClass ]"
+      @click="$emit('clicked')"
+    >
+      <slot name="pre-icon"/>
+
+      <slot name="text">
+        <span>{{ label }}</span>
+      </slot>
+
+      <slot name="post-icon"/>
+    </button>
+  </div>
 </template>
 
 <script>
-import variables from "../../../assets/variables";
+import cssVariables from '../../../assets/variables';
 
 export default {
-    name: 'BaseButton',
-    emits: ['clicked'],
-    props: {
-        label: {
-            type: String,
-        },
-        color: {
-            type: String,
-            default: 'white',
-            validator: (value) => Object.values(variables).includes(value)
-        },
-        background: {
-            type: String,
-            default: 'green',
-            validator: (value) => Object.values(variables).includes(value)
-        },
-        rounded: {
-            type: Boolean
-        },
-        icon: {
-            type: Boolean,
-        },
-        shadow: {
-            type: String,
-        },
-        link: {
-            type: String,
-        }
+  name: 'BaseButton',
+  props: {
+    label: String,
+    color: {
+      type: String,
+      default: 'white',
+      validator: (value) => Object.values(cssVariables).includes(value),
+    },
+    background: {
+      type: String,
+      default: 'green',
+      validator: (value) => Object.values(cssVariables).includes(value),
+    },
+    rounded: {
+      type: Boolean,
+      default: false,
+    },
+    icon: {
+      type: Boolean,
+      default: false,
+    },
+    shadow: String,
+    link: String,
 
-    }
+  },
+  emits: ['clicked'],
+  computed: {
+    roundedClass() {
+      return this.rounded? 'rounded':'';
+    },
+    iconClass() {
+      return this.icon?'icon':'';
+    },
+    bgClass() {
+      return 'bg-'+this.background;
+    },
+    shadowClass() {
+      return this.shadow?'shadow-'+this.shadow:'';
+    },
+    variables() {
+      return cssVariables;
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 a,
-button{
+button {
     cursor: pointer;
-    height:56px;
+    height: 56px;
     padding: 17px 40px;
     display: flex;
     justify-content: center;
@@ -71,40 +92,46 @@ button{
     border: none;
     text-decoration: none;
     transition: all 0.2s ease-in-out;
-    span{
+
+    span {
         font-style: normal;
         font-weight: 500;
         font-size: 18px;
         line-height: 21px;
         color: #FFFFFF;
     }
-    &.rounded{
+
+    &.rounded {
         border-radius: 50px;
     }
-    &.icon{
-        width:56px;
+
+    &.icon {
+        width: 56px;
         padding: 0;
-        &.rounded{
+
+        &.rounded {
             border-radius: 50%;
         }
     }
 }
-@media (max-width: 768px){
- a,button{
-     padding: 14px 22px;
-     height: 45px;
-     font-weight: 500;
-     font-size: 14px;
-     line-height: 16px;
 
-     &.icon{
-         height: 30px;
-         width: 30px;
-         svg{
-             width: 11px;
-         }
-     }
- }
+@media (max-width: 768px) {
+    a, button {
+        padding: 14px 22px;
+        height: 45px;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16px;
+
+        &.icon {
+            height: 30px;
+            width: 30px;
+
+            svg {
+                width: 11px;
+            }
+        }
+    }
 }
 
 </style>

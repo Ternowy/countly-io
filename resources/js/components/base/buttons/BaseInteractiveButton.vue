@@ -1,44 +1,61 @@
 <template>
-    <button v-bind="$attrs" @click="$emit('changed')">
-        <div class="toggle-wrapper" :class="[value?'bg-'+background:'bg-'+variables.disabled, color]">
-            <div class="toggle-inner" :class="[value?'active':'inactive']"></div>
-        </div>
-        <slot>
-            {{ label }}
-        </slot>
-    </button>
+  <div class="interactive-btn" v-bind="$attrs" @click="change">
+    <div
+      class="toggle-wrapper"
+      :class="[backgroundClass, color]"
+    >
+      <div class="toggle-inner" :class="[value?'active':'inactive']"/>
+    </div>
+    <slot>
+      {{ label }}
+    </slot>
+  </div>
 </template>
 
 <script>
-import variables from "../../../assets/variables";
+import cssVariables from '../../../assets/variables';
 
 export default {
-    name: 'BaseInteractiveButton',
-    emits: ['change'],
-    props: {
-        label: {
-            type: String,
-        },
-        color: {
-            type: String,
-            default: 'white',
-            validator: (value) => Object.values(variables).includes(value)
-        },
-        background: {
-            type: String,
-            default: 'green',
-            validator: (value) => Object.values(variables).includes(value)
-        },
-        value: {
-            required: true,
-        }
+  name: 'BaseInteractiveButton',
+  props: {
+    label: {
+      type: String,
     },
+    color: {
+      type: String,
+      default: 'white',
+      validator: (value) => Object.values(cssVariables).includes(value),
+    },
+    background: {
+      type: String,
+      default: 'green',
+      validator: (value) => Object.values(cssVariables).includes(value),
+    },
+    value: {
+      required: true,
+      type: Boolean,
+    },
+  },
+  emits: ['changed'],
+  computed: {
+    backgroundClass() {
+      return this.value?'bg-'+this.background:'bg-'+this.variables.disabled;
+    },
+    variables() {
+      return cssVariables;
+    },
+  },
+  methods: {
+    change() {
+      this.$emit('changed');
+    },
+  },
 
 };
 </script>
 
 <style lang="scss" scoped>
-button{
+.interactive-btn{
     border: none;
     background: none;
     cursor: pointer;
@@ -62,7 +79,7 @@ button{
             width: 20px;
             height: 20px;
             background: #FFFFFF;
-            box-shadow: 0px 2px 5px rgba(85, 85, 85, 0.15);
+            box-shadow: 0 2px 5px rgba(85, 85, 85, 0.15);
             border-radius: 30px;
             &.inactive{
               left: unset;

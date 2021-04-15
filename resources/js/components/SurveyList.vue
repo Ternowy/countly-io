@@ -1,20 +1,40 @@
 <template>
-    <div class="survey-list-wrapper">
-        <div class="ci-container">
-            <div class="survey-list">
-                <survey v-for="(survey, index) in surveys" :key="`survey-${index}`" v-bind="survey"
-                        @remove="deleteSurvey(survey.removeLink, index)"
-                />
-                <create-survey-c-t-a v-for="n in ctaNumber" :key="n" :action="createSurveyLink"/>
-            </div>
-            <div class="create-survey-btn">
-                <BaseButton :link="createSurveyLink" label="Create new survey" color="white" rounded shadow="green">
-                    <BaseIcon :height="14" :width="14" class="ci-mr-10" slot="pre-icon" :fill="variables.white"
-                              icon="plus"/>
-                </BaseButton>
-            </div>
-        </div>
+  <div class="survey-list-wrapper">
+    <div class="ci-container">
+      <div class="survey-list">
+        <survey
+          v-for="(survey, index) in surveys"
+          :key="`survey-${index}`"
+          v-bind="survey"
+          @remove="deleteSurvey(survey.removeLink, index)"
+        />
+        <create-survey-c-t-a
+          v-for="n in ctaNumber"
+          :key="n"
+          :action="createSurveyLink"
+        />
+      </div>
+      <div class="create-survey-btn">
+        <BaseButton
+          :link="createSurveyLink"
+          label="Create new survey"
+          color="white"
+          rounded
+          shadow="green"
+        >
+          <template #pre-icon>
+            <BaseIcon
+              :height="14"
+              :width="14"
+              class="ci-mr-10"
+              :fill="variables.white"
+              icon="plus"
+            />
+          </template>
+        </BaseButton>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -22,48 +42,53 @@ import survey from '../api/survey/survey.js';
 import {getAxios} from '../api/axios';
 import Survey from './survey-list/Survey';
 import CreateSurveyCTA from './survey-list/CreateSurveyCTA';
+import cssVariables from '../assets/variables';
 
 export default {
-    name: 'SurveyList',
-    components: {CreateSurveyCTA, Survey},
-    props: {
-        surveyList: Array,
-        createSurveyLink: {
-            type: String,
-            required: true,
-        },
-        maxSurveys: {
-            type: Number,
-            default: 5
-        },
+  name: 'SurveyList',
+  components: {CreateSurveyCTA, Survey},
+  props: {
+    surveyList: Array,
+    createSurveyLink: {
+      type: String,
+      required: true,
     },
-    data() {
-        const surveyApi = survey(getAxios(), {});
+    maxSurveys: {
+      type: Number,
+      default: 5,
+    },
+  },
+  data() {
+    const surveyApi = survey(getAxios(), {});
 
-        return {
-            api: {
-                survey: surveyApi,
-            },
-            surveys: [],
-        };
-    },
-    computed: {
-        ctaNumber() {
-            const ctaNumber = this.maxSurveys - this.surveys.length;
+    return {
+      api: {
+        survey: surveyApi,
+      },
+      surveys: [],
+    };
+  },
+  computed: {
+    ctaNumber() {
+      const ctaNumber = this.maxSurveys - this.surveys.length;
 
-            return ctaNumber < 0 ? 0 : ctaNumber;
-        },
+      return ctaNumber < 0 ? 0 : ctaNumber;
     },
-    created() {
-        this.surveys = this.surveyList;
+    variables() {
+      return cssVariables;
     },
-    methods: {
-        deleteSurvey(endpoint, index) {
-            this.api.survey.delete(endpoint).then(() => {
-                this.surveys.splice(index, 1);
-            });
-        },
+
+  },
+  created() {
+    this.surveys = this.surveyList;
+  },
+  methods: {
+    deleteSurvey(endpoint, index) {
+      this.api.survey.delete(endpoint).then(() => {
+        this.surveys.splice(index, 1);
+      });
     },
+  },
 };
 </script>
 

@@ -1,98 +1,154 @@
 <template>
-    <div class="survey">
+  <div class="survey">
+    <div class="survey-actions" :class="{active:actions}">
+      <BaseButton
+        class="dots"
+        icon
+        rounded
+        :background="variables.white"
+        @clicked="toggleActions"
+      >
+        <template #pre-icon>
+          <BaseIcon icon="dots" :fill="variables.dark_grey"/>
+        </template>
+      </BaseButton>
 
-        <div class="survey-actions" :class="{active:actions}">
-            <BaseButton class="dots" icon rounded :background="variables.white" @clicked="toggleActions" >
-                <BaseIcon slot="pre-icon" icon="dots" :fill="variables.dark_grey" />
-            </BaseButton>
-            <BaseButton class="action" icon rounded shadow="green" :link="editLink">
-                <BaseIcon slot="pre-icon" :fill="variables.white" icon="pen"/>
-            </BaseButton>
-            <BaseButton class="action" icon rounded shadow="red" background="red" @clicked="requestSurveyRemoval">
-                <BaseIcon slot="pre-icon" :fill="variables.red" icon="trash"/>
-            </BaseButton>
-        </div>
+      <BaseButton
+        class="action"
+        icon
+        rounded
+        shadow="green"
+        :link="editLink"
+      >
+        <template #pre-icon>
+          <BaseIcon :fill="variables.white" icon="pen"/>
+        </template>
+      </BaseButton>
 
-        <div class="access-link">
-            survey.contly.io/{{ accessLink }}
-        </div>
-        <div class="survey-title">
-            {{ name }}
-        </div>
-        <div class="no-questions" v-if="structure.length===0">
-            <BaseIcon class="form-icon"  icon="form" fill="grey"/>
-            <p>Your questions will be here. <br>
-                The form is now empty.</p>
-        </div>
-        <div class="questions">
-
-            <div class="question" v-for="(question, index) in structure.slice(0, 3)" :key="question.name">
-                {{ index + 1 }}.{{ question.label }}
-            </div>
-        </div>
-        <div class="survey-foot">
-            <BaseInteractiveButton @changed="changeStatus" :value="temp" background="green">
-                    {{status}}
-            </BaseInteractiveButton>
-            <div>
-                <BaseButton icon :link="resultsLink" :background="variables.white">
-                    <BaseIcon slot="pre-icon" icon="chart" fill="green"/>
-                </BaseButton>
-                <BaseButton icon :link="resultsLink" :background="variables.white">
-                    <span slot="text">{{ answersNumber }}</span>
-                    <BaseIcon slot="post-icon" class="ci-ml-5" icon="person" fill="dark-grey"/>
-                </BaseButton>
-            </div>
-        </div>
-
-        <confirmation-modal ref="removalConfirmationModal" :name="`delete-survey-${this._uid}`"/>
-        <div class="backdrop" v-if="actions" @click="toggleActions"></div>
+      <BaseButton
+        class="action"
+        icon
+        rounded
+        shadow="red"
+        :background="variables.red"
+        @clicked="requestSurveyRemoval"
+      >
+        <template #pre-icon>
+          <BaseIcon :fill="variables.red" icon="trash"/>
+        </template>
+      </BaseButton>
     </div>
+
+    <div class="access-link">
+      survey.contly.io/{{ accessLink }}
+    </div>
+    <div class="survey-title">
+      {{ name }}
+    </div>
+
+    <div v-if="structure.length===0" class="no-questions">
+      <BaseIcon class="form-icon" icon="form" fill="grey"/>
+      <p>Your questions will be here. <br>The form is now empty.</p>
+    </div>
+
+    <div class="questions">
+      <div
+        v-for="(question, index) in structure.slice(0, 3)"
+        :key="question.name"
+        class="question"
+      >
+        {{ index + 1 }}.{{ question.label }}
+      </div>
+    </div>
+
+    <div class="survey-foot">
+      <BaseInteractiveButton
+        :value="temp"
+        :background="variables.green"
+        @changed="changeStatus"
+      >
+        {{ status }}
+      </BaseInteractiveButton>
+
+      <div>
+        <BaseButton icon :link="resultsLink" :background="variables.white">
+          <template #pre-icon>
+            <BaseIcon icon="chart" fill="green"/>
+          </template>
+        </BaseButton>
+
+        <BaseButton icon :link="resultsLink" :background="variables.white">
+          <template #text>
+            <span>{{ answersNumber }}</span>
+          </template>
+          <template #post-icon>
+            <BaseIcon class="ci-ml-5" icon="person" fill="dark-grey"/>
+          </template>
+        </BaseButton>
+      </div>
+    </div>
+
+    <confirmation-modal
+      ref="removalConfirmationModal"
+      :name="`delete-survey-${this._uid}`"
+    />
+
+    <div v-if="actions" class="backdrop" @click="toggleActions"/>
+  </div>
 </template>
 
 <script>
+import cssVariables from '../../assets/variables';
 export default {
-    name: 'Survey',
-    props: {
-        name: String,
-        description: String,
-        structure: Array,
-        answersNumber: Number,
-        //it is OK to recieve only code here//use surveys.laravel.test/CODE to access the survey
-        accessLink: String,
-        status: String,
-        editLink: String,
-        resultsLink: String,
+  name: 'Survey',
+  props: {
+    name: String,
+    description: String,
+    structure: Array,
+    answersNumber: Number,
+    // eslint-disable-next-line max-len
+    /* it is OK to receive only code here//use surveys.laravel.test/CODE
+       to access the survey
+       */
+    accessLink: String,
+    status: String,
+    editLink: String,
+    resultsLink: String,
 
+  },
+  emits: ['remove'],
+  data() {
+    return {
+      actions: false,
+      temp: this.status==='active', // JUST FOR TESTING PURPOSE
+    };
+  },
+  computed: {
+    variables() {
+      return cssVariables;
     },
-    emits: ['remove'],
-    data(){
-        return{
-            actions: false,
-            temp:this.status==='active' //JUST FOR TESTING PURPOSE
-        }
+  },
+  methods: {
+    requestSurveyRemoval() {
+      this.$refs.removalConfirmationModal.show().then(() => {
+        this.$emit('remove');
+      }).catch(() => {
+      });
     },
-    methods: {
-        requestSurveyRemoval() {
-            this.$refs.removalConfirmationModal.show().then(() => {
-                this.$emit('remove');
-            }).catch(() => {
-            });
-        },
-        changeStatus() {
-            this.temp = !this.temp
-        },
-        toggleActions(){
-            this.actions= !this.actions
-        }
+    changeStatus() {
+      this.temp = !this.temp;
     },
+    toggleActions() {
+      this.actions= !this.actions;
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .survey {
     background: #FFFFFF;
-    box-shadow: 0px 20px 50px rgba(105, 99, 82, 0.15);
+    box-shadow: 0 20px 50px rgba(105, 99, 82, 0.15);
     border-radius: 20px;
     position: relative;
     padding: 78px 50px 52px 50px;
@@ -101,7 +157,7 @@ export default {
         position: absolute;
         content: '';
 
-        border-radius: 20px 0px 0px 20px;
+        border-radius: 20px 0 0 20px;
         width: 15px;
         height: 100%;
         top: 0;
@@ -179,12 +235,11 @@ export default {
     }
 
     .questions {
-        //height: 80%;
         padding-top: 25px;
 
         .question {
             background: #FFFFFF;
-            box-shadow: 0px 2px 15px rgba(85, 85, 85, 0.15);
+            box-shadow: 0 2px 15px rgba(85, 85, 85, 0.15);
             border-radius: 6px;
             font-weight: normal;
             font-size: 16px;
@@ -201,7 +256,7 @@ export default {
         position: absolute;
         left: 50px;
         right: 50px;
-        bottom: 54px;
+        bottom: 30px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -228,7 +283,7 @@ export default {
         position: relative;
         padding: 30px 20px 60px 20px;
         &:before {
-            border-radius: 150px 0px 0px 15px;
+            border-radius: 150px 0 0 15px;
             width: 6px;
         }
         .survey-actions {

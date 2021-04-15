@@ -1,24 +1,43 @@
 <template>
   <div>
-      <a :href="action" class="create-survey">
-          <BaseButton  rounded icon :background="variables.white" :shadow="variables.brown">
-              <BaseIcon slot="pre-icon" icon="plus" :fill="variables.brown" />
-          </BaseButton>
-          <h4>CREATE NEW SURVEY</h4>
-          <span>(You can create up to 5 survey)</span>
-      </a>
+    <a :href="action" class="create-survey">
+      <BaseButton
+        rounded
+        icon
+        :background="variables.white"
+        :shadow="variables.brown"
+      >
+
+        <template #pre-icon>
+          <BaseIcon icon="plus" :fill="variables.brown"/>
+        </template>
+
+      </BaseButton>
+
+      <h4>CREATE NEW SURVEY</h4>
+
+      <span>(You can create up to 5 survey)</span>
+    </a>
   </div>
 </template>
 
 <script>
+
+import cssVariables from '../../assets/variables';
+
 export default {
   name: 'CreateSurveyCTA',
   props: {
     action: {
       type: String,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
+  computed: {
+    variables() {
+      return cssVariables;
+    },
+  },
 };
 </script>
 
