@@ -71,13 +71,21 @@
       </BaseInteractiveButton>
 
       <div>
-        <BaseButton icon :link="resultsLink" :background="variables.white">
+        <BaseButton
+          icon
+          :link="resultsLink"
+          :background="variables.transparent"
+        >
           <template #pre-icon>
             <BaseIcon icon="chart" fill="green"/>
           </template>
         </BaseButton>
 
-        <BaseButton icon :link="resultsLink" :background="variables.white">
+        <BaseButton
+          icon
+          :link="resultsLink"
+          :background="variables.transparent"
+        >
           <template #text>
             <span>{{ answersNumber }}</span>
           </template>
@@ -256,7 +264,7 @@ export default {
         position: absolute;
         left: 50px;
         right: 50px;
-        bottom: 30px;
+        bottom: 26px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -277,13 +285,29 @@ export default {
 
     }
 }
+@media (max-width: 1200px) and (min-width: 768px) {
+    .survey{
+        padding: 78px 20px 52px 30px;
+        .survey-foot{
+            left: 30px;
+            right: 20px;
+        }
+    }
+}
+@media (max-width: 1024px) and (min-width: 768px) {
+    .survey{
+        .survey-foot{
+            bottom: 20px;
+        }
+    }
+}
 @media (max-width: 768px) {
     .survey {
         border-radius: 12px;
         position: relative;
         padding: 30px 20px 60px 20px;
         &:before {
-            border-radius: 150px 0 0 15px;
+            border-radius: 15px 0 0 15px;
             width: 6px;
         }
         .survey-actions {
@@ -324,8 +348,9 @@ export default {
         }
 
         .survey-title {
-            font-size: 24px;
-            line-height: 28px;
+            margin-top: 8px;
+            font-size: 16px;
+            line-height: 18px;
 
         }
 
@@ -353,7 +378,7 @@ export default {
             position: absolute;
             left: 20px;
             right: 20px;
-            bottom: 20px;
+            bottom: 18px;
             span {
                 font-weight: 300;
                 font-size: 14px;
@@ -364,7 +389,7 @@ export default {
 
             div {
                 display: flex;
-
+                column-gap: 5px;
                 align-items: center;
             }
 

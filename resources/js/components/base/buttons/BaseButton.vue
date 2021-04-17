@@ -57,7 +57,6 @@ export default {
     },
     shadow: String,
     link: String,
-
   },
   emits: ['clicked'],
   computed: {

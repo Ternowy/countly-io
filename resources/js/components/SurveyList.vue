@@ -101,7 +101,7 @@ export default {
         display: grid;
         grid-gap: 40px;
         grid-template-columns: 1fr 1fr 1fr;
-        @media (max-width: 991px) {
+        @media (max-width: 1024px) {
             grid-template-columns: 1fr 1fr;
         }
         @media (max-width: 600px) {

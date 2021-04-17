@@ -5,7 +5,6 @@
 /storage/*.key
 /vendor
 /.idea
-.eslintrc.js
 .env
 .env.backup
 .phpunit.result.cache

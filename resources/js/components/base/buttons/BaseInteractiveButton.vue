@@ -1,10 +1,10 @@
 <template>
-  <div class="interactive-btn" v-bind="$attrs" @click="change">
+  <div v-bind="$attrs" class="interactive-btn" @click="change">
     <div
-      class="toggle-wrapper"
       :class="[backgroundClass, color]"
+      class="toggle-wrapper"
     >
-      <div class="toggle-inner" :class="[value?'active':'inactive']"/>
+      <div :class="[value?'active':'inactive']" class="toggle-inner"/>
     </div>
     <slot>
       {{ label }}
@@ -39,7 +39,9 @@ export default {
   emits: ['changed'],
   computed: {
     backgroundClass() {
-      return this.value?'bg-'+this.background:'bg-'+this.variables.disabled;
+      return this.value ?
+          'bg-' + this.background :
+          'bg-' + this.variables.disabled;
     },
     variables() {
       return cssVariables;
@@ -55,7 +57,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.interactive-btn{
+.interactive-btn {
     border: none;
     background: none;
     cursor: pointer;
@@ -66,12 +68,14 @@ export default {
     display: flex;
     column-gap: 5px;
     align-items: center;
+
     .toggle-wrapper {
         position: relative;
         border-radius: 30px;
         width: 44px;
         height: 24px;
-        .toggle-inner{
+
+        .toggle-inner {
             transition: all 0.2s linear;
             position: absolute;
             top: 2px;
@@ -81,8 +85,9 @@ export default {
             background: #FFFFFF;
             box-shadow: 0 2px 5px rgba(85, 85, 85, 0.15);
             border-radius: 30px;
-            &.inactive{
-              left: unset;
+
+            &.inactive {
+                left: unset;
                 right: 2px;
 
             }
@@ -90,12 +95,16 @@ export default {
 
     }
 }
+
 @media (max-width: 768px) {
-    button{
-        .toggle-wrapper{
+    .interactive-btn {
+        font-size: 10px;
+        line-height: 11px;
+        .toggle-wrapper {
             width: 26px;
             height: 14px;
-            .toggle-inner{
+
+            .toggle-inner {
                 width: 10px;
                 height: 10px;
             }
