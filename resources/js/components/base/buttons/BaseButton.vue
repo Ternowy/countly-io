@@ -1,7 +1,7 @@
 <template>
   <div>
     <a v-if="link" v-bind="$attrs"
-       :class="[roundedClass, iconClass, bgClass, shadowClass ]"
+       :class="buttonClasses"
        :href="link"
     >
       <slot name="pre-icon"/>
@@ -16,7 +16,7 @@
     <button
       v-else
       v-bind="$attrs"
-      :class="[roundedClass, iconClass, bgClass, shadowClass ]"
+      :class="buttonClasses"
       @click="$emit('clicked')"
     >
       <slot name="pre-icon"/>
@@ -60,17 +60,22 @@ export default {
   },
   emits: ['clicked'],
   computed: {
-    roundedClass() {
-      return this.rounded? 'rounded':'';
-    },
-    iconClass() {
-      return this.icon?'icon':'';
-    },
-    bgClass() {
-      return 'bg-'+this.background;
-    },
-    shadowClass() {
-      return this.shadow?'shadow-'+this.shadow:'';
+    buttonClasses() {
+      const classes = [];
+      if (this.rounded) {
+        classes.push('rounded');
+      }
+
+      if (this.icon) {
+        classes.push('icon');
+      }
+
+      classes.push(`bg-${this.background}`);
+
+      if (this.shadow) {
+        classes.push(`shadow-${this.shadow}`);
+      }
+      return classes;
     },
     variables() {
       return cssVariables;

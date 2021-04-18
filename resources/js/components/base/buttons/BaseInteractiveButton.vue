@@ -1,10 +1,10 @@
 <template>
   <div v-bind="$attrs" class="interactive-btn" @click="change">
     <div
-      :class="[backgroundClass, color]"
+      :class="buttonClasses"
       class="toggle-wrapper"
     >
-      <div :class="[value?'active':'inactive']" class="toggle-inner"/>
+      <div :class="toggleClass" class="toggle-inner"/>
     </div>
     <slot>
       {{ label }}
@@ -38,10 +38,16 @@ export default {
   },
   emits: ['changed'],
   computed: {
-    backgroundClass() {
-      return this.value ?
-          'bg-' + this.background :
-          'bg-' + this.variables.disabled;
+    buttonClasses() {
+      const classes = [];
+      classes.push( this.value ?
+              'bg-' + this.background :
+              'bg-' + this.variables.disabled);
+      classes.push(this.color);
+      return classes;
+    },
+    toggleClass() {
+      return this.value?'active':'inactive';
     },
     variables() {
       return cssVariables;
