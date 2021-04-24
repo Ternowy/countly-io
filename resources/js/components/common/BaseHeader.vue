@@ -1,14 +1,21 @@
 <template>
-  <div class="header">
+  <header class="header p-app">
     <slot>
-      <p>{{ answersNumber }} / {{ answersLimit }}</p>
+      <div class="item info">
+        <survey-limit :limit="answersLimit" :number="answersNumber"/>
+      </div>
+      <div class="item general">
+        <header-logo :src="logo"/>
+      </div>
 
-      <img :src="logo"/>
-
-      <button @click="logout">logout</button>
-      <header-user-picture :src="userPic"/>
+      <div class="item actions">
+        <user-picture :src="userPic" class="picture"/>
+        <base-button type="passive" @click.native="logout">
+          <base-icon name="quit"/>
+        </base-button>
+      </div>
     </slot>
-  </div>
+  </header>
 </template>
 
 <script>
@@ -19,18 +26,34 @@ export default {
     answersNumber: String,
     logo: String,
     logoutLink: String,
-    userPic: String
+    userPic: String,
   },
   methods: {
     logout() {
       window.location.href = this.logoutLink;
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .header {
-  height: 50px;
+  border-bottom: rgba(183, 179, 170, 0.5) 1px;
+
+  .actions {
+    justify-content: flex-end;
+
+    .picture {
+      margin-right: 15px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    .general {
+      display: none;
+    }
+  }
 }
 </style>

@@ -13,7 +13,7 @@ import BaseItemList from './base/info/BaseItemList';
 import BaseItem from './base/info/BaseItem';
 import BasePopover from './base/interactive/BasePopover';
 import BaseInteractiveButton from './base/buttons/BaseInteractiveButton';
-import HeaderUserPicture from './common/HeaderUserPicture';
+import UserPicture from './common/UserPicture';
 import HeaderLogo from './common/HeaderLogo';
 import BaseModal from './base/modals/BaseModal';
 import ConfirmationModal from './common/ConfirmationModal';
@@ -22,6 +22,7 @@ import BaseSelect from './base/inputs/BaseSelect';
 import BaseOptions from './base/inputs/BaseOptions';
 import ColumnarChart from './base/info/charts/ColumnarChart';
 import TextualChart from './base/info/charts/TextualChart';
+import SurveyLimit from './common/SurveyLimit';
 
 export default {
   install(Vue) {
@@ -45,8 +46,9 @@ export default {
     //common
     Vue.component('BaseHeader', BaseHeader);
     Vue.component('HeaderLogo', HeaderLogo);
-    Vue.component('HeaderUserPicture', HeaderUserPicture)
+    Vue.component('UserPicture', UserPicture)
     Vue.component('ConfirmationModal', ConfirmationModal);
+    Vue.component('SurveyLimit', SurveyLimit);
     //modules
     Vue.component('SurveyBuilder', SurveyBuilder);
     Vue.component('SurveyResults', SurveyResults);

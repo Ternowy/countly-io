@@ -18,7 +18,7 @@
       <base-button v-if="isEditMode" label="Share" @click.native="onShare"/>
       <base-button v-if="!isEditMode" label="Save" @click.native="onSave"/>
 
-      <header-user-picture :src="userPic"/>
+      <user-picture :src="userPic"/>
     </base-header>
 
     <editor ref="editor" :survey="survey" @input="onInput"/>
