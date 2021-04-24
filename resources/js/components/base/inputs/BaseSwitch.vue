@@ -1,26 +1,37 @@
 <template>
-  <vue-toggles
-    :value="value"
-    checked-bg="#b4d455"
-    height="30"
-    unchecked-bg="lightgrey"
-    width="90"
-    @click="onClick"
-  />
+  <div v-bind="$attrs" class="interactive-btn" @click="onClick">
+    <div :class="buttonClasses" class="toggle-wrapper">
+      <div :class="toggleClass" class="toggle-inner"/>
+    </div>
+    <slot/>
+  </div>
 </template>
 
 <script>
-import VueToggles from 'vue-toggles';
-
 export default {
   name: 'BaseSwitch',
-  components: {
-    VueToggles,
-  },
   props: {
     value: Boolean,
+    background: {
+      type: String,
+      default: 'green',
+    },
+    color: {
+      type: String,
+      default: 'white',
+    }
   },
   emits: ['input'],
+  computed: {
+    buttonClasses() {
+      const classes = [];
+      classes.push(this.value ? 'bg-' + this.background : 'bg-disabled');
+      return classes;
+    },
+    toggleClass() {
+      return this.value ? 'active' : 'inactive';
+    },
+  },
   methods: {
     onClick() {
       this.$emit('input', !this.value);
@@ -29,6 +40,75 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.interactive-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 16px;
+  color: #828282;
+  display: flex;
+  column-gap: 5px;
+  align-items: center;
 
+  .toggle-wrapper {
+    position: relative;
+    border-radius: 30px;
+    width: 44px;
+    height: 24px;
+
+    .toggle-inner {
+      transition: all 0.2s linear;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: #FFFFFF;
+      box-shadow: 0 2px 5px rgba(85, 85, 85, 0.15);
+      border-radius: 30px;
+
+      &.inactive {
+        left: unset;
+        right: 2px;
+      }
+    }
+  }
+
+  .bg-green {
+    background-color: #29AD62;
+
+    &:hover {
+      background-color: #29AD62;
+    }
+
+    &:active,
+    &:focus {
+      background-color: #29AD62;
+    }
+  }
+
+  .bg-disabled {
+    background-color: #E0E0E0;
+  }
+}
+
+@media (max-width: 768px) {
+  .interactive-btn {
+    font-size: 10px;
+    line-height: 11px;
+
+    .toggle-wrapper {
+      width: 26px;
+      height: 14px;
+
+      .toggle-inner {
+        width: 10px;
+        height: 10px;
+      }
+    }
+  }
+}
 </style>

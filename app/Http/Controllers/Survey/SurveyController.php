@@ -32,12 +32,11 @@ class SurveyController extends Controller
 
     public function surveys()
     {
-        $surveys = $this->surveyRepository->allOfUser(Auth::user())->each(function (Survey $survey) {
-            $survey->removeLink = route('delete-survey', ['id' => $survey->id]);
-            $survey->editLink = route('edit-survey', ['id' => $survey->id]);
-            $survey->resultsLink = route('survey-results', ['id' => $survey->id]);
-            $survey->answersNumber = $survey->answers_count;
-        });
+        $surveys = $this->surveyRepository->allOfUser(Auth::user())->map(
+            function (Survey $survey) {
+                return $this->surveyService->decorate($survey);
+            }
+        );
 
         return view(
             'user.surveys',
@@ -68,17 +67,20 @@ class SurveyController extends Controller
     {
         $survey = $this->surveyRepository->getById(Auth::user(), $id, true);
 
-        return view('user.survey.builder', [
-            'builderConfig' => [
-                'update-survey-uri' => route('update-survey', ['id' => $id]),
-                'survey-stats-uri' => route('survey-results', ['id' => $id]),
-                'survey-sharing-uri' => route('load-survey', ['code' => $survey->access_code]),
-                'home-uri' => route('surveys'),
-                'user-pic' => Auth::user()->avatar,
-                'mode' => 'edit',
-                'survey' => $survey->toArray()
+        return view(
+            'user.survey.builder',
+            [
+                'builderConfig' => [
+                    'update-survey-uri' => route('update-survey', ['id' => $id]),
+                    'survey-stats-uri' => route('survey-results', ['id' => $id]),
+                    'survey-sharing-uri' => route('load-survey', ['code' => $survey->access_code]),
+                    'home-uri' => route('surveys'),
+                    'user-pic' => Auth::user()->avatar,
+                    'mode' => 'edit',
+                    'survey' => $survey->toArray()
+                ]
             ]
-        ]);
+        );
     }
 
     public function create(CreateSurveyRequest $request)
@@ -108,10 +110,12 @@ class SurveyController extends Controller
 
     public function updateStatus(UpdateSurveyStatusRequest $request, $id)
     {
-        return $this->surveyService->updateStatus(
-            (int)$id,
-            $request->get('status'),
-            Auth::user()
+        return $this->surveyService->decorate(
+            $this->surveyService->updateStatus(
+                (int)$id,
+                $request->get('status'),
+                Auth::user()
+            )
         );
     }
 

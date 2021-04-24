@@ -3,6 +3,7 @@
     <div class="survey-list">
       <survey v-for="(survey, index) in surveys" :key="`survey-${index}`" v-bind="survey"
               @remove="deleteSurvey(survey.removeLink, index)"
+              @change-status="updateStatus(survey.updateStatusLink, index, $event)"
       />
       <create-survey-c-t-a v-for="n in ctaNumber" :key="n" :action="createSurveyLink"/>
       <base-button class="create-survey-btn" type="action" :action="createSurveyLink">
@@ -58,6 +59,11 @@ export default {
         this.surveys.splice(index, 1);
       });
     },
+    updateStatus(endpoint, index, status) {
+      this.api.survey.updateStatus(endpoint, status).then((data) => {
+        this.surveys.splice(index, 1, data);
+      });
+    }
   },
 };
 </script>

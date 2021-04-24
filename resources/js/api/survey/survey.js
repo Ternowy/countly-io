@@ -13,6 +13,13 @@ export default ($axios, config) => ({
         .catch(reject);
     });
   },
+  updateStatus: (endpoint, status) => {
+    return new Promise((resolve, reject) => {
+      $axios.put(endpoint, {status})
+      .then(({data}) => resolve(data))
+      .catch(reject);
+    });
+  },
   delete: (endpoint) => {
     return new Promise((resolve, reject) => {
       $axios.delete(endpoint)

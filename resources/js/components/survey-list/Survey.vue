@@ -32,16 +32,17 @@
     </div>
 
     <div class="survey-footer">
+      <base-switch :value="status === 'active'" @input="onStatusChange">
+        {{ status }}
+      </base-switch>
 
+      <a :href="resultsLink" target="_blank" class="stats-link">
+        <base-icon name="stats"/>
+        <p>{{ answersNumber }}</p>
+        <base-icon name="person"/>
+      </a>
     </div>
 
-
-    {{ status }}
-    {{ accessLink }}
-    Answers - {{ answersNumber }}
-    <a :href="editLink">Edit</a>
-    <a :href="resultsLink" target="_blank">Results</a>
-    <button @click="requestSurveyRemoval">Delete</button>
     <confirmation-modal ref="removalConfirmationModal" :name="`delete-survey-${this._uid}`"/>
   </div>
 </template>
@@ -59,13 +60,16 @@ export default {
     editLink: String,
     resultsLink: String,
   },
-  emits: ['remove'],
+  emits: ['remove', 'change-status'],
   methods: {
     requestSurveyRemoval() {
       this.$refs.removalConfirmationModal.show().then(() => {
         this.$emit('remove');
       }).catch(() => {
       });
+    },
+    onStatusChange(val) {
+      this.$emit('change-status', val ? 'active' : 'inactive');
     },
   },
 };
@@ -77,11 +81,10 @@ export default {
   background: #FFFFFF;
   box-shadow: 0 20px 50px rgba(105, 99, 82, 0.15);
   border-radius: 20px;
-  padding: 25px 25px 25px 25px;
+  padding: 25px 25px 15px 25px;
   height: 415px;
 
   .survey-header-title {
-    width: 50%;
     display: flex;
     flex-direction: column;
     margin: 0 0 15px 0;
@@ -95,6 +98,7 @@ export default {
       font-weight: 300;
       line-height: 14px;
       color: #4F4F4F;
+      width: 170px;
     }
 
     .survey-title {
@@ -121,7 +125,7 @@ export default {
   }
 
   .questions {
-    padding-top: 25px;
+    padding-top: 15px;
 
     .question {
       background: #FFFFFF;
@@ -144,6 +148,7 @@ export default {
     align-items: center;
     flex-direction: column;
     height: 50%;
+
     p {
       font-style: normal;
       font-weight: normal;
@@ -158,6 +163,67 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 40px;
+
+    .stats-link {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      * {
+        margin-left: 15px;
+      }
+    }
   }
 }
+
+@media (max-width: 768px) {
+  .survey {
+
+
+    .survey-actions {
+
+    }
+
+    .access-link {
+      width: 70%;
+    }
+
+    font-size: 10px;
+    line-height: 11px;
+    color: #4F4F4F;
+  }
+  .survey-title {
+
+  }
+  .no-questions {
+
+
+    p {
+      font-size: 10px;
+      line-height: 14px;
+    }
+  }
+  .questions {
+
+
+    .question {
+      font-size: 10px;
+      line-height: 11px;
+
+    }
+  }
+  .survey-footer {
+
+
+    span {
+
+    }
+
+    div {
+
+    }
+  }
+}
+
 </style>

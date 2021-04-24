@@ -23,6 +23,7 @@ import BaseOptions from './base/inputs/BaseOptions';
 import ColumnarChart from './base/info/charts/ColumnarChart';
 import TextualChart from './base/info/charts/TextualChart';
 import SurveyLimit from './common/SurveyLimit';
+import BaseSwitch from './base/inputs/BaseSwitch';
 
 export default {
   install(Vue) {
@@ -43,6 +44,7 @@ export default {
     Vue.component('BaseOptions', BaseOptions);
     Vue.component('ColumnarChart', ColumnarChart);
     Vue.component('TextualChart', TextualChart);
+    Vue.component('BaseSwitch', BaseSwitch);
     //common
     Vue.component('BaseHeader', BaseHeader);
     Vue.component('HeaderLogo', HeaderLogo);

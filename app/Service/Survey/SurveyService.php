@@ -101,4 +101,17 @@ class SurveyService
 
         return $survey;
     }
+
+    public function decorate(Survey $survey): Survey
+    {
+        $routeData = ['id' => $survey->id];
+
+        $survey->removeLink = route('delete-survey', $routeData);
+        $survey->editLink = route('edit-survey', $routeData);
+        $survey->resultsLink = route('survey-results', $routeData);
+        $survey->updateStatusLink = route('update-survey-status', $routeData);
+        $survey->answersNumber = $survey->answers_count;
+
+        return $survey;
+    }
 }

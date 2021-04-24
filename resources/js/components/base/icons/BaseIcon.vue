@@ -8,6 +8,8 @@ import IconPlus from './all/IconPlus';
 import IconPen from './all/IconPen';
 import IconTrash from './all/IconTrash';
 import IconAddForm from './all/IconAddForm';
+import IconStats from './all/IconStats';
+import IconPerson from './all/IconPerson';
 
 export default {
   name: 'BaseIcon',
@@ -16,7 +18,9 @@ export default {
     IconPlus,
     IconPen,
     IconTrash,
-    IconAddForm
+    IconAddForm,
+    IconStats,
+    IconPerson
   },
   props: {
     name: {
