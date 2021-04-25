@@ -20,6 +20,7 @@ import ConfirmationModal from './common/ConfirmationModal';
 import SurveyList from './SurveyList';
 import BaseSelect from './base/inputs/BaseSelect';
 import BaseOptions from './base/inputs/BaseOptions';
+import AuthView from './AuthView';
 
 export default {
   install(Vue) {
@@ -48,5 +49,8 @@ export default {
     Vue.component('SurveyResults', SurveyResults);
     Vue.component('SurveyPreview', SurveyPreview);
     Vue.component('SurveyList', SurveyList);
+
+    //  Auth
+    Vue.component('AuthView', AuthView)
   },
 };
