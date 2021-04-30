@@ -24,6 +24,7 @@ import ColumnarChart from './base/info/charts/ColumnarChart';
 import TextualChart from './base/info/charts/TextualChart';
 import SurveyLimit from './common/SurveyLimit';
 import BaseSwitch from './base/inputs/BaseSwitch';
+import AuthView from './AuthView';
 
 export default {
   install(Vue) {
@@ -56,5 +57,8 @@ export default {
     Vue.component('SurveyResults', SurveyResults);
     Vue.component('SurveyPreview', SurveyPreview);
     Vue.component('SurveyList', SurveyList);
+
+    //  Auth
+    Vue.component('AuthView', AuthView)
   },
 };

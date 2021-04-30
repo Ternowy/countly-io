@@ -1,0 +1,31 @@
+@include font-face(
+    "Ubuntu",
+    "/fonts/Ubuntu-Bold",
+    bold,
+    normal,
+    woff
+);
+
+@include font-face(
+    "Ubuntu",
+    "/fonts/Ubuntu-Light",
+    300,
+    normal,
+    woff
+);
+
+@include font-face(
+    "Ubuntu",
+    "/fonts/Ubuntu-Medium",
+    500,
+    normal,
+    woff
+);
+
+@include font-face(
+    Ubuntu,
+    "/fonts/Ubuntu-Regular",
+    400,
+    normal,
+    woff
+);

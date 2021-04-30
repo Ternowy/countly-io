@@ -1,5 +1,5 @@
 const mix = require('laravel-mix');
-
+require('mix-tailwindcss');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -25,7 +25,8 @@ mix
     }
   })
   .js('resources/js/app.js', 'public/js')
-  .sass('resources/css/app.scss', 'public/css')
+  .sass("resources/scss/app.scss", "public/css")
+  .tailwind('./tailwind.config.js')
   .options({
     hmrOptions: {
       host: 'laravel.test',
