@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div v-bind="$attrs" class="overflow-hidden">
     <base-input v-show="active" ref="input" v-model="vValue" :maxlength="100" @blur="toggleActive"/>
-    <div v-show="!active" @click="activate">>{{ vValue }}</div>
+    <div v-show="!active" @click="activate">{{ vValue }}</div>
   </div>
 </template>
 

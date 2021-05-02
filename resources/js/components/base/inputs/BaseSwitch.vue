@@ -1,5 +1,6 @@
 <template>
-  <div v-bind="$attrs" class="interactive-btn" @click="onClick">
+  <div v-bind="$attrs" class="interactive-btn flex flex-row" @click="onClick">
+    <p v-if="label">{{ label }}</p>
     <div :class="buttonClasses" class="toggle-wrapper">
       <div :class="toggleClass" class="toggle-inner"/>
     </div>
@@ -19,7 +20,8 @@ export default {
     color: {
       type: String,
       default: 'white',
-    }
+    },
+    label: String
   },
   emits: ['input'],
   computed: {

@@ -1,13 +1,9 @@
 <template>
-  <div class="flex w-7/12 flex-col justify-center items-center mb-10 bg-white p-7 rounded-3xl">
-    <div class="flex w-7/12">
-      <input-label-editor v-model="inputData.label" @input="onInput"/>
-      <base-switch v-model="inputData.required" @input="onInput"/>
-    </div>
-    <div class="flex w-7/12">
-      <input-type-selector v-model="inputData.type" :options="inputTypes" @input="onInput"/>
-      <component :is="componentName" v-bind="$props" v-model="inputValue" @input="onInput"/>
-      <base-popover>
+  <div class="flex w-7/12 flex-col items-center mb-10 bg-white p-7 rounded-3xl">
+    <div class="flex w-full">
+      <input-label-editor v-model="inputData.label" class="w-8/12" @input="onInput"/>
+      <base-switch v-model="inputData.required" class="w-3/12" label="Required" @input="onInput"/>
+      <base-popover class="w-1/12">
         <template #trigger>
           <button>
             <base-icon name="vertical-dots"/>
@@ -19,6 +15,10 @@
           <base-item label="delete" icon="trash" @click.native="remove"/>
         </base-item-list>
       </base-popover>
+    </div>
+    <div class="flex w-full">
+      <input-type-selector v-model="inputData.type" :options="inputTypes" @input="onInput"/>
+      <component :is="componentName" v-bind="$props" v-model="inputValue" @input="onInput"/>
     </div>
   </div>
 </template>
