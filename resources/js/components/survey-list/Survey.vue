@@ -125,6 +125,7 @@ export default {
   }
 
   .questions {
+    height: 150px;
     padding-top: 15px;
 
     .question {

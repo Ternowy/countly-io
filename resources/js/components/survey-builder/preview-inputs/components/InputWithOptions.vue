@@ -5,7 +5,7 @@
                     @input="onOptionInput($event, index)" @remove="removeOption(index)"
       />
     </input-option-list>
-    <base-button @click.native="addOption">
+    <base-button type="passive" @click.native="addOption">
       + Add answer
     </base-button>
   </div>

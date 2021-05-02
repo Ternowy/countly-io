@@ -1,5 +1,5 @@
 <template>
-  <editor-preview>
+  <editor-preview class="container flex flex-col content-center justify-center items-center mt-20">
     <editor-preview-survey-description v-model="nameAndDescription"/>
     <editor-preview-input v-for="(item, index) in reactiveStructure" :key="index"
                           v-bind="item"
@@ -20,7 +20,7 @@ import EditorPreviewSurveyDescription from './EditorPreviewSurveyDescription';
 import UniqueNameService from '../../service/unique-name-service';
 
 export default {
-  name: 'Editor',
+   name: 'Editor',
   components: {EditorPreviewSurveyDescription, EditorPreviewInput, EditorPreview},
   props: {
     survey: Object

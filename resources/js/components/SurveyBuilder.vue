@@ -1,22 +1,22 @@
 <template>
-  <div>
+  <div class="builder">
     <confirmation-modal ref="exitConfirmationModal" name="exit-confirmation-modal"/>
     <base-header>
-      <base-button v-if="homeUri" :disabled="updateStatus === 'saving'" @click.native="exit">
+      <base-button v-if="homeUri" :disabled="updateStatus === 'saving'" type="passive" class="exit-button" @click.native="exit">
         <base-icon name="left-arrow"/>
-        Back to home
+        <p class="exit">Back to home</p>
       </base-button>
 
       <saving-status v-if="isEditMode" :status="updateStatus"/>
 
-      <header-logo/>
+      <header-logo :src="logo"/>
 
-      <base-button v-if="isEditMode" @click.native="onStats">
+      <base-button v-if="isEditMode" type="action" @click.native="onStats">
         <base-icon name="stats"/>
       </base-button>
 
-      <base-button v-if="isEditMode" label="Share" @click.native="onShare"/>
-      <base-button v-if="!isEditMode" label="Save" @click.native="onSave"/>
+      <base-button v-if="isEditMode" label="Share" type="action" class="save-button" @click.native="onShare"/>
+      <base-button v-if="!isEditMode" label="Save" type="action" class="save-button" @click.native="onSave"/>
 
       <user-picture :src="userPic"/>
     </base-header>
@@ -48,6 +48,7 @@ export default {
     },
     userPic: String,
     survey: Object,
+    logo: String
   },
   data() {
     const surveyApi = survey(getAxios(), {
@@ -107,6 +108,22 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.builder {
+  .exit-button {
+    height: 56px;
+    width: 228px;
+    border-radius: 50px;
+    color: #696352;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 0 25px;
+  }
 
+  .save-button {
+    height: 56px;
+    width: 159px;
+    border-radius: 50px;
+  }
+}
 </style>

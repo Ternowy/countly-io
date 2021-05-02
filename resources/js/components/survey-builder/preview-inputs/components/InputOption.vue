@@ -1,7 +1,7 @@
 <template>
   <div>
     <base-input v-model="vValue" @blur="onBlur"/>
-    <base-icon name="input-option-remove" @click.native="$emit('remove')"/>
+    <base-icon name="trash" @click.native="$emit('remove')"/>
   </div>
 </template>
 

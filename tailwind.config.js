@@ -35,12 +35,12 @@ module.exports = {
             paddingLeft: "1rem",
             paddingRight: "1rem",
             "@screen lg": {
-              paddingLeft: "3rem",
-              paddingRight: "3rem"
+              paddingLeft: "7.5rem",
+              paddingRight: "7.5rem"
             },
             "@screen xxl": {
-              paddingLeft: "7rem",
-              paddingRight: "7rem"
+              paddingLeft: "7.5rem",
+              paddingRight: "7.5rem"
             }
           }
         });

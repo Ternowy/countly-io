@@ -1,9 +1,9 @@
 <template>
   <div>
-    <a href="/auth/google">
+    <a :href="googleLink">
       Continue with Google
     </a>
-    <a href="/auth/facebook">
+    <a :href="facebookLink">
       Continue with Facebook
     </a>
   </div>
@@ -11,6 +11,15 @@
 
 <script>
 export default {
-
+  props: {
+    googleLink: {
+      type: String,
+      required: true
+    },
+    facebookLink: {
+      type: String,
+      required: true
+    }
+  }
 };
 </script>

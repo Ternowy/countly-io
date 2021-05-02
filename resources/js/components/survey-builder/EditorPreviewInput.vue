@@ -1,21 +1,25 @@
 <template>
-  <div>
-    <input-label-editor v-model="inputData.label" @input="onInput"/>
-    <input-type-selector v-model="inputData.type" :options="inputTypes" @input="onInput"/>
-    <base-switch v-model="inputData.required" @input="onInput"/>
-    <component :is="componentName" v-bind="$props" v-model="inputValue" @input="onInput"/>
-    <base-popover>
-      <template #trigger>
-        <button>
-          <base-icon name="vertical-dots"/>
-        </button>
-      </template>
+  <div class="flex w-7/12 flex-col justify-center items-center mb-10 bg-white p-7 rounded-3xl">
+    <div class="flex w-7/12">
+      <input-label-editor v-model="inputData.label" @input="onInput"/>
+      <base-switch v-model="inputData.required" @input="onInput"/>
+    </div>
+    <div class="flex w-7/12">
+      <input-type-selector v-model="inputData.type" :options="inputTypes" @input="onInput"/>
+      <component :is="componentName" v-bind="$props" v-model="inputValue" @input="onInput"/>
+      <base-popover>
+        <template #trigger>
+          <button>
+            <base-icon name="vertical-dots"/>
+          </button>
+        </template>
 
-      <base-item-list>
-        <base-item label="copy" icon="copy" @click.native="copy"/>
-        <base-item label="delete" icon="delete" @click.native="remove"/>
-      </base-item-list>
-    </base-popover>
+        <base-item-list>
+          <base-item label="copy" icon="copy" @click.native="copy"/>
+          <base-item label="delete" icon="trash" @click.native="remove"/>
+        </base-item-list>
+      </base-popover>
+    </div>
   </div>
 </template>
 

@@ -10,6 +10,14 @@ import IconTrash from './all/IconTrash';
 import IconAddForm from './all/IconAddForm';
 import IconStats from './all/IconStats';
 import IconPerson from './all/IconPerson';
+import IconLeftArrow from './all/IconLeftArrow';
+import IconInputCheckbox from './all/IconInputCheckbox';
+import IconInputRadio from './all/IconInputRadio';
+import IconInputSelect from './all/IconInputSelect';
+import IconInputText from './all/IconInputText';
+import IconInputTextarea from './all/IconInputTextarea';
+import IconVerticalDots from './all/IconVerticalDots';
+import IconCopy from './all/IconCopy';
 
 export default {
   name: 'BaseIcon',
@@ -20,7 +28,15 @@ export default {
     IconTrash,
     IconAddForm,
     IconStats,
-    IconPerson
+    IconPerson,
+    IconLeftArrow,
+    IconInputCheckbox,
+    IconInputRadio,
+    IconInputSelect,
+    IconInputText,
+    IconInputTextarea,
+    IconVerticalDots,
+    IconCopy
   },
   props: {
     name: {
@@ -30,7 +46,7 @@ export default {
   },
   computed: {
     iconName() {
-      return `icon-${this.name}`
+      return `icon-${this.name}`;
     }
   }
 };
