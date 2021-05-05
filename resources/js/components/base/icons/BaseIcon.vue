@@ -1,5 +1,5 @@
 <template>
-  <component :is="iconName" v-bind="$attrs"/>
+  <component :is="iconName" v-bind="Object.assign({}, $attrs, sizes)"/>
 </template>
 
 <script>
@@ -42,11 +42,33 @@ export default {
     name: {
       type: String,
       required: true
+    },
+    size: {
+      type: String,
+      default: 'medium'
     }
   },
   computed: {
     iconName() {
       return `icon-${this.name}`;
+    },
+    sizes() {
+      const sizes = {
+        small: {
+          height: 15,
+          width:  15
+        },
+        medium: {
+          height: 18,
+          width:  18
+        },
+        large: {
+          height: 18,
+          width:  18
+        }
+      };
+
+      return sizes[this.size];
     }
   }
 };

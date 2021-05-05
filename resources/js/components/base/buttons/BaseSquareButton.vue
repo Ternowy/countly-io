@@ -1,5 +1,5 @@
 <template>
-  <div class="button" :class="classes">
+  <div class="button" v-bind="$attrs" :class="classes">
     <slot>
       <base-icon v-if="icon" :name="icon"/>
     </slot>
@@ -29,8 +29,6 @@ export default {
 
 <style lang="scss" scoped>
 .button {
-  height: 30px;
-  width: 30px;
 
   .selected {
     background-color: #1a202c;

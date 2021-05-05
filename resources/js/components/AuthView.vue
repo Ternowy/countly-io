@@ -11,6 +11,7 @@
 
 <script>
 export default {
+  name: 'AuthView',
   props: {
     googleLink: {
       type: String,

@@ -1,15 +1,17 @@
 <template>
   <editor-preview class="container flex flex-col content-center justify-center items-center mt-20">
-    <editor-preview-survey-description v-model="nameAndDescription"/>
-    <editor-preview-input v-for="(item, index) in reactiveStructure" :key="index"
-                          v-bind="item"
-                          @copy="copyInput(index)"
-                          @input="onInput($event, index)"
-                          @remove="removeInput(index)"
-    />
-    <base-interactive-button :disabled="reactiveStructure.length >= 15" label="+"
-                             @click.native="addInput"
-    />
+    <div class="flex flex-col flex-7/12">
+      <editor-preview-survey-description v-model="nameAndDescription"/>
+      <editor-preview-input v-for="(item, index) in reactiveStructure" :key="index"
+                            v-bind="item"
+                            @copy="copyInput(index)"
+                            @input="onInput($event, index)"
+                            @remove="removeInput(index)"
+      />
+      <base-interactive-button :disabled="reactiveStructure.length >= 15" label="+"
+                               @click.native="addInput"
+      />
+    </div>
   </editor-preview>
 </template>
 
@@ -20,7 +22,7 @@ import EditorPreviewSurveyDescription from './EditorPreviewSurveyDescription';
 import UniqueNameService from '../../service/unique-name-service';
 
 export default {
-   name: 'Editor',
+  name: 'Editor',
   components: {EditorPreviewSurveyDescription, EditorPreviewInput, EditorPreview},
   props: {
     survey: Object

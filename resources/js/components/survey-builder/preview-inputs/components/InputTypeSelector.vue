@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="flex flex-row grid-cols-5 gap-1.5">
     <base-square-button v-for="(option, index) in options" :key="index" :selected="option === value"
-                        :icon="`input-${option}`"
+                        :icon="`input-${option}`" class="w-9 h-9 rounded-md bg-grey hover:bg-activeGreen"
                         @click.native="onSelect(option)"
     />
   </div>

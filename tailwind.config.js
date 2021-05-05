@@ -22,7 +22,8 @@ module.exports = {
         backgroundColor: {
           main: '#F2EFE4',
           header: '#FAF7EC',
-
+          grey: '#F2F2F2',
+          activeGreen: '#E0FFED'
         }
       },
     },

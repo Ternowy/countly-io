@@ -48,7 +48,6 @@ export default {
   flex-direction: row;
   align-items: center;
   align-self: center;
-  border-radius: 50%;
   border: 0;
   color: #fff;
   font-size: 18px;

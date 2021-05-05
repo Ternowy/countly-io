@@ -58,7 +58,7 @@ export default {
     Vue.component('SurveyPreview', SurveyPreview);
     Vue.component('SurveyList', SurveyList);
 
-    //  Auth
-    Vue.component('AuthView', AuthView)
+    //Auth
+    Vue.component('AuthView', AuthView);
   },
 };
