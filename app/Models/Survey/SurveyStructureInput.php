@@ -61,20 +61,14 @@ class SurveyStructureInput implements Arrayable
 
     public function toArray(): array
     {
-        $inputData = [
+        return [
             'type' => $this->type,
             'label' => $this->label,
             'name' => $this->name,
-            'required' => $this->required
+            'required' => $this->required,
+            'placeholder' => $this->placeholder,
+            'options' => $this->options
         ];
-
-        if (in_array($this->type, SurveyEnumHelper::inputsWithText())) {
-            $inputData['placeholder'] = $this->placeholder;
-        } elseif (in_array($this->type, SurveyEnumHelper::inputsWithOptions())) {
-            $inputData['options'] = $this->options;
-        }
-
-        return $inputData;
     }
 
     public function isTextInput(): bool

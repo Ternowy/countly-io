@@ -1,11 +1,11 @@
 <template>
   <div class="survey">
     <div class="survey-actions">
-      <base-button :action="editLink" size="medium" type="action">
+      <base-button :action="editLink" size="medium" type="action" rounded>
         <base-icon name="pen"/>
       </base-button>
 
-      <base-button size="medium" type="danger" @click.native="requestSurveyRemoval">
+      <base-button size="medium" type="danger" @click.native="requestSurveyRemoval" rounded>
         <base-icon name="trash" fill="white"/>
       </base-button>
     </div>

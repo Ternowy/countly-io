@@ -1,14 +1,16 @@
 <template>
   <div class="flex w-full flex-row mb-10 bg-white p-7 rounded-3xl h-auto items-start">
     <div class="flex flex-col w-7/12 h-full place-content-start">
-      <input-label-editor v-model="inputData.label" class="w-full label-editor" @input="onInput"/>
-      <component :is="componentName" v-bind="$props" v-model="inputValue" class="w-full mt-5" @input="onInput"/>
+      <input-label-editor :value="label" class="w-full label-editor" @input="onInput('label', $event)"/>
+      <component :is="componentName" v-bind="$props" :value="inputValue" class="w-full mt-5"
+                 @input="onInput(relevantInputValue, $event)"
+      />
     </div>
     <div class="flex flex-col w-5/12 h-full">
       <div class="flex flex-row w-full justify-between">
-        <span class="text-red-500 mr-4">{{ inputData.required ? '*' : '' }}</span>
+        <span class="text-red-500 mr-4">{{ required ? '*' : '' }}</span>
         <div class="flex flex-row justify-end">
-          <base-switch v-model="inputData.required" class="" label="Required" @input="onInput"/>
+          <base-switch :value="required" class="" label="Required" @input="onInput('required', $event)"/>
           <base-popover class="ml-10" trigger="click">
             <template #trigger>
               <button>
@@ -23,8 +25,8 @@
           </base-popover>
         </div>
       </div>
-      <input-type-selector v-model="inputData.type" :options="inputTypes" class="mt-8 justify-end"
-                           @input="onInput"
+      <input-type-selector :value="type" :options="inputTypes" class="mt-8 justify-end"
+                           @input="onInput('type', $event)"
       />
     </div>
   </div>
@@ -67,17 +69,11 @@ export default {
     }
   },
   emits: ['input', 'copy', 'remove'],
-  data: () => ({
-    inputData: {
-      name: null,
-      type: null,
-      label: null,
-      required: null,
-      options: null,
-      placeholder: null
-    },
-    inputTypes: ['checkbox', 'radio', 'select', 'text', 'textarea']
-  }),
+  data() {
+    return {
+      inputTypes: ['checkbox', 'radio', 'select', 'text', 'textarea']
+    };
+  },
   computed: {
     componentName() {
       return `input-${this.type}`;
@@ -85,28 +81,22 @@ export default {
     relevantInputValue() {
       return ['text', 'textarea'].includes(this.type) ? 'placeholder' : 'options';
     },
-    inputValue: {
-      get() {
-        return this.inputData[this.relevantInputValue];
-      },
-      set(value) {
-        this.inputData[this.relevantInputValue] = value;
-      }
-    }
-  },
-  created() {
-    this.inputData = {
-      name: this.name,
-      type: this.type,
-      label: this.label,
-      required: this.required,
-      options: this.options,
-      placeholder: this.placeholder
+    inputValue() {
+      return this[this.relevantInputValue];
     }
   },
   methods: {
-    onInput() {
-      this.$emit('input', this.inputData);
+    onInput(item, value) {
+      const data = Object.assign({
+        name: this.name,
+        type: this.type,
+        label: this.label,
+        required: this.required,
+        options: this.options,
+        placeholder: this.placeholder
+      }, {[item]: value});
+
+      this.$emit('input', data);
     },
     copy() {
       this.$emit('copy');

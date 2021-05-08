@@ -1,29 +1,33 @@
 <template>
-  <editor-preview class="container flex flex-col content-center justify-center items-center mt-20">
+  <div class="container flex flex-col content-center justify-center items-center mt-20">
     <div class="flex flex-col xl:w-5/12 md:w-7/12 sm:w-9/12">
       <editor-preview-survey-description v-model="nameAndDescription"/>
-      <editor-preview-input v-for="(item, index) in reactiveStructure" :key="index"
-                            v-bind="item"
-                            @copy="copyInput(index)"
-                            @input="onInput($event, index)"
-                            @remove="removeInput(index)"
-      />
+
+      <editor-preview-input-list v-model="reactiveStructure" @end="onDragEnd">
+        <editor-preview-input v-for="(item, index) in reactiveStructure" :key="`element-${index}`"
+                              v-bind="item"
+                              @copy="copyInput(index)"
+                              @input="onInput($event, index)"
+                              @remove="removeInput(index)"
+        />
+      </editor-preview-input-list>
+
       <base-interactive-button :disabled="reactiveStructure.length >= 15" label="+"
                                @click.native="addInput"
       />
     </div>
-  </editor-preview>
+  </div>
 </template>
 
 <script>
-import EditorPreview from './EditorPreview';
+import EditorPreviewInputList from './EditorPreviewInputList';
 import EditorPreviewInput from './EditorPreviewInput';
 import EditorPreviewSurveyDescription from './EditorPreviewSurveyDescription';
 import UniqueNameService from '../../service/unique-name-service';
 
 export default {
   name: 'Editor',
-  components: {EditorPreviewSurveyDescription, EditorPreviewInput, EditorPreview},
+  components: {EditorPreviewSurveyDescription, EditorPreviewInput, EditorPreviewInputList},
   props: {
     survey: Object
   },
@@ -46,8 +50,13 @@ export default {
     },
   }),
   computed: {
-    reactiveStructure() {
-      return this.structure;
+    reactiveStructure: {
+      get() {
+        return this.structure;
+      },
+      set(value) {
+        this.structure = value;
+      },
     },
     nameAndDescription: {
       get() {
@@ -96,6 +105,9 @@ export default {
         description: this.surveyDescription,
         structure: this.structure,
       };
+    },
+    onDragEnd() {
+      this.onStateChange();
     },
     onStateChange() {
       this.$emit('input', this.getState());
