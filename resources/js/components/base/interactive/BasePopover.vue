@@ -3,7 +3,6 @@
     <template #trigger>
       <slot name="trigger"/>
     </template>
-
     <slot/>
   </tooltip>
 </template>

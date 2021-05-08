@@ -1,26 +1,28 @@
 <template>
-  <div>
-    <input-option-list>
-      <input-option v-for="(option, index) in value" :key="index" :value="option"
-                    @input="onOptionInput($event, index)" @remove="removeOption(index)"
-      />
-    </input-option-list>
-    <base-button type="passive" @click.native="addOption">
+  <div class="flex-col">
+    <input-option v-for="(option, index) in value" :key="index" :value="option"
+                  @input="onOptionInput($event, index)" @remove="removeOption(index)"
+    />
+    <base-button type="grey" size="small" class="p-4 text-sm mt-2" :disabled="!canAdd" @click.native="addOption">
       + Add answer
     </base-button>
   </div>
 </template>
 
 <script>
-import InputOptionList from './InputOptionList';
 import InputOption from './InputOption';
 import vValueMixin from '../../../../mixins/helpers/v-value-mixin';
 
 export default {
   name: 'InputWithOptions',
-  components: {InputOption, InputOptionList},
+  components: {InputOption},
   mixins: [vValueMixin],
   emits: ['input'],
+  computed: {
+    canAdd() {
+      return this.value.length < 10;
+    }
+  },
   methods: {
     addOption() {
       this.$emit('input', [...this.value, 'Text']);

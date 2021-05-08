@@ -1,5 +1,5 @@
 <template>
-  <component :is="iconName" v-bind="Object.assign({}, $attrs, sizes)"/>
+  <component :is="iconName" v-bind="Object.assign({}, $attrs, sizes)" :class="classes"/>
 </template>
 
 <script>
@@ -46,7 +46,8 @@ export default {
     size: {
       type: String,
       default: 'medium'
-    }
+    },
+    clickable: Boolean
   },
   computed: {
     iconName() {
@@ -69,11 +70,16 @@ export default {
       };
 
       return sizes[this.size];
+    },
+    classes() {
+      let classes = [];
+
+      if (this.clickable) {
+        classes.push('cursor-pointer');
+      }
+
+      return classes;
     }
   }
 };
 </script>
-
-<style scoped>
-
-</style>

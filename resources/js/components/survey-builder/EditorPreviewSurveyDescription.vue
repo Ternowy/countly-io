@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-7/12 flex-col justify-center items-center mb-10 bg-white p-7 rounded-3xl">
+  <div class="flex w-full flex-col justify-center items-center mb-10 bg-white p-7 rounded-3xl">
     <base-input v-model="name" :maxlength="100" class="text-3xl" text-center @blur="onNameBlur"/>
     <base-input v-model="description" :maxlength="280" text-center @blur="onDescriptionBlur"/>
   </div>

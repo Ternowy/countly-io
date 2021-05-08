@@ -1,9 +1,9 @@
 <template>
   <div v-bind="$attrs" class="w-full overflow-hidden overflow-ellipsis">
-    <base-input v-show="active" ref="input" v-model="vValue" :maxlength="100" class="w-full"
+    <base-input ref="input" v-model="vValue" :maxlength="100" class="w-full"
+                :input-classes="['p-2', 'bg-grey', 'border-b', 'border-gray-300']"
                 @blur="toggleActive"
     />
-    <div v-show="!active" class="w-full whitespace-nowrap" @click="activate">{{ vValue }}</div>
   </div>
 </template>
 
@@ -41,14 +41,12 @@ export default {
 
       this.active = !this.active;
     },
-    activate() {
-      this.toggleActive();
-      this.$nextTick(() => this.$refs.input.focus());
-    },
   },
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  .label-input {
 
+  }
 </style>

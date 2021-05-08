@@ -1,6 +1,6 @@
 <template>
   <input-base v-bind="$attrs" :name="name">
-    <input ref="input" :placeholder="placeholder" :value="value" type="text" :class="classes"
+    <input ref="input" :placeholder="placeholder" :value="value" type="text" :class="vClasses"
            v-bind="$attrs" @blur="onBlur" @input="onInput"
     >
     <slot/>
@@ -17,12 +17,16 @@ export default {
       type: String,
       default: '',
     },
-    textCenter: Boolean
+    textCenter: Boolean,
+    inputClasses: {
+      type: Array,
+      default: () => [],
+    }
   },
   emits: ['input', 'blur'],
   computed: {
-    classes() {
-      let classes = ['w-full'];
+    vClasses() {
+      let classes = ['w-full', 'rounded-t-lg',...this.inputClasses];
 
       if (this.textCenter) {
         classes.push('text-center');

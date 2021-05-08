@@ -1,24 +1,28 @@
 <template>
-  <div class="flex w-full flex-col items-center mb-10 bg-white p-7 rounded-3xl">
-    <div class="flex w-full">
-      <input-label-editor v-model="inputData.label" class="w-8/12" @input="onInput"/>
-      <base-switch v-model="inputData.required" class="w-3/12" label="Required" @input="onInput"/>
-      <base-popover class="w-1/12">
-        <template #trigger>
-          <button>
-            <base-icon name="vertical-dots"/>
-          </button>
-        </template>
-
-        <base-item-list>
-          <base-item label="copy" icon="copy" @click.native="copy"/>
-          <base-item label="delete" icon="trash" @click.native="remove"/>
-        </base-item-list>
-      </base-popover>
+  <div class="flex w-full flex-row mb-10 bg-white p-7 rounded-3xl h-auto items-start">
+    <div class="flex flex-col w-7/12 h-full place-content-start">
+      <input-label-editor v-model="inputData.label" class="w-full label-editor" @input="onInput"/>
+      <component :is="componentName" v-bind="$props" v-model="inputValue" class="w-full" @input="onInput"/>
     </div>
-    <div class="flex w-full">
-      <component :is="componentName" v-bind="$props" v-model="inputValue" @input="onInput"/>
-      <input-type-selector v-model="inputData.type" :options="inputTypes" @input="onInput"/>
+    <div class="flex flex-col w-5/12 h-full">
+      <div class="flex flex-row w-full justify-end">
+        <base-switch v-model="inputData.required" class="" label="Required" @input="onInput"/>
+        <base-popover class="ml-10" trigger="click">
+          <template #trigger>
+            <button>
+              <base-icon name="vertical-dots"/>
+            </button>
+          </template>
+
+          <base-item-list>
+            <base-item label="copy" icon="copy" @click.native="copy"/>
+            <base-item label="delete" icon="trash" @click.native="remove"/>
+          </base-item-list>
+        </base-popover>
+      </div>
+      <input-type-selector v-model="inputData.type" :options="inputTypes" class="mt-8 justify-end"
+                           @input="onInput"
+      />
     </div>
   </div>
 </template>

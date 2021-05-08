@@ -22,18 +22,38 @@ export default {
     size: {
       type: String,
       default: 'large',
-      validator: (value) => ['large', 'medium'].includes(value),
+      validator: (value) => ['large', 'medium', 'small'].includes(value),
     },
     type: {
       type: String,
       required: true,
-      validator: (value) => ['passive', 'action', 'classic', 'danger'].includes(value),
+      validator: (value) => ['passive', 'action', 'classic', 'danger', 'grey'].includes(value),
     },
-    action: String
+    action: String,
+    rounded: Boolean
   },
   computed: {
     classes() {
-      let classes = ['button', `button-${this.size}`, `button-${this.type}`];
+      const styleSizeSet = {
+        width: {large: 'w-14', medium: 'w-12', small: 'w-8'},
+        height: {large: 'h-14', medium: 'h-12', small: 'h-8'}
+      };
+
+      let classes = ['button', `button-${this.type}`, 'rounded-full', styleSizeSet.height[this.size]];
+
+      const styleTypeSet = {
+        grey: ['bg-grey', 'hover:bg-darkGrey', 'text-gray-500']
+      };
+
+      if (Object.keys(styleTypeSet).includes(this.type)) {
+        classes.push(...styleTypeSet[this.type]);
+      } else {
+        classes.push(['text-white', 'text-lg', 'font-medium'])
+      }
+
+      if (this.rounded) {
+        classes.push(styleSizeSet.width[this.size]);
+      }
 
       return classes;
     },
@@ -49,10 +69,6 @@ export default {
   align-items: center;
   align-self: center;
   border: 0;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 20px;
   text-decoration: none;
 
   &:hover {
@@ -62,16 +78,6 @@ export default {
   &:focus {
     outline: 0;
   }
-}
-
-.button-large {
-  height: 56px;
-  width: 56px;
-}
-
-.button-medium {
-  height: 46px;
-  width: 46px;
 }
 
 .button-passive {

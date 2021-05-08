@@ -1,6 +1,6 @@
 <template>
   <editor-preview class="container flex flex-col content-center justify-center items-center mt-20">
-    <div class="flex flex-col flex-7/12">
+    <div class="flex flex-col xl:w-5/12 md:w-7/12 sm:w-9/12">
       <editor-preview-survey-description v-model="nameAndDescription"/>
       <editor-preview-input v-for="(item, index) in reactiveStructure" :key="index"
                             v-bind="item"

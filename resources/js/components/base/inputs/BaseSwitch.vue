@@ -62,7 +62,6 @@ export default {
     height: 24px;
 
     .toggle-inner {
-      transition: all 0.2s linear;
       position: absolute;
       top: 2px;
       left: 2px;
@@ -73,6 +72,11 @@ export default {
       border-radius: 30px;
 
       &.inactive {
+        right: unset;
+        left: 2px;
+      }
+
+      &.active {
         left: unset;
         right: 2px;
       }

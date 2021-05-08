@@ -17,13 +17,15 @@ module.exports = {
       },
       extend: {
         textColor: {
-          brown: '#696352'
+          brown: '#696352',
+          grey: '#4F4F4F'
         },
         backgroundColor: {
           main: '#F2EFE4',
           header: '#FAF7EC',
           grey: '#F2F2F2',
-          activeGreen: '#E0FFED'
+          darkGrey: '#E0E0E0',
+          activeGreen: '#E0FFED',
         }
       },
     },
