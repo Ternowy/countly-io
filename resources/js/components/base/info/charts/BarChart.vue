@@ -10,7 +10,7 @@
 import VChart from './vChart';
 
 export default {
-  name: 'ColumnChart',
+  name: 'BarChart',
   components: {VChart},
   props: {
     label: String,

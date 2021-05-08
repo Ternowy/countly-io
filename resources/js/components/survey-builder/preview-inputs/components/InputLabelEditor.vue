@@ -1,9 +1,10 @@
 <template>
-  <div v-bind="$attrs" class="w-full overflow-hidden overflow-ellipsis">
+  <div v-bind="$attrs" class="w-full flex flex-row overflow-hidden overflow-ellipsis">
     <base-input ref="input" v-model="vValue" :maxlength="100" class="w-full"
                 :input-classes="['p-2', 'bg-grey', 'border-b', 'border-gray-300']"
                 @blur="toggleActive"
     />
+    <slot/>
   </div>
 </template>
 

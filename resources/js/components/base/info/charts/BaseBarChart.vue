@@ -8,7 +8,7 @@
 import { Chart } from 'chart.js';
 
 export default {
-  name: 'BaseColumnarChart',
+  name: 'BaseBarChart',
   props: {
     answers: Object
   },

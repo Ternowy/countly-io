@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <textarea ref="textarea" v-bind="$attrs" :value="value" @input="onInput"/>
+  <div v-bind="$attrs" class="w-full flex flex-col">
+    <textarea ref="textarea" v-bind="$attrs" :value="value" class="w-full" :class="classes" @input="onInput"/>
     <slot/>
   </div>
 </template>
@@ -10,6 +10,7 @@ export default {
   name: 'BaseTextarea',
   props: {
     value: String,
+    classes: Array
   },
   emits: ['input'],
   methods: {
