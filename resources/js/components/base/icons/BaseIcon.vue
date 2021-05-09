@@ -18,6 +18,7 @@ import IconInputText from './all/IconInputText';
 import IconInputTextarea from './all/IconInputTextarea';
 import IconVerticalDots from './all/IconVerticalDots';
 import IconCopy from './all/IconCopy';
+import IconDrag from './all/IconDrag';
 
 export default {
   name: 'BaseIcon',
@@ -36,18 +37,19 @@ export default {
     IconInputText,
     IconInputTextarea,
     IconVerticalDots,
-    IconCopy
+    IconCopy,
+    IconDrag,
   },
   props: {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     size: {
       type: String,
-      default: 'medium'
+      default: 'medium',
     },
-    clickable: Boolean
+    clickable: Boolean,
   },
   computed: {
     iconName() {
@@ -57,16 +59,16 @@ export default {
       const sizes = {
         small: {
           height: 15,
-          width:  15
+          width: 15,
         },
         medium: {
           height: 18,
-          width:  18
+          width: 18,
         },
         large: {
           height: 18,
-          width:  18
-        }
+          width: 18,
+        },
       };
 
       return sizes[this.size];
@@ -79,7 +81,7 @@ export default {
       }
 
       return classes;
-    }
-  }
+    },
+  },
 };
 </script>

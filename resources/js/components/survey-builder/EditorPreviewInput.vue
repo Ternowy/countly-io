@@ -1,33 +1,38 @@
 <template>
-  <div class="flex w-full flex-row mb-10 bg-white p-7 rounded-3xl h-auto items-start">
-    <div class="flex flex-col w-7/12 h-full place-content-start">
-      <input-label-editor :value="label" class="w-full label-editor" @input="onInput('label', $event)"/>
-      <component :is="componentName" v-bind="$props" :value="inputValue" class="w-full mt-5"
-                 @input="onInput(relevantInputValue, $event)"
-      />
-    </div>
-    <div class="flex flex-col w-5/12 h-full">
-      <div class="flex flex-row w-full justify-between">
-        <span class="text-red-500 mr-4">{{ required ? '*' : '' }}</span>
-        <div class="flex flex-row justify-end">
-          <base-switch :value="required" class="" label="Required" @input="onInput('required', $event)"/>
-          <base-popover class="ml-10" trigger="click">
-            <template #trigger>
-              <button>
-                <base-icon name="vertical-dots"/>
-              </button>
-            </template>
-
-            <base-item-list>
-              <base-item label="copy" icon="copy" @click.native="copy"/>
-              <base-item label="delete" icon="trash" @click.native="remove"/>
-            </base-item-list>
-          </base-popover>
-        </div>
+  <div class="flex w-full flex-col mb-10 bg-white px-7 pt-7 pb-5 rounded-3xl h-auto items-start">
+    <div class="flex w-full flex-row items-start">
+      <div class="flex flex-col w-7/12 h-full place-content-start">
+        <input-label-editor :value="label" class="w-full label-editor" @input="onInput('label', $event)"/>
+        <component :is="componentName" v-bind="$props" :value="inputValue" class="w-full mt-5"
+                   @input="onInput(relevantInputValue, $event)"
+        />
       </div>
-      <input-type-selector :value="type" :options="inputTypes" class="mt-8 justify-end"
-                           @input="onInput('type', $event)"
-      />
+      <div class="flex flex-col w-5/12 h-full">
+        <div class="flex flex-row w-full justify-between">
+          <span class="text-red-500 mr-4">{{ required ? '*' : '' }}</span>
+          <div class="flex flex-row justify-end">
+            <base-switch :value="required" class="" label="Required" @input="onInput('required', $event)"/>
+            <base-popover class="ml-10" trigger="click">
+              <template #trigger>
+                <button>
+                  <base-icon name="vertical-dots"/>
+                </button>
+              </template>
+
+              <base-item-list>
+                <base-item label="copy" icon="copy" @click.native="copy"/>
+                <base-item label="delete" icon="trash" @click.native="remove"/>
+              </base-item-list>
+            </base-popover>
+          </div>
+        </div>
+        <input-type-selector :value="type" :options="inputTypes" class="mt-8 justify-end"
+                             @input="onInput('type', $event)"
+        />
+      </div>
+    </div>
+    <div class="flex relative" style="left: 98%; cursor: grab">
+      <base-icon name="drag" fill="#BDBDBD"/>
     </div>
   </div>
 </template>

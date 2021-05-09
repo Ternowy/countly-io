@@ -86,10 +86,6 @@ export default {
   &:hover {
     background-color: #F2EFE4;
   }
-
-  &:focus {
-    background-color: #F2EFE4;
-  }
 }
 
 .button-action {
@@ -97,10 +93,6 @@ export default {
 
   &:hover {
     background-color: #32C973;
-  }
-
-  &:focus {
-    background-color: #1A9C52;
   }
 }
 
@@ -110,10 +102,6 @@ export default {
   &:hover {
     background-color: #FAF7EC;
   }
-
-  &:focus {
-    background-color: #E8E3D6;
-  }
 }
 
 .button-danger {
@@ -121,10 +109,6 @@ export default {
 
   &:hover {
     background-color: #FF8278;
-  }
-
-  &:focus {
-    background-color: #D93428;
   }
 }
 </style>

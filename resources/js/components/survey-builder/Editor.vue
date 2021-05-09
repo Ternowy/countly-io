@@ -1,20 +1,25 @@
 <template>
-  <div class="container flex flex-col content-center justify-center items-center mt-20">
+  <div class="container flex flex-col content-center justify-center items-center my-16">
     <div class="flex flex-col xl:w-5/12 md:w-7/12 sm:w-9/12">
       <editor-preview-survey-description v-model="nameAndDescription"/>
 
       <editor-preview-input-list v-model="reactiveStructure" @end="onDragEnd">
         <editor-preview-input v-for="(item, index) in reactiveStructure" :key="`element-${index}`"
                               v-bind="item"
+                              v-click-outside="deactivateInput(index)"
+                              :active="activeInputIndex === index"
                               @copy="copyInput(index)"
                               @input="onInput($event, index)"
                               @remove="removeInput(index)"
+                              @click.native="activateInput(index)"
         />
       </editor-preview-input-list>
 
-      <base-interactive-button :disabled="reactiveStructure.length >= 15" label="+"
-                               @click.native="addInput"
-      />
+      <base-button :disabled="reactiveStructure.length >= 15" type="action" size="large" rounded
+                   @click.native="addInput"
+      >
+        <base-icon name="plus" clickable fill="#fff"/>
+      </base-button>
     </div>
   </div>
 </template>
@@ -24,10 +29,14 @@ import EditorPreviewInputList from './EditorPreviewInputList';
 import EditorPreviewInput from './EditorPreviewInput';
 import EditorPreviewSurveyDescription from './EditorPreviewSurveyDescription';
 import UniqueNameService from '../../service/unique-name-service';
+import ClickOutside from 'vue-click-outside';
 
 export default {
   name: 'Editor',
   components: {EditorPreviewSurveyDescription, EditorPreviewInput, EditorPreviewInputList},
+  directives: {
+    ClickOutside
+  },
   props: {
     survey: Object
   },
@@ -48,6 +57,7 @@ export default {
       ],
       placeholder: 'placeholder'
     },
+    activeInputIndex: null
   }),
   computed: {
     reactiveStructure: {
@@ -111,7 +121,15 @@ export default {
     },
     onStateChange() {
       this.$emit('input', this.getState());
-    }
+    },
+    deactivateInput(index) {
+      if (index === this.activeInputIndex) {
+        this.activeInputIndex = null;
+      }
+    },
+    activateInput(index) {
+      this.activeInputIndex = index;
+    },
   },
 };
 </script>
