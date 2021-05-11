@@ -1,5 +1,8 @@
 <template>
-  <component :is="componentName" v-model="vValue" v-bind="$attrs" v-on="$listeners"/>
+  <div class="flex w-full flex-col mb-8 bg-white px-7 pt-7 pb-5 rounded-3xl h-auto items-start">
+    <p class="text-base font-normal">{{ label }}</p>
+    <component :is="componentName" v-model="vValue" v-bind="$attrs" v-on="$listeners"/>
+  </div>
 </template>
 
 <script>
@@ -21,7 +24,8 @@ export default {
   },
   mixins: [vValueMixin],
   props: {
-    type: String
+    type: String,
+    label: String,
   },
   emits: ['input'],
   computed: {

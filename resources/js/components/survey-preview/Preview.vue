@@ -1,6 +1,11 @@
 <template>
-  <validation-observer ref="form" v-bind="$attrs" tag="form" v-on="$listeners">
-    <slot/>
+  <validation-observer ref="form" v-bind="$attrs" tag="form"
+                       class="container flex flex-col content-center justify-center items-center my-16"
+                       v-on="$listeners"
+  >
+    <div class="flex flex-col xl:w-5/12 md:w-7/12 sm:w-9/12">
+      <slot/>
+    </div>
   </validation-observer>
 </template>
 

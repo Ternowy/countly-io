@@ -1,8 +1,10 @@
 <template>
-  <div class="flex w-full flex-col mb-10 bg-white px-7 pt-7 pb-5 rounded-3xl h-auto items-start">
+  <div class="flex w-full flex-col mb-8 bg-white px-7 pt-7 pb-5 rounded-3xl h-auto items-start">
     <div class="flex w-full flex-row items-start">
       <div class="flex flex-col w-7/12 h-full place-content-start">
-        <input-label-editor :value="label" class="w-full label-editor" @input="onInput('label', $event)"/>
+        <input-label-editor :value="label" class="w-full label-editor"
+                            @input="onInput('label', $event)"
+        />
         <component :is="componentName" v-bind="$props" :value="inputValue" class="w-full mt-5"
                    @input="onInput(relevantInputValue, $event)"
         />
@@ -71,7 +73,8 @@ export default {
     placeholder: {
       type: String,
       default: ''
-    }
+    },
+    isActive: Boolean
   },
   emits: ['input', 'copy', 'remove'],
   data() {

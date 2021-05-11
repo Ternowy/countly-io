@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <p>{{ name }}</p>
-    <p>{{ description }}</p>
+  <div class="flex w-full flex-col justify-center items-center mb-10 bg-white p-7 rounded-3xl">
+    <h1 class="text-3xl">{{ name }}</h1>
+    <h2>{{ description }}</h2>
   </div>
 </template>
 

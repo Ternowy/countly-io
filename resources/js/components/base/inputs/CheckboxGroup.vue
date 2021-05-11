@@ -29,6 +29,7 @@ export default {
       default: () => ({}),
     },
   },
+  emits: ['input'],
   computed: {
     vValue: {
       get() {

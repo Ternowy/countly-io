@@ -1,7 +1,7 @@
 <template>
   <div v-bind="$attrs" class="w-full flex flex-row overflow-hidden overflow-ellipsis">
     <base-input ref="input" v-model="vValue" :maxlength="100" class="w-full"
-                :input-classes="['p-2', 'bg-grey', 'border-b', 'border-gray-300']"
+                :input-classes="classes"
                 @blur="toggleActive"
     />
     <slot/>
@@ -22,6 +22,11 @@ export default {
     active: false,
     vValue: null
   }),
+  computed: {
+    classes() {
+      return ['p-2', 'bg-grey', 'border-b', 'border-gray-300'];
+    }
+  },
   watch: {
     value: {
       immediate: true,
