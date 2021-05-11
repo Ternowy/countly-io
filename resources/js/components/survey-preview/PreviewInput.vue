@@ -1,6 +1,6 @@
 <template>
   <div class="flex w-full flex-col mb-8 bg-white px-7 pt-7 pb-5 rounded-3xl h-auto items-start">
-    <p class="text-base font-normal">{{ label }}</p>
+    <p class="text-base font-normal mb-2">{{ label }}</p>
     <component :is="componentName" v-model="vValue" v-bind="$attrs" v-on="$listeners"/>
   </div>
 </template>

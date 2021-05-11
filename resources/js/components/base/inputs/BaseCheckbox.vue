@@ -1,5 +1,5 @@
 <template>
-  <label class="flex w-full input-container my-1 items-start content-center"
+  <label class="flex w-full input-container mb-1 items-start content-center"
          @click.native="onLabelClick"
   >
     <input ref="checkbox" v-model="vValue" :value="itemValue" :name="name" hidden type="checkbox">

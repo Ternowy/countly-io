@@ -1,5 +1,8 @@
 <template>
-  <base-input v-bind="Object.assign({}, $attrs, $props, {rules: vRules})" :maxlength="vRules.max" v-on="$listeners">
+  <base-input v-bind="Object.assign({}, $attrs, $props, {rules: vRules})" :maxlength="vRules.max"
+              class="w-full good-shadow rounded-lg px-4 py-2 text-gray-600 font-light text-base"
+              v-on="$listeners"
+  >
     <base-counter :limit="vRules.max" :value="vLength"/>
   </base-input>
 </template>

@@ -1,6 +1,9 @@
 <template>
   <div v-bind="$attrs" class="w-full flex flex-col">
-    <textarea ref="textarea" v-bind="$attrs" :value="value" class="w-full" :class="classes" @input="onInput"/>
+    <textarea ref="textarea" v-bind="$attrs" :value="value" class="w-full" :class="classes"
+              style="min-height: 100px"
+              @input="onInput"
+    />
     <slot/>
   </div>
 </template>

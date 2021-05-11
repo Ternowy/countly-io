@@ -5,7 +5,7 @@
     </template>
     <template v-else>
       <div v-for="(option, index) in options" :key="index">
-        <label :for="`radio-${index}-${_uid}`" class="flex flex-row items-center input-container">
+        <label :for="`radio-${index}-${_uid}`" class="flex flex-row items-center input-container mb-1">
           <input :id="`radio-${index}-${_uid}`" :checked="option === value" :name="name"
                  type="radio" class="checkmark" @input="onChange(option)"
           >
