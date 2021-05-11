@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full flex-col mb-8 bg-white px-7 pt-7 pb-5 rounded-3xl h-auto items-start">
+  <div v-if="isActive" class="flex w-full flex-col mb-8 bg-white px-7 pt-7 pb-5 rounded-3xl h-auto items-start">
     <div class="flex w-full flex-row items-start">
       <div class="flex flex-col w-7/12 h-full place-content-start">
         <input-label-editor :value="label" class="w-full label-editor"
@@ -37,6 +37,7 @@
       <base-icon name="drag" fill="#BDBDBD"/>
     </div>
   </div>
+  <preview-input v-else v-bind="{label, options, required, type, name, placeholder}"/>
 </template>
 
 <script>
@@ -48,10 +49,12 @@ import InputTextarea from './preview-inputs/InputTextarea.vue';
 import InputLabelEditor from './preview-inputs/components/InputLabelEditor.vue';
 import InputTypeSelector from './preview-inputs/components/InputTypeSelector.vue';
 import BaseSwitch from '../base/inputs/BaseSwitch.vue';
+import PreviewInput from '../survey-preview/PreviewInput';
 
 export default {
   name: 'EditorPreviewInput',
   components: {
+    PreviewInput,
     BaseSwitch,
     InputTypeSelector,
     InputLabelEditor,
@@ -111,7 +114,7 @@ export default {
     },
     remove() {
       this.$emit('remove');
-    }
+    },
   },
 };
 </script>

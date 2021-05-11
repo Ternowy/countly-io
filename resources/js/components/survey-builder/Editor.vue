@@ -6,8 +6,7 @@
       <editor-preview-input-list v-model="reactiveStructure" @end="onDragEnd">
         <editor-preview-input v-for="(item, index) in reactiveStructure" :key="`element-${index}`"
                               v-bind="item"
-                              v-click-outside="deactivateInput(index)"
-                              :active="activeInputIndex === index"
+                              :is-active="activeInputIndex === index"
                               @copy="copyInput(index)"
                               @input="onInput($event, index)"
                               @remove="removeInput(index)"
@@ -29,14 +28,10 @@ import EditorPreviewInputList from './EditorPreviewInputList';
 import EditorPreviewInput from './EditorPreviewInput';
 import EditorPreviewSurveyDescription from './EditorPreviewSurveyDescription';
 import UniqueNameService from '../../service/unique-name-service';
-import ClickOutside from 'vue-click-outside';
 
 export default {
   name: 'Editor',
   components: {EditorPreviewSurveyDescription, EditorPreviewInput, EditorPreviewInputList},
-  directives: {
-    ClickOutside
-  },
   props: {
     survey: Object
   },
