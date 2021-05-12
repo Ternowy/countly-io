@@ -37,7 +37,7 @@
       <base-icon name="drag" fill="#BDBDBD"/>
     </div>
   </div>
-  <preview-input v-else v-bind="{label, options, required, type, name, placeholder}"/>
+  <preview-input v-else v-bind="{label, options, required, type, name, placeholder}" class="cursor-pointer"/>
 </template>
 
 <script>
