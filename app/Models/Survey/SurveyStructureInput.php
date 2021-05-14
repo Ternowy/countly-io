@@ -6,6 +6,7 @@ namespace App\Models\Survey;
 
 use App\Enum\Survey\SurveyInputTypeEnum;
 use App\Helper\Survey\SurveyEnumHelper;
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
 
 class SurveyStructureInput implements Arrayable
@@ -17,6 +18,7 @@ class SurveyStructureInput implements Arrayable
         protected string $placeholder = '',
         protected string $name = '',
         protected bool $required = false,
+        protected ?string $updatedAt = null
     ) {}
 
     public function getType(): string
@@ -67,7 +69,8 @@ class SurveyStructureInput implements Arrayable
             'name' => $this->name,
             'required' => $this->required,
             'placeholder' => $this->placeholder,
-            'options' => $this->options
+            'options' => $this->options,
+            'updated_at' => $this->updatedAt ?? Carbon::now()->toString()
         ];
     }
 

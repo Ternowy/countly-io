@@ -32,7 +32,7 @@
             </base-popover>
           </div>
         </div>
-        <input-type-selector :value="type" :options="inputTypes" class="mt-8 justify-end" :disabled="disableTypeChange"
+        <input-type-selector :value="type" :options="inputTypes" class="mt-8 justify-end" :disabled="!!updated_at"
                              @input="onInput('type', $event)"
         />
       </div>
@@ -87,6 +87,7 @@ export default {
     },
     isActive: Boolean,
     disableTypeChange: Boolean,
+    updated_at: String
   },
   emits: ['input', 'copy', 'remove'],
   data() {

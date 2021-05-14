@@ -5,7 +5,7 @@
     <label v-if="label" :class="{error: errors.length > 0}">
       {{ label }}
     </label>
-    <slot/>
+    <slot v-bind="{ errors }"/>
   </validation-provider>
 </template>
 

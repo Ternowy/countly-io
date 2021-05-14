@@ -9,6 +9,7 @@ use App\Models\Survey\Survey;
 use App\Models\Survey\SurveyStructure;
 use App\Repository\Survey\SurveyRepository;
 use App\Service\Common\UniqueIdService;
+use App\Service\Survey\Formatter\SurveyStructureInputDateFormatter;
 use App\Service\Survey\Results\SurveyResultsService;
 use Illuminate\Contracts\Auth\Authenticatable;
 
@@ -26,7 +27,7 @@ class SurveyService
         Survey $survey,
         UniqueIdService $uniqueIdService,
         SurveyRepository $surveyRepository,
-        SurveyResultsService $surveyResultsService
+        SurveyResultsService $surveyResultsService,
     ) {
         $this->survey = $survey;
         $this->uniqueIdService = $uniqueIdService;
