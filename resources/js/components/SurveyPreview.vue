@@ -5,7 +5,9 @@
     <preview-input v-for="(input, index) in structure" :key="index" v-bind="input"
                    v-model="surveyData[input.name]" @input="onInput"
     />
-    <base-button :disabled="!surveyValid" label="🖐 Submit" type="action" class="w-36" @click="onSubmit"/>
+    <base-button :disabled="!surveyValid" type="action" class="w-36" @click="onSubmit">
+      <p class="text-base text-white text-lg font-medium">🖐 Submit</p>
+    </base-button>
   </preview>
 </template>
 

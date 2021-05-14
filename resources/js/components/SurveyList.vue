@@ -6,7 +6,7 @@
               @change-status="updateStatus(survey.updateStatusLink, index, $event)"
       />
       <create-survey-c-t-a v-for="n in ctaNumber" :key="n" :action="createSurveyLink"/>
-      <base-button class="create-survey-btn" type="action" :action="createSurveyLink">
+      <base-button class="create-survey-btn shadow-lg" type="action" rounded :action="createSurveyLink">
         <p style="font-size: 28px; margin-right: 5px">+</p> Create new survey
       </base-button>
     </div>
@@ -90,7 +90,6 @@ export default {
     right: 7%;
     bottom: 60px;
     width: 264px;
-    border-radius: 50px;
   }
 }
 

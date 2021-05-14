@@ -1,10 +1,10 @@
 <template>
-  <a v-if="action" v-bind="$attrs" :class="classes" :href="action">
+  <a v-if="action" v-bind="$attrs" :class="classes" :href="action" :disabled="disabled">
     <slot>
       {{ label }}
     </slot>
   </a>
-  <button v-else v-bind="$attrs" :class="classes">
+  <button v-else v-bind="$attrs" :class="classes" :disabled="disabled">
     <slot>
       {{ label }}
     </slot>
@@ -33,8 +33,9 @@ export default {
     rounded: Boolean,
     clickable: {
       type: Boolean,
-      default: false
-    }
+      default: true
+    },
+    disabled: Boolean
   },
   computed: {
     classes() {
@@ -45,19 +46,26 @@ export default {
 
       let classes = ['button', `button-${this.type}`, 'rounded-full', styleSizeSet.height[this.size]];
 
+      if (this.rounded) {
+        classes.push(styleSizeSet.width[this.size]);
+      }
+
+      const defaultTextStyle = ['text-white', 'text-lg', 'font-medium'];
+
+      if (this.disabled) {
+        classes.push(['bg-disabledGrey', 'cursor-default', ...defaultTextStyle]);
+        return classes;
+      }
+
       const styleTypeSet = {
         grey: ['bg-grey', 'hover:bg-darkGrey', 'text-gray-500'],
-        classic: ['', ]
+        action: ['bg-actionGreen', 'hover:bg-greenHighlight']
       };
 
       if (Object.keys(styleTypeSet).includes(this.type)) {
         classes.push(...styleTypeSet[this.type]);
       } else {
-        classes.push(['text-white', 'text-lg', 'font-medium'])
-      }
-
-      if (this.rounded) {
-        classes.push(styleSizeSet.width[this.size]);
+        classes.push(defaultTextStyle);
       }
 
       if (this.clickable) {
@@ -92,14 +100,6 @@ export default {
 
   &:hover {
     background-color: #F2EFE4;
-  }
-}
-
-.button-action {
-  background-color: #29AD62;
-
-  &:hover {
-    background-color: #32C973;
   }
 }
 

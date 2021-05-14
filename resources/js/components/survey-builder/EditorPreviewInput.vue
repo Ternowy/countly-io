@@ -14,7 +14,7 @@
           <span class="text-red-500 mr-4">{{ required ? '*' : '' }}</span>
           <div class="flex flex-row justify-end">
             <base-switch :value="required" class="" label="Required" @input="onInput('required', $event)"/>
-            <base-popover class="ml-10" trigger="click">
+            <base-popover ref="actionsPopover" class="ml-10" trigger="click">
               <template #trigger>
                 <button>
                   <base-icon name="vertical-dots"/>
@@ -22,13 +22,17 @@
               </template>
 
               <base-item-list>
-                <base-item label="copy" icon="copy" @click.native="copy"/>
-                <base-item label="delete" icon="trash" @click.native="remove"/>
+                <base-item label="Copy" icon="copy" class="cursor-pointer px-2 py-1" fill="#828282"
+                           @click.native="copy"
+                />
+                <base-item label="Delete" icon="trash" class="cursor-pointer px-2 py-1"
+                           @click.native="remove"
+                />
               </base-item-list>
             </base-popover>
           </div>
         </div>
-        <input-type-selector :value="type" :options="inputTypes" class="mt-8 justify-end"
+        <input-type-selector :value="type" :options="inputTypes" class="mt-8 justify-end" :disabled="disableTypeChange"
                              @input="onInput('type', $event)"
         />
       </div>
@@ -37,7 +41,11 @@
       <base-icon name="drag" fill="#BDBDBD"/>
     </div>
   </div>
-  <preview-input v-else v-bind="{label, options, required, type, name, placeholder}" class="cursor-pointer"/>
+  <preview-input v-else v-bind="{label, options, required, type, name, placeholder}" class="cursor-pointer">
+    <div class="flex relative mt-2" style="left: 98%; cursor: grab">
+      <base-icon name="drag" fill="#BDBDBD"/>
+    </div>
+  </preview-input>
 </template>
 
 <script>
@@ -77,7 +85,8 @@ export default {
       type: String,
       default: ''
     },
-    isActive: Boolean
+    isActive: Boolean,
+    disableTypeChange: Boolean,
   },
   emits: ['input', 'copy', 'remove'],
   data() {
@@ -110,11 +119,16 @@ export default {
       this.$emit('input', data);
     },
     copy() {
+      this.closeActionsPopover();
       this.$emit('copy');
     },
     remove() {
+      this.closeActionsPopover();
       this.$emit('remove');
     },
+    closeActionsPopover() {
+      this.$refs.actionsPopover.close();
+    }
   },
 };
 </script>

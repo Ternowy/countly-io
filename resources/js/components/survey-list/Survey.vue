@@ -1,11 +1,11 @@
 <template>
   <div class="survey">
     <div class="survey-actions">
-      <base-button :action="editLink" size="medium" type="action" rounded>
+      <base-button :action="editLink" size="medium" type="action" class="shadow-md" rounded>
         <base-icon name="pen"/>
       </base-button>
 
-      <base-button size="medium" type="danger" @click.native="requestSurveyRemoval" rounded>
+      <base-button size="medium" type="danger" class="shadow-md" rounded @click.native="requestSurveyRemoval">
         <base-icon name="trash" fill="white"/>
       </base-button>
     </div>
@@ -37,7 +37,7 @@
       </base-switch>
 
       <a :href="resultsLink" target="_blank" class="stats-link">
-        <base-icon name="stats"/>
+        <base-icon name="stats" fill="#29AD62"/>
         <p>{{ answersNumber }}</p>
         <base-icon name="person"/>
       </a>

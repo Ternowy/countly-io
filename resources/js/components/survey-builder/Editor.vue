@@ -3,10 +3,11 @@
     <div class="flex flex-col xl:w-5/12 md:w-7/12 sm:w-9/12">
       <editor-preview-survey-description v-model="nameAndDescription"/>
 
-      <editor-preview-input-list v-model="reactiveStructure" @end="onDragEnd">
+      <editor-preview-input-list v-model="reactiveStructure" @input="onDrag">
         <editor-preview-input v-for="(item, index) in reactiveStructure" :key="`element-${index}`"
                               v-bind="item"
                               :is-active="activeInputIndex === index"
+                              :disable-type-change="isEditing"
                               @copy="copyInput(index)"
                               @input="onInput($event, index)"
                               @remove="removeInput(index)"
@@ -14,9 +15,12 @@
         />
       </editor-preview-input-list>
 
-      <base-button label="🖐 Submit" type="action" class="w-36 mb-2"/>
+      <base-button type="action" class="w-36 mb-2">
+        <p class="text-base text-white text-lg font-medium">🖐 Submit</p>
+      </base-button>
 
-      <base-button :disabled="reactiveStructure.length >= 15" type="action" size="large" rounded
+      <base-button :disabled="structure.length >= 15" type="action" size="large" rounded
+                   class="shadow-md"
                    @click.native="addInput"
       >
         <base-icon name="plus" clickable fill="#fff"/>
@@ -30,12 +34,14 @@ import EditorPreviewInputList from './EditorPreviewInputList';
 import EditorPreviewInput from './EditorPreviewInput';
 import EditorPreviewSurveyDescription from './EditorPreviewSurveyDescription';
 import UniqueNameService from '../../service/unique-name-service';
+import isEqual from 'lodash/_baseIsEqual';
 
 export default {
   name: 'Editor',
   components: {EditorPreviewSurveyDescription, EditorPreviewInput, EditorPreviewInputList},
   props: {
-    survey: Object
+    survey: Object,
+    isEditing: Boolean
   },
   emits: ['survey-created', 'input'],
   data: () => ({
@@ -102,9 +108,11 @@ export default {
     },
     copyInput(index) {
       this.structure.push(this.structure[index]);
+      this.onStateChange();
     },
     removeInput(index) {
       this.structure.splice(index, 1);
+      this.onStateChange();
     },
     getState() {
       return {
@@ -113,16 +121,11 @@ export default {
         structure: this.structure,
       };
     },
-    onDragEnd() {
+    onDrag() {
       this.onStateChange();
     },
     onStateChange() {
       this.$emit('input', this.getState());
-    },
-    deactivateInput(index) {
-      if (index === this.activeInputIndex) {
-        this.activeInputIndex = null;
-      }
     },
     activateInput(index) {
       this.activeInputIndex = index;

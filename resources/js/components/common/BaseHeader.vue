@@ -1,5 +1,5 @@
 <template>
-  <header class="header p-app">
+  <header class="header p-app sticky top-0 shadow-md">
     <div class="item info">
       <slot name="info">
         <survey-limit :limit="answersLimit" :number="answersNumber"/>

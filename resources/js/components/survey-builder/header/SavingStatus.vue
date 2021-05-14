@@ -44,16 +44,16 @@ export default {
 .description-wrapper {
   position: absolute;
   left: -200px;
-  transition: .75s;
+  transition: 1s;
+}
+
+.button {
+  z-index: 2;
 }
 
 .saving {
-  .button {
-    z-index: 2;
-  }
-
   .description-wrapper {
-    transition: .75s;
+    transition: 1s;
     left: 30px;
     background-color: #E8E3D6;
   }

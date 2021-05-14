@@ -26,7 +26,10 @@ module.exports = {
           grey: '#F2F2F2',
           darkGrey: '#E0E0E0',
           activeGreen: '#E0FFED',
-          darkHighlight: '#E8E3D6'
+          darkHighlight: '#E8E3D6',
+          disabledGrey: '#DADADA',
+          actionGreen: '#29AD62',
+          greenHighlight: '#32C973'
         }
       },
     },

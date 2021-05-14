@@ -17,18 +17,18 @@
         </base-button>
 
         <base-button v-if="isEditMode" type="action" class="w-36 mx-4" @click.native="onShare">
-          Share
+          <p class="text-center text-lg text-white">Share</p>
         </base-button>
 
         <base-button v-if="!isEditMode" type="action" class="w-36 mx-4" @click.native="onSave">
-          Save
+          <p class="text-center text-lg text-white">Save</p>
         </base-button>
 
         <user-picture :src="userPic"/>
       </template>
     </base-header>
 
-    <editor ref="editor" :survey="survey" @input="onInput"/>
+    <editor ref="editor" :survey="survey" :is-editing="isEditMode" @input="onInput"/>
   </div>
 </template>
 
