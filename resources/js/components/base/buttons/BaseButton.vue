@@ -30,7 +30,11 @@ export default {
       validator: (value) => ['passive', 'action', 'classic', 'danger', 'grey'].includes(value),
     },
     action: String,
-    rounded: Boolean
+    rounded: Boolean,
+    clickable: {
+      type: Boolean,
+      default: false
+    }
   },
   computed: {
     classes() {
@@ -42,7 +46,8 @@ export default {
       let classes = ['button', `button-${this.type}`, 'rounded-full', styleSizeSet.height[this.size]];
 
       const styleTypeSet = {
-        grey: ['bg-grey', 'hover:bg-darkGrey', 'text-gray-500']
+        grey: ['bg-grey', 'hover:bg-darkGrey', 'text-gray-500'],
+        classic: ['', ]
       };
 
       if (Object.keys(styleTypeSet).includes(this.type)) {
@@ -53,6 +58,12 @@ export default {
 
       if (this.rounded) {
         classes.push(styleSizeSet.width[this.size]);
+      }
+
+      if (this.clickable) {
+        classes.push('cursor-pointer');
+      } else {
+        classes.push('cursor-default');
       }
 
       return classes;
@@ -70,10 +81,6 @@ export default {
   align-self: center;
   border: 0;
   text-decoration: none;
-
-  &:hover {
-    cursor: pointer;
-  }
 
   &:focus {
     outline: 0;

@@ -1,7 +1,5 @@
 <template>
-  <label class="flex w-full input-container mb-1 items-start content-center"
-         @click="onLabelClick"
-  >
+  <label class="flex w-full input-container mb-1 items-start content-center">
     <input ref="checkbox" v-model="vValue" :value="itemValue" :name="name" hidden type="checkbox">
     <span class="checkmark"></span>
     <p class="flex text-base font-normal text-grey ml-2">{{ label }}</p>
@@ -40,9 +38,6 @@ export default {
     },
   },
   methods: {
-    onLabelClick() {
-      this.$refs.checkbox.click();
-    },
   },
 };
 </script>

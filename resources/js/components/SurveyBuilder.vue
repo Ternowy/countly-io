@@ -1,24 +1,31 @@
 <template>
   <div class="builder">
     <confirmation-modal ref="exitConfirmationModal" name="exit-confirmation-modal"/>
-    <base-header>
-      <base-button v-if="homeUri" :disabled="updateStatus === 'saving'" type="passive" class="exit-button" @click.native="exit">
-        <base-icon name="left-arrow"/>
-        <p class="exit">Back to home</p>
-      </base-button>
+    <base-header :logo="logo">
+      <template #info>
+        <base-button v-if="homeUri" :disabled="updateStatus === 'saving'" type="passive" class="exit-button" @click.native="exit">
+          <base-icon name="left-arrow"/>
+          <p class="exit">Back to home</p>
+        </base-button>
 
-      <saving-status v-if="isEditMode" :status="updateStatus"/>
+        <saving-status v-if="isEditMode" :status="updateStatus" class="ml-8"/>
+      </template>
 
-      <header-logo :src="logo"/>
+      <template #actions>
+        <base-button v-if="isEditMode" type="action" rounded @click.native="onStats">
+          <base-icon name="stats" fill="#fff"/>
+        </base-button>
 
-      <base-button v-if="isEditMode" type="action" @click.native="onStats">
-        <base-icon name="stats"/>
-      </base-button>
+        <base-button v-if="isEditMode" type="action" class="w-36 mx-4" @click.native="onShare">
+          Share
+        </base-button>
 
-      <base-button v-if="isEditMode" label="Share" type="action" class="save-button" @click.native="onShare"/>
-      <base-button v-if="!isEditMode" label="Save" type="action" class="save-button" @click.native="onSave"/>
+        <base-button v-if="!isEditMode" type="action" class="w-36 mx-4" @click.native="onSave">
+          Save
+        </base-button>
 
-      <user-picture :src="userPic"/>
+        <user-picture :src="userPic"/>
+      </template>
     </base-header>
 
     <editor ref="editor" :survey="survey" @input="onInput"/>

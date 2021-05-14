@@ -19,6 +19,8 @@ import IconInputTextarea from './all/IconInputTextarea';
 import IconVerticalDots from './all/IconVerticalDots';
 import IconCopy from './all/IconCopy';
 import IconDrag from './all/IconDrag';
+import IconCloudCheckmark from './all/IconCloudCheckmark';
+import IconCloudUpload from './all/IconCloudUpload';
 
 export default {
   name: 'BaseIcon',
@@ -39,6 +41,8 @@ export default {
     IconVerticalDots,
     IconCopy,
     IconDrag,
+    IconCloudCheckmark,
+    IconCloudUpload
   },
   props: {
     name: {
@@ -48,6 +52,7 @@ export default {
     size: {
       type: String,
       default: 'medium',
+      validator: value => ['small', 'medium', 'large'].includes(value)
     },
     clickable: Boolean,
   },
@@ -66,8 +71,8 @@ export default {
           width: 18,
         },
         large: {
-          height: 18,
-          width: 18,
+          height: 25,
+          width: 25,
         },
       };
 

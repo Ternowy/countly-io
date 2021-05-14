@@ -14,6 +14,8 @@
         />
       </editor-preview-input-list>
 
+      <base-button label="🖐 Submit" type="action" class="w-36 mb-2"/>
+
       <base-button :disabled="reactiveStructure.length >= 15" type="action" size="large" rounded
                    @click.native="addInput"
       >

@@ -1,20 +1,24 @@
 <template>
   <header class="header p-app">
-    <slot>
-      <div class="item info">
+    <div class="item info">
+      <slot name="info">
         <survey-limit :limit="answersLimit" :number="answersNumber"/>
-      </div>
-      <div class="item general">
+      </slot>
+    </div>
+    <div class="item general">
+      <slot name="general">
         <header-logo :src="logo"/>
-      </div>
+      </slot>
+    </div>
 
-      <div class="item actions">
+    <div class="item actions">
+      <slot name="actions">
         <user-picture :src="userPic" class="picture"/>
-        <base-button type="passive" @click.native="logout">
-          <base-icon name="quit"/>
+        <base-button type="passive" rounded @click.native="logout">
+          <base-icon name="quit" size="large"/>
         </base-button>
-      </div>
-    </slot>
+      </slot>
+    </div>
   </header>
 </template>
 
