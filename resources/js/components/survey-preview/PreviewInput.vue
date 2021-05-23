@@ -1,7 +1,9 @@
 <template>
   <div class="flex w-full flex-col mb-8 bg-white px-7 pt-7 pb-5 rounded-3xl h-auto items-start good-shadow">
     <p class="text-base font-normal mb-2">{{ label }} <span class="text-red-500 mr-4">{{ required ? '*' : '' }}</span></p>
-    <component :is="componentName" v-model="vValue" v-bind="$attrs" v-on="$listeners"/>
+    <component :is="componentName" v-model="vValue" v-bind="$attrs" :required="required"
+               v-on="$listeners"
+    />
     <slot/>
   </div>
 </template>

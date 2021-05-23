@@ -51,7 +51,10 @@ export default {
   methods: {
     onInput() {
       this.$nextTick(
-          () => this.$refs.form.validate().then(valid => this.surveyValid = valid)
+          () => this.$refs.form.validate().then(valid => {
+            this.surveyValid = valid;
+            console.log(valid)
+          })
       );
     },
     onSubmit() {
