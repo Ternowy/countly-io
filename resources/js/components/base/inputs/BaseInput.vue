@@ -1,10 +1,12 @@
 <template>
-  <input-base v-bind="$attrs" v-slot="{ errors }" :name="name">
-    <input ref="input" :placeholder="placeholder" :value="value" type="text"
-           :class="[...vClasses, {'error' : errors.length > 0}]"
-           v-bind="$attrs" @blur="onBlur" @input="onInput"
-    >
-    <slot/>
+  <input-base v-slot="{ errors }" v-bind="$attrs" :name="name">
+    <div :class="[...classes, {'border border-red-700' : errors.length > 0}]">
+      <input ref="input" :placeholder="placeholder" :value="value" type="text"
+             :class="[...vClasses]"
+             v-bind="$attrs" @blur="onBlur" @input="onInput"
+      >
+      <slot/>
+    </div>
   </input-base>
 </template>
 
@@ -14,6 +16,10 @@ export default {
   props: {
     name: String,
     value: String,
+    classes: {
+      type: Array,
+      default: () => [],
+    },
     placeholder: {
       type: String,
       default: '',

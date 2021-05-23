@@ -1,6 +1,6 @@
 <template>
   <validation-provider v-slot="{ errors }" :custom-messages="rulesMessages"
-                       :name="name" :rules="rules" tag="div"
+                       :name="name" :rules="rules" tag="div" class="w-full"
   >
     <label v-if="label" :class="{error: errors.length > 0}">
       {{ label }}

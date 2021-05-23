@@ -1,6 +1,6 @@
 <template>
   <base-input v-bind="Object.assign({}, $attrs, $props, {rules: vRules})" :maxlength="vRules.max"
-              class="w-full good-shadow rounded-lg px-4 py-2 text-gray-600 font-light text-base"
+              :classes="['w-full good-shadow rounded-lg px-4 py-2 text-gray-600 font-light text-base']"
               :input-classes="vClasses"
               v-on="$listeners"
   >
