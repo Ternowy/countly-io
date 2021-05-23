@@ -1,8 +1,8 @@
 <template>
   <a v-bind="$attrs" :href="action" class="create-survey">
-    <base-button type="classic">
+    <base-button type="classic" rounded>
       <template>
-        <base-icon name="plus"/>
+        <base-icon name="plus" fill="#696352"/>
       </template>
     </base-button>
 
