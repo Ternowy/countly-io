@@ -1,6 +1,6 @@
 <template>
   <input-base v-slot="{ errors }" v-bind="$attrs" :name="name">
-    <div :class="[...classes, {'border border-red-700' : errors.length > 0}]">
+    <div :class="[...classes, {'border border-red-400' : errors.length > 0}]">
       <input ref="input" :placeholder="placeholder" :value="value" type="text"
              :class="[...vClasses]"
              v-bind="$attrs" @blur="onBlur" @input="onInput"

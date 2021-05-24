@@ -3,9 +3,9 @@
   <preview v-else ref="form" @submit.prevent="onSubmit">
     <preview-survey-description :name="name" :description="description"/>
     <preview-input v-for="(input, index) in structure" :key="index" v-bind="input"
-                   v-model="surveyData[input.name]" @input="onInput"
+                   v-model="surveyData[input.name]"
     />
-    <base-button :disabled="!surveyValid" type="action" class="w-36" @click="onSubmit">
+    <base-button type="action" class="w-36" @click="onSubmit">
       <p class="text-base text-white text-lg font-medium">🖐 Submit</p>
     </base-button>
   </preview>
@@ -40,7 +40,7 @@ export default {
       },
       surveyData: {},
       surveyValid: false,
-      isSubmitted: false
+      isSubmitted: false,
     };
   },
   created() {
@@ -50,15 +50,15 @@ export default {
   },
   methods: {
     onInput() {
-      this.$nextTick(
-          () => this.$refs.form.validate().then(valid => {
-            this.surveyValid = valid;
-            console.log(valid)
-          })
-      );
     },
     onSubmit() {
-      this.api.survey.submit(this.surveyData).then(() => this.isSubmitted = true);
+      this.$refs.form.validate().then(valid => {
+        this.surveyValid = valid;
+
+        if (valid) {
+          this.api.survey.submit(this.surveyData).then(() => this.isSubmitted = true);
+        }
+      });
     },
   },
 };

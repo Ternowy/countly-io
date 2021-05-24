@@ -1,7 +1,7 @@
 <template>
   <label class="flex w-full input-container mb-1 items-start content-center">
     <input ref="checkbox" v-model="vValue" :value="itemValue" :name="name" hidden type="checkbox">
-    <span class="checkmark"></span>
+    <span :class="['checkmark', {'checkmark-error' : errors.length > 0}]"></span>
     <p class="flex text-base font-normal text-grey ml-2">{{ label }}</p>
   </label>
 </template>
@@ -17,14 +17,7 @@ export default {
       required: true,
     },
     label: String,
-    rules: {
-      type: Object,
-      default: () => ({}),
-    },
-    rulesMessages: {
-      type: Object,
-      default: () => ({}),
-    },
+    errors: Array
   },
   emits: ['input'],
   computed: {
@@ -36,8 +29,6 @@ export default {
         this.$emit('input', newVal);
       },
     },
-  },
-  methods: {
   },
 };
 </script>
@@ -92,5 +83,10 @@ export default {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+
+.input-container .checkmark-error {
+  border-width: 1px;
+  border-color: #F95D51;
 }
 </style>

@@ -1,6 +1,9 @@
-<template>
-  <input-base :name="name" v-bind="$attrs" class="w-full rounded-lg good-shadow">
-    <select v-model="vValue" :name="name" class="w-full py-2 px-4 rounded-lg select-input" @change="onInput">
+  <template>
+  <input-base v-slot="{ errors }" :name="name" v-bind="$attrs" class="w-full rounded-lg good-shadow">
+    <select v-model="vValue" :name="name"
+            :class="['w-full py-2 px-4 rounded-lg select-input', {'border border-red-400' : errors.length > 0}]"
+            @change="onInput"
+    >
       <option value="" disabled :selected="!value">{{ defaultLabel }}</option>
       <option v-for="(option, index) in options" :key="index" :value="option">
         {{ option }}

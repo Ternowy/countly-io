@@ -1,20 +1,23 @@
 <template>
-  <div v-bind="$attrs" class="w-full flex flex-col">
-    <textarea ref="textarea" v-bind="$attrs" :value="value" class="w-full" :class="vClasses"
-              @input="onInput" @blur="onBlur"
-    />
-    <slot/>
-  </div>
+  <input-base v-slot="{ errors }" v-bind="$attrs" :name="name">
+    <div :class="[classes, {'border border-red-400' : errors.length > 0}]">
+      <textarea ref="textarea" v-bind="$attrs" :name="name" :value="value" class="w-full" :class="vClasses"
+                @input="onInput" @blur="onBlur"
+      />
+      <slot/>
+    </div>
+  </input-base>
 </template>
 
 <script>
 export default {
   name: 'BaseTextarea',
   props: {
+    name: String,
     value: String,
     classes: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     size: {
       type: String,
@@ -25,7 +28,7 @@ export default {
   emits: ['input', 'blur'],
   computed: {
     vClasses() {
-      return ['input-style', ...this.classes, `${this.size}-size`];
+      return ['input-style', 'w-full', 'rounded-t-lg', `${this.size}-size`];
     },
   },
   methods: {
@@ -37,7 +40,7 @@ export default {
     },
     onBlur() {
       this.$emit('blur');
-    }
+    },
   },
 };
 </script>

@@ -1,15 +1,15 @@
 <template>
-  <input-base :label="label" :name="name" :rules="rules" :rules-messages="rulesMessages">
+  <div>
     <div v-for="(option, index) in options" :key="index">
       <label :for="`radio-${index}-${_uid}`" class="flex flex-row items-center input-container mb-1">
         <input :id="`radio-${index}-${_uid}`" :checked="option === value" :name="name"
-               type="radio" class="checkmark" @input="onChange(option)"
+               type="radio" @input="onChange(option)"
         >
-        <span class="checkmark"></span>
+        <span :class="['checkmark', {'checkmark-error' : errors.length > 0}]"></span>
         <div class="flex text-base font-normal text-grey ml-2">{{ option }}</div>
       </label>
     </div>
-  </input-base>
+  </div>
 </template>
 
 <script>
@@ -23,14 +23,7 @@ export default {
       required: true,
     },
     label: String,
-    rules: {
-      type: Object,
-      default: () => ({}),
-    },
-    rulesMessages: {
-      type: Object,
-      default: () => ({}),
-    },
+    errors: Array
   },
   emits: ['input'],
   methods: {
@@ -90,5 +83,10 @@ export default {
   border-radius: 8px;
   margin-top: 4px;
   background-color: green;
+}
+
+.input-container .checkmark-error {
+  border-width: 1px;
+  border-color: #F95D51;
 }
 </style>

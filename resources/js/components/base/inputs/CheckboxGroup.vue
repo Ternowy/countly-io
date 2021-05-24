@@ -1,7 +1,7 @@
 <template>
   <div class="checkbox-group">
     <base-checkbox v-for="(option, index) in options" :key="index" v-model="vValue" :name="name"
-                   :item-value="option" :label="option"
+                   :item-value="option" :label="option" :errors="errors"
     />
   </div>
 </template>
@@ -19,6 +19,10 @@ export default {
       required: true,
     },
     label: String,
+    errors: {
+      type: Array,
+      default: () => []
+    }
   },
   emits: ['input'],
   computed: {
