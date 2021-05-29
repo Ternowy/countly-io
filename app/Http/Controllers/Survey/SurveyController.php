@@ -9,6 +9,7 @@ use App\Http\Requests\Survey\UpdateSurveyStatusRequest;
 use App\Models\Survey\Factory\SurveyStructureFactory;
 use App\Models\Survey\Survey;
 use App\Repository\Survey\SurveyRepository;
+use App\Service\Survey\SurveyDecorator;
 use App\Service\Survey\SurveyService;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,21 +21,25 @@ class SurveyController extends Controller
 
     protected SurveyStructureFactory $surveyStructureFactory;
 
+    protected SurveyDecorator $surveyDecorator;
+
     public function __construct(
         SurveyService $surveyService,
         SurveyRepository $surveyRepository,
-        SurveyStructureFactory $surveyStructureFactory
+        SurveyStructureFactory $surveyStructureFactory,
+        SurveyDecorator $surveyDecorator
     ) {
         $this->surveyService = $surveyService;
         $this->surveyRepository = $surveyRepository;
         $this->surveyStructureFactory = $surveyStructureFactory;
+        $this->surveyDecorator = $surveyDecorator;
     }
 
     public function surveys()
     {
         $surveys = $this->surveyRepository->allOfUser(Auth::user())->map(
             function (Survey $survey) {
-                return $this->surveyService->decorate($survey);
+                return $this->surveyDecorator->decorate($survey);
             }
         );
 
@@ -110,7 +115,7 @@ class SurveyController extends Controller
 
     public function updateStatus(UpdateSurveyStatusRequest $request, $id)
     {
-        return $this->surveyService->decorate(
+        return $this->surveyDecorator->decorate(
             $this->surveyService->updateStatus(
                 (int)$id,
                 $request->get('status'),

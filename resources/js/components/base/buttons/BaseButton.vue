@@ -59,7 +59,7 @@ export default {
 
       const styleTypeSet = {
         grey: ['bg-grey', 'hover:bg-darkGrey', 'text-gray-500'],
-        action: ['bg-actionGreen', 'hover:bg-greenHighlight']
+        action: ['bg-actionGreen', 'hover:bg-greenHighlight', 'text-white', 'text-lg', 'font-medium']
       };
 
       if (Object.keys(styleTypeSet).includes(this.type)) {

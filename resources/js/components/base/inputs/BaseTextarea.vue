@@ -19,6 +19,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    inputClasses: {
+      type: Array,
+      default: () => [],
+    },
     size: {
       type: String,
       default: 'medium',
@@ -28,7 +32,7 @@ export default {
   emits: ['input', 'blur'],
   computed: {
     vClasses() {
-      return ['input-style', 'w-full', 'rounded-t-lg', `${this.size}-size`];
+      return ['input-style', 'w-full', 'rounded-t-lg', ...this.inputClasses, `${this.size}-size`];
     },
   },
   methods: {

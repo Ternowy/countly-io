@@ -1,5 +1,5 @@
 <template>
-  <success-window v-if="isSubmitted"/>
+  <success-window v-if="isSubmitted" :link="homeUri"/>
   <preview v-else ref="form" @submit.prevent="onSubmit">
     <preview-survey-description :name="name" :description="description"/>
     <preview-input v-for="(input, index) in structure" :key="index" v-bind="input"
@@ -28,6 +28,7 @@ export default {
     structure: Array,
     accessCode: String,
     submitSurveyUri: String,
+    homeUri: String,
   },
   data() {
     const surveyApi = survey(getAxios(), {

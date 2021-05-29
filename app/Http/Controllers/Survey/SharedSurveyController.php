@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Survey\SubmitSurveyRequest;
 use App\Repository\Survey\SurveyRepository;
 use App\Service\Survey\Shared\SharedSurveyService;
+use App\Service\Survey\SurveyDecorator;
 
 class SharedSurveyController extends Controller
 {
@@ -13,12 +14,16 @@ class SharedSurveyController extends Controller
 
     protected SurveyRepository $surveyRepository;
 
+    protected SurveyDecorator $surveyDecorator;
+
     public function __construct(
         SharedSurveyService $sharedSurveyService,
-        SurveyRepository $surveyRepository
+        SurveyRepository $surveyRepository,
+        SurveyDecorator $surveyDecorator
     ) {
         $this->sharedSurveyService = $sharedSurveyService;
         $this->surveyRepository = $surveyRepository;
+        $this->surveyDecorator = $surveyDecorator;
     }
 
     public function load($code)
@@ -28,10 +33,12 @@ class SharedSurveyController extends Controller
             ['structure', 'name', 'description', 'access_code']
         );
 
-        $survey->submitSurveyUri = route('submit-survey', ['code' => $survey->getAttribute('access_code')]);
+        if (empty($survey)) {
+            return view('survey.notfound');
+        }
 
         return view('survey.survey', [
-            'survey' => $survey->toArray()
+            'survey' => $this->surveyDecorator->decorate($survey, true)->toArray()
         ]);
     }
 

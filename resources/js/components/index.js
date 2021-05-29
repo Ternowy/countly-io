@@ -25,6 +25,7 @@ import TextualChart from './base/info/charts/TextualChart';
 import SurveyLimit from './common/SurveyLimit';
 import BaseSwitch from './base/inputs/BaseSwitch';
 import AuthView from './AuthView';
+import SurveyNotFound from './survey-preview/SurveyNotFound';
 
 export default {
   install(Vue) {
@@ -58,6 +59,7 @@ export default {
     Vue.component('SurveyPreview', SurveyPreview);
     Vue.component('SurveyList', SurveyList);
 
+    Vue.component('SurveyNotFound', SurveyNotFound);
     //Auth
     Vue.component('AuthView', AuthView);
   },

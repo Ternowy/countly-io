@@ -12,7 +12,7 @@
 
     <div class="survey-header-title">
       <div class="survey-access-link">
-        survey.contly.io/{{ accessLink }}
+        {{ accessLink }}
       </div>
 
       <div class="survey-title">

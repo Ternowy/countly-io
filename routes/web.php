@@ -35,7 +35,7 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-Route::domain('survey.' . env('APP_URL'))->group(function () {
+Route::prefix('survey')->group(function () {
     Route::get('/{code}', [SharedSurveyController::class, 'load'])->name('load-survey');
     Route::post('/{code}', [SharedSurveyController::class, 'submit'])->name('submit-survey');
 });

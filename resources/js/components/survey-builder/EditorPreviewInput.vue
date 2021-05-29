@@ -11,7 +11,7 @@
       </div>
       <div class="flex flex-col w-5/12 h-full">
         <div class="flex flex-row w-full justify-between">
-          <span class="text-red-500 mr-4">{{ required ? '*' : '' }}</span>
+          <span class="text-red-500 mr-4 ml-1">{{ required ? '*' : '' }}</span>
           <div class="flex flex-row justify-end">
             <base-switch :value="required" class="" label="Required" @input="onInput('required', $event)"/>
             <base-popover ref="actionsPopover" class="ml-10" trigger="click">
