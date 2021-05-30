@@ -26,8 +26,8 @@ Route::middleware(['auth'])->group(function () {
 
         Route::post('/', [SurveyController::class, 'create'])->name('save-survey');
         Route::put('/{id}', [SurveyController::class, 'update'])->name('update-survey');
-        Route::delete('/{id}', [SurveyController::class, 'delete'])->name('delete-survey');
         Route::put('/{id}/status', [SurveyController::class, 'updateStatus'])->name('update-survey-status');
+        Route::delete('/{id}', [SurveyController::class, 'delete'])->name('delete-survey');
 
         Route::get('/{id}/results', [SurveyResultsController::class, 'results'])->name('survey-results');
         Route::post('/{id}/clear', [SurveyController::class, 'clear'])->name('clear-survey-results');

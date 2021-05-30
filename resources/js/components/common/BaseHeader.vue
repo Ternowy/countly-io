@@ -2,7 +2,9 @@
   <header class="header p-app sticky top-0 shadow-md">
     <div class="item info">
       <slot name="info">
-        <survey-limit :limit="answersLimit" :number="answersNumber"/>
+        <survey-limit v-tooltip :content="surveyLimitTooltip"
+                      :limit="answersLimit" :number="answersNumber"
+        />
       </slot>
     </div>
     <div class="item general">
@@ -32,6 +34,9 @@ export default {
     logoutLink: String,
     userPic: String,
   },
+  data: () => ({
+    surveyLimitTooltip: 'Records limit for your surveys, you can clear it on the page with results for each survey'
+  }),
   methods: {
     logout() {
       window.location.href = this.logoutLink;

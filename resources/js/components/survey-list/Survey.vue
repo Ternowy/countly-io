@@ -10,13 +10,16 @@
       </base-button>
     </div>
 
-    <div class="survey-header-title">
-      <div class="survey-access-link">
+    <div class="survey-header-title w-full">
+      <div v-tooltip v-clipboard="accessLink"
+           content="Click to copy"
+           class="survey-access-link w-52 text-center cursor-pointer"
+      >
         {{ accessLink }}
       </div>
 
-      <div class="survey-title">
-        {{ name }}
+      <div class="survey-title h-12">
+        {{ name.length > 60 ? `${name.substring(0, 60)}...` : name }}
       </div>
     </div>
 
@@ -65,8 +68,7 @@ export default {
     requestSurveyRemoval() {
       this.$refs.removalConfirmationModal.show().then(() => {
         this.$emit('remove');
-      }).catch(() => {
-      });
+      }).catch(() => {});
     },
     onStatusChange(val) {
       this.$emit('change-status', val ? 'active' : 'inactive');
@@ -98,7 +100,6 @@ export default {
       font-weight: 300;
       line-height: 14px;
       color: #4F4F4F;
-      width: 170px;
     }
 
     .survey-title {

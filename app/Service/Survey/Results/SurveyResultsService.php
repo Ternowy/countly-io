@@ -39,12 +39,14 @@ class SurveyResultsService
                 );
 
                 if ($surveyStructureInput->isTextInput()) {
-                    $allInputs->each(function (SurveyAnswerInput $surveyAnswerInput) use (&$statistics) {
-                        $value = $surveyAnswerInput->value;
-                        if (is_string($value)) {
-                            $statistics[] = $value;
+                    $allInputs->each(
+                        function (SurveyAnswerInput $surveyAnswerInput) use (&$statistics) {
+                            $value = $surveyAnswerInput->value;
+                            if (is_string($value)) {
+                                $statistics[] = $value;
+                            }
                         }
-                    });
+                    );
                 } elseif ($surveyStructureInput->isInputWithOptions()) {
                     foreach ($surveyStructureInput->getOptions() as $option) {
                         $statistics[$option] = 0;
@@ -88,14 +90,20 @@ class SurveyResultsService
         return collect($preparedAnswers);
     }
 
-    public function clearSurveyResults(Survey $survey): ?bool
+    /**
+     * Delete all survey submissions
+     */
+    public function clearSurveyResults(Survey $survey): void
     {
-        $surveyAnswer = $this->surveyAnswer->where('survey_id', $survey->id)->firstOrFail();
+        $surveyAnswers = $this->surveyAnswer->where('survey_id', $survey->id)->get();
 
-        $surveyAnswer->inputs()->delete();
+        $surveyAnswers->each(
+            function (SurveyAnswer $surveyAnswer) {
+                $surveyAnswer->inputs()->delete();
+                $surveyAnswer->delete();
+            }
+        );
 
         //TODO create cleanup job queue to delete instantly
-        //if needed
-        return (bool)$surveyAnswer->delete();
     }
 }

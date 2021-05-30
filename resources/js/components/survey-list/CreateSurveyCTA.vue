@@ -8,7 +8,7 @@
 
     <h4>CREATE NEW SURVEY</h4>
 
-    <span>(You can create up to 5 survey)</span>
+    <span>(You can create up to 5 surveys)</span>
   </a>
 </template>
 
@@ -36,10 +36,6 @@ a.create-survey {
   cursor: pointer;
   text-decoration: none;
   transition: transform 0.2s ease-in-out;
-
-  &:hover {
-    transform: scale(1.01);
-  }
 
   h4 {
     margin: 20px 0 11px 0;

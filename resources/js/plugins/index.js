@@ -3,6 +3,7 @@ import Lodash from './lodash.js';
 import VueModal from './vue-modal.js';
 import VeeValidate from './vee-validate.js';
 import WCharts from './wcharts.js';
+import Clipboard from 'v-clipboard';
 
 export default {
   install (Vue) {
@@ -11,5 +12,6 @@ export default {
     Vue.use(VueModal);
     Vue.use(VeeValidate);
     Vue.use(WCharts);
+    Vue.use(Clipboard);
   }
 }

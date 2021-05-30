@@ -10,6 +10,7 @@ use App\Service\Auth\AuthService;
 use App\Service\Auth\Driver\DriverFactory;
 use App\Service\User\UserService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
@@ -65,7 +66,7 @@ class AuthController extends Controller
 
         Auth::login($userModel);
 
-        return redirect()->intended('surveys');
+        return Redirect::route('surveys');
     }
 
     public function logout()
