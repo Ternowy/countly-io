@@ -3,21 +3,28 @@
     <confirmation-modal ref="exitConfirmationModal" name="exit-confirmation-modal"/>
     <base-header :logo="logo">
       <template #info>
-        <base-button v-if="homeUri" :disabled="updateStatus === 'saving'" type="passive" class="exit-button" @click.native="exit">
+        <base-button v-if="homeUri" :disabled="updateStatus === 'saving'" type="passive" class="exit-button" @ click.native="exit">
           <base-icon name="left-arrow"/>
           <p class="exit">Back to home</p>
         </base-button>
 
-        <saving-status v-if="isEditMode" :status="updateStatus" class="ml-8"/>
+        <saving-status v-if="isEditMode" v-tooltip :status="updateStatus"
+                       class="ml-8" content="Saving status"
+        />
       </template>
 
       <template #actions>
-        <base-button v-if="isEditMode" type="action" rounded @click.native="onStats">
-          <base-icon name="stats" fill="#fff"/>
+        <base-button v-if="isEditMode" v-tooltip type="classic" rounded content="Click to open results"
+                     @click.native="onStats"
+        >
+          <base-icon name="stats" fill="#29AD62"/>
         </base-button>
 
-        <base-button v-if="isEditMode" type="action" class="w-36 mx-4" @click.native="onShare">
-          <p class="text-center text-lg text-white">Share</p>
+        <base-button v-if="isEditMode" v-tooltip type="action"
+                     class="w-36 mx-4" content="Click to open the survey"
+                     @click.native="onShare"
+        >
+          <p class="text-center text-lg text-white">Share survey</p>
         </base-button>
 
         <base-button v-if="!isEditMode" type="action" class="w-36 mx-4" @click.native="onSave">
