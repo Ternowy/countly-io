@@ -5,6 +5,7 @@
 
       <editor-preview-input-list v-model="reactiveStructure" @input="onDrag">
         <editor-preview-input v-for="(item, index) in reactiveStructure" :key="`element-${index}`"
+                              :ref="`element-${index}`"
                               v-bind="item"
                               :is-active="activeInputIndex === index"
                               :disable-type-change="isEditing"
@@ -25,6 +26,8 @@
       >
         <base-icon name="plus" clickable fill="#fff"/>
       </base-button>
+
+      <confirmation-modal ref="removalConfirmationModal" name="delete-input"/>
     </div>
   </div>
 </template>
@@ -109,10 +112,17 @@ export default {
     copyInput(index) {
       this.structure.push(this.structure[index]);
       this.onStateChange();
+      this.$nextTick(() => {
+        debugger
+        const lastItemIndex = this.reactiveStructure.length - 1;
+        this.$scrollTo(this.$refs[`element-${lastItemIndex}`][0].$el, 750, {});
+      });
     },
     removeInput(index) {
-      this.structure.splice(index, 1);
-      this.onStateChange();
+      this.$refs.removalConfirmationModal.show().then(() => {
+        this.structure.splice(index, 1);
+        this.onStateChange();
+      }).catch(() => {});
     },
     getState() {
       return {

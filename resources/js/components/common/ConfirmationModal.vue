@@ -1,7 +1,11 @@
 <template>
-  <base-modal v-bind="Object.assign({}, $attrs, $props)">
-    <base-icon v-if="alert" name="alert"/>
-    {{ label }}
+  <base-modal v-bind="Object.assign({}, $attrs, $props)"
+              class="w-48"
+  >
+    <div>
+      <base-icon v-if="alert" name="alert"/>
+      {{ label }}
+    </div>
     {{ description }}
     <div @click="confirm">{{ confirmText }}</div>
     <div @click="decline">{{ declineText }}</div>
@@ -21,29 +25,39 @@ export default {
     alert: Boolean,
     confirmText: {
       type: String,
-      default: 'Yes'
+      default: 'Yes',
     },
     declineText: {
       type: String,
-      default: 'No'
+      default: 'No',
     },
     hideOnDecline: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
+    hideOnConfirm: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
       resolvePromise: null,
-      rejectPromise: null
-    }
+      rejectPromise: null,
+    };
   },
   methods: {
     show() {
       this.$modal.show(this.name);
-      
+
       return new Promise((resolve, reject) => {
-        this.resolvePromise = () => resolve();
+        this.resolvePromise = () => {
+          if (this.hideOnConfirm) {
+            this.hide();
+          }
+
+          resolve();
+        };
         this.rejectPromise = () => {
           if (this.hideOnDecline) {
             this.hide();
@@ -66,6 +80,10 @@ export default {
 };
 </script>
 
-<style scoped>
-
+<style lang="scss">
+.v--modal {
+  border-radius: 10px;
+  width: 360px;
+  height: 187px;
+}
 </style>
