@@ -64,7 +64,7 @@ class AuthController extends Controller
             //EVENT USER REGISTERED
         }
 
-        Auth::login($userModel);
+        Auth::login($userModel, true);
 
         return Redirect::route('surveys');
     }

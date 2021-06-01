@@ -105,7 +105,7 @@ class SurveyController extends Controller
         return $this->surveyService->update(
             (int)$id,
             $request->get('name'),
-            $request->get('description'),
+            (string)$request->get('description'),
             $this->surveyStructureFactory->createInstance(
                 $request->get('structure')
             ),

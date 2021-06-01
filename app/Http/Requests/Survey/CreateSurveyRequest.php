@@ -18,7 +18,7 @@ class CreateSurveyRequest extends FormRequest
     {
        return [
             'name' => 'required|max:100',
-            'description' => 'required|max:280',
+            'description' => 'nullable|max:280',
             'structure' => 'required|array|min:1|max:15',
             'structure.*.name' => 'required|max:32',
             'structure.*.required' => 'required|boolean',

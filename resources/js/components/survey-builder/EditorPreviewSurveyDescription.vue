@@ -1,9 +1,6 @@
 <template>
   <div class="flex w-full flex-col justify-center items-center mb-10 bg-white p-7 rounded-3xl">
-    <base-textarea v-model="name" :maxlength="100" class="text-3xl" text-center
-                   :input-classes="['resize-vertical', 'text-center']" size="small"
-                   @blur="onNameBlur"
-    />
+    <base-input v-model="name" :maxlength="100" class="text-3xl" text-center @blur="onNameBlur"/>
     <base-textarea v-model="description" :maxlength="280" text-center
                    :input-classes="['resize-vertical', 'text-center']" size="small"
                    @blur="onDescriptionBlur"
@@ -44,10 +41,6 @@ export default {
       }
     },
     onDescriptionBlur() {
-      if (!this.description) {
-        this.description = this.value.description;
-      }
-
       if (this.description !== this.value.description) {
         this.onInput({description: this.description});
       }
