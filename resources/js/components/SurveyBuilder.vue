@@ -3,7 +3,7 @@
     <confirmation-modal ref="exitConfirmationModal" name="exit-confirmation-modal"/>
     <base-header :logo="logo">
       <template #info>
-        <base-button v-if="homeUri" :disabled="updateStatus === 'saving'" type="passive" class="exit-button" @ click.native="exit">
+        <base-button v-if="homeUri" :disabled="updateStatus === 'saving'" type="passive" class="exit-button" @click.native="exit">
           <base-icon name="left-arrow"/>
           <p class="exit">Back to home</p>
         </base-button>

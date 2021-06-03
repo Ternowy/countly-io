@@ -27,7 +27,7 @@ export default {
     type: {
       type: String,
       required: true,
-      validator: (value) => ['passive', 'action', 'classic', 'danger', 'grey'].includes(value),
+      validator: (value) => ['passive', 'action', 'classic', 'danger', 'grey', 'light-danger'].includes(value),
     },
     action: String,
     rounded: Boolean,
@@ -117,5 +117,9 @@ export default {
   &:hover {
     background-color: #FF8278;
   }
+}
+
+.button-light-danger {
+  background-color: #FFE4E4;
 }
 </style>

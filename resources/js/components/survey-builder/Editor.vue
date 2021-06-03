@@ -108,15 +108,12 @@ export default {
     addInput() {
       this.structure.push(Object.assign({}, this.defaultInput, {name: UniqueNameService.generate()}));
       this.onStateChange();
+      this.$nextTick(this.scrollToLastItem);
     },
     copyInput(index) {
       this.structure.push(this.structure[index]);
       this.onStateChange();
-      this.$nextTick(() => {
-        debugger
-        const lastItemIndex = this.reactiveStructure.length - 1;
-        this.$scrollTo(this.$refs[`element-${lastItemIndex}`][0].$el, 750, {});
-      });
+      this.$nextTick(this.scrollToLastItem);
     },
     removeInput(index) {
       this.$refs.removalConfirmationModal.show().then(() => {
@@ -140,6 +137,10 @@ export default {
     activateInput(index) {
       this.activeInputIndex = index;
     },
+    scrollToLastItem() {
+      const lastItemIndex = this.reactiveStructure.length - 1;
+      this.$scrollTo(this.$refs[`element-${lastItemIndex}`][0].$el, 750, {});
+    }
   },
 };
 </script>

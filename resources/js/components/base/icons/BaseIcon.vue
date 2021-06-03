@@ -21,6 +21,7 @@ import IconCopy from './all/IconCopy';
 import IconDrag from './all/IconDrag';
 import IconCloudCheckmark from './all/IconCloudCheckmark';
 import IconCloudUpload from './all/IconCloudUpload';
+import IconAlert from './all/IconAlert';
 
 export default {
   name: 'BaseIcon',
@@ -42,7 +43,8 @@ export default {
     IconCopy,
     IconDrag,
     IconCloudCheckmark,
-    IconCloudUpload
+    IconCloudUpload,
+    IconAlert
   },
   props: {
     name: {
