@@ -1,26 +1,26 @@
 <template>
   <base-modal v-bind="Object.assign({}, $attrs, $props)"
-              classes="flex flex-col rounded-2xl bg-white justify-items-center pt-10 content-between"
+              classes="flex flex-col rounded-2xl bg-white justify-items-center pt-5 content-between place-content-between"
               width="360px"
-              height="187px"
+              :height="modalHeight"
   >
-    <div class="w-full flex flex-row justify-center align-middle" style="height: 46px">
+    <div class="w-full flex flex-row justify-center items-center px-4 pt-2" style="height: 60px">
       <base-button type="light-danger" rounded>
         <base-icon name="alert" size="large" fill="#F95D51"/>
       </base-button>
-      <p class="text-center">{{ label }}</p>
+      <p class="ml-2 text-center">{{ label }}</p>
     </div>
 
-    <div class="w-full text-center" style="height: 46px">
+    <div v-if="description" class="w-full flex py-2 text-center items-center justify-center font-normal" style="height: 60px">
       {{ description }}
     </div>
 
-    <div class="w-full flex flex-row border-t" style="height: 56px">
-      <div class="w-6/12 text-center border-r content-center justify-center" @click="confirm">
-        <p class="w-full h-full text-center">{{ confirmText }}</p>
+    <div class="w-full flex flex-row border-t cursor-pointer" style="height: 60px">
+      <div class="w-6/12 flex text-center items-center justify-center font-normal text-gray-500 border-r" @click="decline">
+        {{ declineText }}
       </div>
-      <div class="w-6/12 text-center content-center justify-center" @click="decline">
-        <p class="w-full h-full text-center">{{ declineText }}</p>
+      <div class="w-6/12 flex text-center items-center justify-center font-normal" @click="confirm">
+        {{ confirmText }}
       </div>
     </div>
   </base-modal>
@@ -59,6 +59,11 @@ export default {
       resolvePromise: null,
       rejectPromise: null,
     };
+  },
+  computed: {
+    modalHeight() {
+      return this.description ? '240px' : '180px';
+    }
   },
   methods: {
     show() {

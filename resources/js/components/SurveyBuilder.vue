@@ -1,6 +1,9 @@
 <template>
   <div class="builder">
-    <confirmation-modal ref="exitConfirmationModal" name="exit-confirmation-modal"/>
+    <confirmation-modal ref="exitConfirmationModal" name="exit-confirmation-modal"
+                        confirm-text="Yes, quit" decline-text="No, continue"
+                        label="Are You sure You want to quit?"
+    />
     <base-header :logo="logo">
       <template #info>
         <base-button v-if="homeUri" :disabled="updateStatus === 'saving'" type="passive" class="exit-button" @click.native="exit">

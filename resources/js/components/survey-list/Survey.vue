@@ -46,7 +46,11 @@
       </a>
     </div>
 
-    <confirmation-modal ref="removalConfirmationModal" :name="`delete-survey-${this._uid}`"/>
+    <confirmation-modal ref="removalConfirmationModal" :name="`delete-survey-${this._uid}`"
+                        confirm-text="Yes, delete" decline-text="No, cancel"
+                        label="Confirm survey deletion"
+                        description="Click yes to delete the survey"
+    />
   </div>
 </template>
 
