@@ -2,8 +2,10 @@
 
 namespace App\Casts;
 
+use App\Models\Survey\Factory\SurveyStructureFactory;
 use App\Models\Survey\SurveyStructure;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+use Illuminate\Support\Facades\App;
 
 class SurveyStructureCast implements CastsAttributes
 {
@@ -18,7 +20,7 @@ class SurveyStructureCast implements CastsAttributes
      */
     public function get($model, $key, $value, $attributes)
     {
-        return new SurveyStructure(
+        return App::make(SurveyStructureFactory::class)->createInstance(
             json_decode($value, true)
         );
     }

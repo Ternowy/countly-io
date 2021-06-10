@@ -10,7 +10,6 @@ class CreateSurveyRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        //TODO check limit
         return true;
     }
 
@@ -19,10 +18,11 @@ class CreateSurveyRequest extends FormRequest
        return [
             'name' => 'required|max:100',
             'description' => 'nullable|max:280',
-            'structure' => 'required|array|min:1|max:15',
-            'structure.*.name' => 'required|max:32',
-            'structure.*.required' => 'required|boolean',
-            'structure.*.type' => [
+            'structure.ctaButton.label' => 'required|max:24',
+            'structure.inputs' => 'required|array|min:1|max:15',
+            'structure.inputs.*.name' => 'required|max:32',
+            'structure.inputs.*.required' => 'required|boolean',
+            'structure.inputs.*.type' => [
                 'required',
                 Rule::in(
                     [
@@ -31,9 +31,9 @@ class CreateSurveyRequest extends FormRequest
                     ]
                 )
             ],
-            'structure.*.label' => 'required|max:100',
-            'structure.*.placeholder' => 'present|max:100',
-            'structure.*.options' => 'present|max:15'
+            'structure.inputs.*.label' => 'required|max:100',
+            'structure.inputs.*.placeholder' => 'present|max:100',
+            'structure.inputs.*.options' => 'present|max:15'
         ];
     }
 }

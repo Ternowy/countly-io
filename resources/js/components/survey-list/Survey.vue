@@ -23,13 +23,13 @@
       </div>
     </div>
 
-    <div v-if="structure.length === 0" class="no-questions">
+    <div v-if="structure.inputs.length === 0" class="no-questions">
       <base-icon name="add-form"/>
       <p>Your questions will be here. <br>The form is now empty.</p>
     </div>
 
     <div v-else class="questions">
-      <div v-for="(question, index) in structure.slice(0, 3)" :key="question.name" class="question">
+      <div v-for="(question, index) in structure.inputs.slice(0, 3)" :key="question.name" class="question">
         {{ `${index + 1}. ${question.label}` }}
       </div>
     </div>

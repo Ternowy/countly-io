@@ -16,11 +16,9 @@
         />
       </editor-preview-input-list>
 
-      <base-button type="action" class="w-36 mb-2">
-        <p class="text-base text-white text-lg font-medium">🖐 Submit</p>
-      </base-button>
+      <editor-preview-cta-button v-model="ctaButton.label" @input="onStateChange"/>
 
-      <base-button :disabled="structure.length >= 15" type="action" size="large" rounded
+      <base-button :disabled="inputs.length >= 15" type="action" size="large" rounded
                    class="shadow-md"
                    @click.native="addInput"
       >
@@ -38,10 +36,11 @@ import EditorPreviewInput from './EditorPreviewInput';
 import EditorPreviewSurveyDescription from './EditorPreviewSurveyDescription';
 import UniqueNameService from '../../service/unique-name-service';
 import isEqual from 'lodash/_baseIsEqual';
+import EditorPreviewCtaButton from './EditorPreviewCtaButton';
 
 export default {
   name: 'Editor',
-  components: {EditorPreviewSurveyDescription, EditorPreviewInput, EditorPreviewInputList},
+  components: {EditorPreviewCtaButton, EditorPreviewSurveyDescription, EditorPreviewInput, EditorPreviewInputList},
   props: {
     survey: Object,
     isEditing: Boolean
@@ -50,7 +49,10 @@ export default {
   data: () => ({
     surveyName: 'Sample name',
     surveyDescription: 'Sample description',
-    structure: [],
+    inputs: [],
+    ctaButton: {
+      label: '🖐 Submit'
+    },
     defaultInput: {
       type: 'select',
       label: 'This is a new input!',
@@ -68,10 +70,10 @@ export default {
   computed: {
     reactiveStructure: {
       get() {
-        return this.structure;
+        return this.inputs;
       },
       set(value) {
-        this.structure = value;
+        this.inputs = value;
       },
     },
     nameAndDescription: {
@@ -95,29 +97,30 @@ export default {
       const {name, description, structure} = this.survey;
       this.surveyName = name;
       this.surveyDescription = description;
-      this.structure = structure;
+      this.inputs = structure.inputs;
+      this.ctaButton = structure.ctaButton;
     } else {
       this.addInput();
     }
   },
   methods: {
     onInput(data, index) {
-      this.$set(this.structure, index, data);
+      this.$set(this.inputs, index, data);
       this.onStateChange();
     },
     addInput() {
-      this.structure.push(Object.assign({}, this.defaultInput, {name: UniqueNameService.generate()}));
+      this.inputs.push(Object.assign({}, this.defaultInput, {name: UniqueNameService.generate()}));
       this.onStateChange();
       this.$nextTick(this.scrollToLastItem);
     },
     copyInput(index) {
-      this.structure.push(this.structure[index]);
+      this.inputs.push(this.inputs[index]);
       this.onStateChange();
       this.$nextTick(this.scrollToLastItem);
     },
     removeInput(index) {
       this.$refs.removalConfirmationModal.show().then(() => {
-        this.structure.splice(index, 1);
+        this.inputs.splice(index, 1);
         this.onStateChange();
       }).catch(() => {});
     },
@@ -125,7 +128,10 @@ export default {
       return {
         name: this.surveyName,
         description: this.surveyDescription,
-        structure: this.structure,
+        structure: {
+          'inputs': this.inputs,
+          'ctaButton': this.ctaButton
+        }
       };
     },
     onDrag() {

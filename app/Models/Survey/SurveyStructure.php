@@ -12,9 +12,12 @@ class SurveyStructure implements Arrayable
     /* @var $inputs SurveyStructureInput[] */
     protected array $inputs;
 
-    public function __construct(array $inputs)
+    protected array $ctaButton;
+
+    public function __construct(array $inputs, array $ctaButton)
     {
         $this->inputs = $this->wrapInputs($inputs);
+        $this->ctaButton = $ctaButton;
     }
 
     public function __toString(): string
@@ -24,12 +27,15 @@ class SurveyStructure implements Arrayable
 
     public function toArray(): array
     {
-        return array_map(
-            function (SurveyStructureInput $input) {
-                return $input->toArray();
-            },
-            array_values($this->inputs)
-        );
+        return [
+            'inputs' => array_map(
+                function (SurveyStructureInput $input) {
+                    return $input->toArray();
+                },
+                array_values($this->inputs)
+            ),
+            'ctaButton' => $this->ctaButton
+        ];
     }
 
     public function getInputs(mixed ...$types): Collection
