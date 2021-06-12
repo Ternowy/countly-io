@@ -2,11 +2,11 @@
   <success-window v-if="isSubmitted" :link="homeUri"/>
   <preview v-else ref="form" @submit.prevent="onSubmit">
     <preview-survey-description :name="name" :description="description"/>
-    <preview-input v-for="(input, index) in structure" :key="index" v-bind="input"
+    <preview-input v-for="(input, index) in inputs" :key="index" v-bind="input"
                    v-model="surveyData[input.name]"
     />
     <base-button type="action" class="w-36" @click="onSubmit">
-      <p class="text-base text-white text-lg font-medium">🖐 Submit</p>
+      <p class="text-base text-white text-lg font-medium">{{ ctaButton.label }}</p>
     </base-button>
   </preview>
 </template>
@@ -25,7 +25,7 @@ export default {
   props: {
     name: String,
     description: String,
-    structure: Array,
+    structure: Object,
     accessCode: String,
     submitSurveyUri: String,
     homeUri: String,
@@ -39,13 +39,15 @@ export default {
       api: {
         survey: surveyApi,
       },
+      inputs: this.structure.inputs,
+      ctaButton: this.structure.ctaButton,
       surveyData: {},
       surveyValid: false,
       isSubmitted: false,
     };
   },
   created() {
-    this.structure.forEach(({name, type}) => {
+    this.inputs.forEach(({name, type}) => {
       this.$set(this.surveyData, name, type === 'checkbox' ? [] : null);
     });
   },

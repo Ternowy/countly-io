@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-full px-7">
     <component :is="componentName" v-bind="componentData"/>
   </div>
 </template>
@@ -20,7 +20,7 @@ export default {
       if (textual.includes(this.type)) {
         return 'textual-chart';
       } else {
-        return 'columnar-chart';
+        return 'bar-chart';
       }
     },
     componentData() {

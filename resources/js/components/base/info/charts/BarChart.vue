@@ -1,17 +1,19 @@
 <template>
-  <div>
-    <p>{{ label }} --- {{ answersNumber }}</p>
-    <br>------<br>
-    <v-chart :answers="answers"/>
+  <div class="flex flex-col">
+    <div class="flex w-full flex-row justify-between">
+      <p class="text-base">{{ label }}</p>
+      <p class="text-base">{{ answersNumber }}</p>
+    </div>
+    <base-bar-chart :answers="answers"/>
   </div>
 </template>
 
 <script>
-import VChart from './vChart';
+import BaseBarChart from './BaseBarChart';
 
 export default {
   name: 'BarChart',
-  components: {VChart},
+  components: {BaseBarChart},
   props: {
     label: String,
     answersNumber: Number,

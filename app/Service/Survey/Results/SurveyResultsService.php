@@ -80,7 +80,7 @@ class SurveyResultsService
                 $preparedAnswers[$surveyStructureInput->getName()] = [
                     'label' => $surveyStructureInput->getLabel(),
                     'type' => $surveyStructureInput->getType(),
-                    'answers_number' => $allInputs->count(),
+                    'answersNumber' => $allInputs->count(),
                     'answers' => $statistics
                 ];
             }

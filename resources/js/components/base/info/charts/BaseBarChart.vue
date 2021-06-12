@@ -1,60 +1,43 @@
 <template>
   <div>
-    <canvas :id="`chart-${_uid}`" ref="chart" width="400" height="400"></canvas>
+    <WCartesian :dataset="data" :height="300" :bound="[0]" responsive>
+      <WBar datakey="value" :width="45"
+            :color="['#463303', '#5A440B', '#7D6018', '#9E7409', '#C59112', '#DBA726', '#F3BD33']"
+      />
+      <WXAxis datakey="label" :space="[0, 50, 50, 50]"/>
+      <WYAxis :space="[25, 0, 0, 50]"/>
+    </WCartesian>
   </div>
 </template>
 
 <script>
-import { Chart } from 'chart.js';
+import { WCartesian, WBar, WXAxis, WYAxis } from 'vue-wcharts';
+import ChartDataFormatter from '../../../../service/chart-data-formatter.js';
 
 export default {
   name: 'BaseBarChart',
+  components: {
+    WCartesian,
+    WBar,
+    WXAxis,
+    WYAxis
+  },
   props: {
-    answers: Object
+    answers: Object,
+  },
+  data() {
+    const labelKey = 'label';
+    const valueKey = 'value';
+    return {
+      labelKey,
+      valueKey,
+      data: ChartDataFormatter.formatData(this.answers, labelKey, valueKey),
+    };
   },
   mounted() {
-    this.initChart();
+
   },
-  methods: {
-    initChart() {
-      new Chart(document.getElementById(`chart-${this._uid}`), {
-        type: 'bar',
-        data: {
-          labels: Object.keys(this.answers),
-          datasets: [{
-            data: Object.values(this.answers),
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          },
-          legend: {
-            display: false
-          },
-        }
-      });
-    }
-  }
+  methods: {},
 };
 </script>
 

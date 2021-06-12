@@ -11,6 +11,7 @@ use App\Models\Survey\Survey;
 use App\Repository\Survey\SurveyRepository;
 use App\Service\Survey\SurveyDecorator;
 use App\Service\Survey\SurveyService;
+use App\Service\SurveyLimits\SurveyLimitsService;
 use Illuminate\Support\Facades\Auth;
 
 class SurveyController extends Controller
@@ -23,21 +24,27 @@ class SurveyController extends Controller
 
     protected SurveyDecorator $surveyDecorator;
 
+    protected SurveyLimitsService $surveyLimitsService;
+
     public function __construct(
         SurveyService $surveyService,
         SurveyRepository $surveyRepository,
         SurveyStructureFactory $surveyStructureFactory,
-        SurveyDecorator $surveyDecorator
+        SurveyDecorator $surveyDecorator,
+        SurveyLimitsService $surveyLimitsService
     ) {
         $this->surveyService = $surveyService;
         $this->surveyRepository = $surveyRepository;
         $this->surveyStructureFactory = $surveyStructureFactory;
         $this->surveyDecorator = $surveyDecorator;
+        $this->surveyLimitsService = $surveyLimitsService;
     }
 
     public function surveys()
     {
-        $surveys = $this->surveyRepository->allOfUser(Auth::user())->map(
+        $user = Auth::user();
+
+        $surveys = $this->surveyRepository->allOfUser($user)->map(
             function (Survey $survey) {
                 return $this->surveyDecorator->decorate($survey);
             }
@@ -47,8 +54,8 @@ class SurveyController extends Controller
             'user.surveys',
             [
                 'surveys' => $surveys->toArray(),
-                'answersLimit' => 5000,
-                'answersNumber' => 4000
+                'answersLimit' => $this->surveyLimitsService->getAnswersLimit($user),
+                'answersNumber' => $this->surveyLimitsService->getAnswersStored($user)
             ]
         );
     }
