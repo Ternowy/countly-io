@@ -16,7 +16,7 @@ class CreateSurveyRequest extends FormRequest
     public function rules(): array
     {
        return [
-            'name' => 'required|max:100',
+            'name' => 'required|max:40',
             'description' => 'nullable|max:280',
             'structure.ctaButton.label' => 'required|max:24',
             'structure.inputs' => 'required|array|min:1|max:15',

@@ -18,11 +18,13 @@
 
       <editor-preview-cta-button v-model="ctaButton.label" @input="onStateChange"/>
 
-      <base-button :disabled="inputs.length >= 15" type="action" size="large" rounded
-                   class="shadow-md"
+      <base-button v-tooltip :disabled="inputs.length >= 15" type="action" size="large"
+                   content="Add new field"
+                   class="shadow-md w-48 mt-7"
                    @click.native="addInput"
       >
         <base-icon name="plus" clickable fill="#fff"/>
+        <p class="ml-2 text-base text-base">Add new input</p>
       </base-button>
 
       <confirmation-modal ref="removalConfirmationModal" name="delete-input"/>
@@ -110,6 +112,7 @@ export default {
     },
     addInput() {
       this.inputs.push(Object.assign({}, this.defaultInput, {name: UniqueNameService.generate()}));
+      this.activeInputIndex = this.inputs.length - 1;
       this.onStateChange();
       this.$nextTick(this.scrollToLastItem);
     },
