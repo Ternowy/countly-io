@@ -3,8 +3,8 @@ class ChartDataFormatter {
     let formatted = [];
 
     Object.keys(data).forEach(
-        (key) => formatted.push({
-          [labelKey]: key,
+        (key, index) => formatted.push({
+          [labelKey]: index + 1,
           [valueKey]: data[key]
         }),
     );

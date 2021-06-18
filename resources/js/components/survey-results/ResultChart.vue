@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full px-7">
+  <div class="">
     <component :is="componentName" v-bind="componentData"/>
   </div>
 </template>
