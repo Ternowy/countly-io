@@ -1,14 +1,20 @@
 <template>
   <div class="flex flex-col bg-white rounded-3xl">
-    <div class="flex w-full flex-row justify-between h-12 px-5 py-5">
+    <div class="flex w-full flex-row justify-between h-12 px-8 py-10 items-center border-b">
       <p class="text-base">{{ label }}</p>
-      <p class="text-base">{{ answersNumber }}</p>
+      <div class="flex flex-row items-center">
+        <p class="text-base">{{ answersNumber }}</p>
+        <base-icon name="person" size="small"/>
+      </div>
     </div>
     <base-bar-chart :answers="formattedAnswers"/>
-    <div class="flex w-fullgrid-rows-3 grid-flow-col gap-2">
-      <div v-for="(inputLabel, index) in Object.keys(answers)" :key="index" class="flex flex-row">
-        <div class="w-4 h-4 rounded-full bg-gray-400"></div>
-        {{ index + 1 }}) {{ inputLabel }}
+    <div class="grid grid-cols-3 gap-2 px-8 py-3 agenda border-t">
+      <div v-for="(inputLabel, index) in Object.keys(answers)" :key="index"
+           v-tooltip :content="inputLabel"
+           class="flex flex-row align-middle items-center h-8 agenda-item"
+      >
+        <span class="flex agenda-mark"/>
+        <p class="text-base font-light truncate ... ml-7">{{ index + 1 }}. {{ inputLabel }}</p>
       </div>
     </div>
   </div>
@@ -24,19 +30,58 @@ export default {
   props: {
     label: String,
     answersNumber: Number,
-    answers: Object
+    answers: Object,
   },
   data() {
     return {
       formattedAnswers: ChartDataFormatter.formatData(this.answers, 'label', 'value'),
-    }
+    };
   },
-  computed: {
-
-  }
+  computed: {},
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.agenda-item:nth-child(n) .agenda-mark {
+  background-color: #463303;
+}
 
+.agenda-item:nth-child(2n) .agenda-mark {
+  background-color: #5A440B;
+}
+
+.agenda-item:nth-child(3n) .agenda-mark {
+  background-color: #7D6018;
+}
+
+.agenda-item:nth-child(4n) .agenda-mark {
+  background-color: #9E7409;
+}
+
+.agenda-item:nth-child(5n) .agenda-mark {
+  background: #C59112;
+}
+
+.agenda-item:nth-child(6n) .agenda-mark {
+  background: #DBA726;
+}
+
+.agenda-item:nth-child(7n) .agenda-mark {
+  background-color: #F3BD33;
+}
+
+.agenda-item:nth-child(8n) .agenda-mark {
+  background-color: #FFD15D;
+}
+
+.agenda-item:nth-child(9n) .agenda-mark {
+  background-color: #FFE49D;
+}
+
+.agenda-mark {
+  height: 16px;
+  width: 16px;
+  position: absolute;
+  border-radius: 50%;
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="grid grid-cols-3 gap-4 mt-10">
+    <div class="grid grid-cols-2 gap-4 mt-10">
       <result-chart v-for="(result, index) in Object.values(results)" :key="index" v-bind="result"/>
     </div>
     <base-button color="red" label="Clear data" @click="onClearData"/>

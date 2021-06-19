@@ -33,7 +33,7 @@ class CreateSurveyRequest extends FormRequest
             ],
             'structure.inputs.*.label' => 'required|max:100',
             'structure.inputs.*.placeholder' => 'present|max:100',
-            'structure.inputs.*.options' => 'present|max:15',
+            'structure.inputs.*.options' => 'present|max:10',
             'structure.inputs.*.options.*' => 'max:40'
         ];
     }

@@ -50,8 +50,6 @@ class SharedSurveyController extends Controller
             $request->ip()
         );
 
-        return view('survey.success', [
-            'answer' => $answer
-        ]);
+        return $answer;
     }
 }
