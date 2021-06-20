@@ -1,12 +1,5 @@
 <template>
-  <div class="flex flex-col bg-white rounded-3xl">
-    <div class="flex w-full flex-row justify-between h-12 px-8 py-10 items-center border-b">
-      <p class="text-base">{{ label }}</p>
-      <div class="flex flex-row items-center">
-        <p class="text-base">{{ answersNumber }}</p>
-        <base-icon name="person" size="small"/>
-      </div>
-    </div>
+  <chart-wrapper v-bind="{label, answersNumber}">
     <base-bar-chart :answers="formattedAnswers"/>
     <div class="grid grid-cols-3 gap-2 px-8 py-3 agenda border-t">
       <div v-for="(inputLabel, index) in Object.keys(answers)" :key="index"
@@ -17,16 +10,17 @@
         <p class="text-base font-light truncate ... ml-7">{{ index + 1 }}. {{ inputLabel }}</p>
       </div>
     </div>
-  </div>
+  </chart-wrapper>
 </template>
 
 <script>
-import BaseBarChart from './BaseBarChart';
+import BaseBarChart from './Base/BaseBarChart';
 import ChartDataFormatter from '../../../../service/chart-data-formatter';
+import ChartWrapper from './ChartWrapper';
 
 export default {
   name: 'BarChart',
-  components: {BaseBarChart},
+  components: {ChartWrapper, BaseBarChart},
   props: {
     label: String,
     answersNumber: Number,

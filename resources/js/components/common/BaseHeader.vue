@@ -48,6 +48,7 @@ export default {
 <style lang="scss" scoped>
 .header {
   border-bottom: rgba(183, 179, 170, 0.5) 1px;
+  z-index: 999999;
 
   .actions {
     justify-content: flex-end;

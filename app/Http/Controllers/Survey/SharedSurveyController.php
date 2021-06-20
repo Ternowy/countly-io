@@ -44,12 +44,10 @@ class SharedSurveyController extends Controller
 
     public function submit(SubmitSurveyRequest $request, $code)
     {
-        $answer = $this->sharedSurveyService->answer(
+        return $this->sharedSurveyService->answer(
             $this->surveyRepository->getByCode($code),
             $request->get('answers'),
             $request->ip()
         );
-
-        return $answer;
     }
 }

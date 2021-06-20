@@ -54,7 +54,7 @@ class SharedSurveyService
             $preparedAnswers[] = [
                 'survey_id' => $surveyId,
                 'input_name' => $inputName,
-                'value' => $value
+                'value' => $value ?? ''
             ];
         }
 

@@ -1,21 +1,21 @@
 <template>
-  <div>
-    <p>{{ label }} --- {{ answersNumber }}</p>
-    <br>------  -<br>
+  <chart-wrapper v-bind="{label, answersNumber}">
     <base-textual-chart :answers="answers"/>
-  </div>
+  </chart-wrapper>
 </template>
 
 <script>
-import BaseTextualChart from './BaseTextualChart';
+import BaseTextualChart from './Base/BaseTextualChart';
+import ChartWrapper from './ChartWrapper';
+
 export default {
   name: 'TextualChart',
-  components: {BaseTextualChart},
+  components: {BaseTextualChart, ChartWrapper},
   props: {
     label: String,
     answersNumber: Number,
-    answers: Array
-  }
+    answers: Array,
+  },
 };
 </script>
 

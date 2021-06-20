@@ -5,7 +5,10 @@ class ChartDataFormatter {
     Object.keys(data).forEach(
         (key, index) => formatted.push({
           [labelKey]: index + 1,
-          [valueKey]: data[key]
+          [valueKey]: data[key],
+          tooltip: {
+            label: key
+          }
         }),
     );
 
