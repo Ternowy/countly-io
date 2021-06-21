@@ -2,7 +2,7 @@
   <div class="progress-bar-wrapper">
     <p>{{ number }}/{{ limit }} records</p>
     <div class="progress-bar">
-      <div :style="{width: '60%'}" class="progress-inner"/>
+      <div :style="{width: progressBarCompletion}" class="progress-inner"/>
     </div>
   </div>
 </template>
@@ -14,6 +14,12 @@ export default {
     limit: String,
     number: String,
   },
+  computed: {
+    progressBarCompletion() {
+      const completion = this.number / 50;
+      return `${completion}%`;
+    }
+  }
 };
 </script>
 

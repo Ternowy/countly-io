@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SurveyResults;
 use App\Http\Controllers\Controller;
 use App\Repository\Survey\SurveyRepository;
 use App\Service\Survey\Results\SurveyResultsService;
+use App\Service\Survey\SurveyDecorator;
 use App\Service\SurveyLimits\SurveyLimitsService;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,20 +17,26 @@ class SurveyResultsController extends Controller
 
     protected SurveyLimitsService $surveyLimitsService;
 
+    protected SurveyDecorator $surveyDecorator;
+
     public function __construct(
         SurveyRepository $surveyRepository,
         SurveyResultsService $surveyResultsService,
-        SurveyLimitsService $surveyLimitsService
+        SurveyLimitsService $surveyLimitsService,
+        SurveyDecorator $surveyDecorator
     ) {
         $this->surveyRepository = $surveyRepository;
         $this->surveyResultsService = $surveyResultsService;
         $this->surveyLimitsService = $surveyLimitsService;
+        $this->surveyDecorator = $surveyDecorator;
     }
 
     public function results($id)
     {
         $user = Auth::user();
-        $survey = $this->surveyRepository->getById($user, (int)$id);
+        $survey = $this->surveyDecorator->decorate(
+            $this->surveyRepository->getById($user, (int)$id)
+        );
 
         return view(
             'user.survey.results',

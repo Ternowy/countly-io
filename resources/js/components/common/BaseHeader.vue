@@ -16,7 +16,7 @@
     <div class="item actions">
       <slot name="actions">
         <user-picture :src="userPic" class="picture"/>
-        <base-button type="passive" rounded @click.native="logout">
+        <base-button v-tooltip type="passive" content="Logout" rounded @click.native="logout">
           <base-icon name="quit" size="large"/>
         </base-button>
       </slot>

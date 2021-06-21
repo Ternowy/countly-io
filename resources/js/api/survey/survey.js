@@ -33,5 +33,12 @@ export default ($axios, config) => ({
         .then(({data}) => resolve(data))
         .catch(reject);
     });
-  }
+  },
+  clearResults: (endpoint) => {
+    return new Promise((resolve, reject) => {
+      $axios.delete(endpoint)
+        .then(({data}) => resolve(data))
+        .catch(reject);
+    });
+  },
 });

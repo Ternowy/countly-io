@@ -6,7 +6,9 @@
               @change-status="updateStatus(survey.updateStatusLink, index, $event)"
       />
       <create-survey-c-t-a v-for="n in ctaNumber" :key="n" :action="createSurveyLink"/>
-      <base-button class="create-survey-btn shadow-lg" type="action" rounded :action="createSurveyLink">
+      <base-button v-tooltip content="Open survey builder" class="shadow-lg" type="action" rounded fixed
+                   :action="createSurveyLink"
+      >
         <p style="font-size: 28px; margin-right: 5px">+</p> Create new survey
       </base-button>
     </div>
@@ -84,24 +86,7 @@ export default {
       grid-template-columns: 1fr;
     }
   }
-
-  .create-survey-btn {
-    position: fixed;
-    right: 7%;
-    bottom: 60px;
-    width: 264px;
-  }
 }
 
-@media (max-width: 768px) {
-  .survey-list-wrapper {
-    .create-survey-btn {
-      right: 50%;
-      transform: translateX(50%);
-      bottom: 40px;
-      width: 227px;
-      border-radius: 50px;
-    }
-  }
-}
+
 </style>

@@ -35,7 +35,8 @@ export default {
       type: Boolean,
       default: true
     },
-    disabled: Boolean
+    disabled: Boolean,
+    fixed: Boolean
   },
   computed: {
     classes() {
@@ -48,6 +49,10 @@ export default {
 
       if (this.rounded) {
         classes.push(styleSizeSet.width[this.size]);
+      }
+
+      if (this.fixed) {
+        classes.push('fixed-btn');
       }
 
       const defaultTextStyle = ['text-white', 'text-lg', 'font-medium'];
@@ -121,5 +126,22 @@ export default {
 
 .button-light-danger {
   background-color: #FFE4E4;
+}
+
+.fixed-btn {
+  position: fixed;
+  right: 7%;
+  bottom: 60px;
+  width: 264px;
+}
+
+@media (max-width: 768px) {
+  .fixed-btn {
+    right: 50%;
+    transform: translateX(50%);
+    bottom: 40px;
+    width: 227px;
+    border-radius: 50px;
+  }
 }
 </style>

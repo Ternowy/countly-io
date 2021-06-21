@@ -1,18 +1,23 @@
 <template>
   <div class="survey">
     <div class="survey-actions">
-      <base-button :action="editLink" size="medium" type="action" class="shadow-md" rounded>
+      <base-button v-tooltip content="Edit survey"
+                   :action="editLink" size="medium" type="action" class="shadow-md" rounded
+      >
         <base-icon name="pen"/>
       </base-button>
 
-      <base-button size="medium" type="danger" class="shadow-md" rounded @click.native="requestSurveyRemoval">
+      <base-button v-tooltip content="Delete survey"
+                   size="medium" type="danger" class="shadow-md" rounded
+                   @click.native="requestSurveyRemoval"
+      >
         <base-icon name="trash" fill="white"/>
       </base-button>
     </div>
 
     <div class="survey-header-title w-full">
       <div v-tooltip v-clipboard="accessLink"
-           content="Click to copy"
+           content="Sharing link (Click to copy)"
            class="survey-access-link w-52 text-center cursor-pointer"
       >
         {{ accessLink }}
@@ -28,18 +33,20 @@
       <p>Your questions will be here. <br>The form is now empty.</p>
     </div>
 
-    <div v-else class="questions">
+    <div v-else v-tooltip content="Survey mini-preview (first 3 questions)" class="questions">
       <div v-for="(question, index) in structure.inputs.slice(0, 3)" :key="question.name" class="question">
         {{ `${index + 1}. ${question.label}` }}
       </div>
     </div>
 
     <div class="survey-footer">
-      <base-switch :value="status === 'active'" @input="onStatusChange">
+      <base-switch v-tooltip :content="status === 'active' ? 'Survey is available' : 'Survey is not available'"
+                   :value="status === 'active'" @input="onStatusChange"
+      >
         {{ status }}
       </base-switch>
 
-      <a :href="resultsLink" target="_blank" class="stats-link">
+      <a v-tooltip content="Total survey answers" :href="resultsLink" target="_blank" class="stats-link">
         <base-icon name="stats" fill="#29AD62"/>
         <p>{{ answersNumber }}</p>
         <base-icon name="person"/>
@@ -72,7 +79,8 @@ export default {
     requestSurveyRemoval() {
       this.$refs.removalConfirmationModal.show().then(() => {
         this.$emit('remove');
-      }).catch(() => {});
+      }).catch(() => {
+      });
     },
     onStatusChange(val) {
       this.$emit('change-status', val ? 'active' : 'inactive');
