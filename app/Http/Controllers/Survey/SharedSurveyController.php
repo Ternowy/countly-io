@@ -50,4 +50,12 @@ class SharedSurveyController extends Controller
             $request->ip()
         );
     }
+
+    public function joinSurvey($code)
+    {
+        return $this->surveyDecorator->decorate(
+            $this->surveyRepository->getByCode($code),
+            true
+        );
+    }
 }

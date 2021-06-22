@@ -1,5 +1,8 @@
 <template>
-  <img :src="src" class="logo"/>
+  <a v-if="uri" :href="uri">
+    <img :src="src" class="logo"/>
+  </a>
+  <img v-else :src="src" class="logo"/>
 </template>
 
 <script>
@@ -10,6 +13,7 @@ export default {
       type: String,
       required: true,
     },
+    uri: String
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
-  <base-button type="action" class="w-44 mb-2 px-2">
-    <input ref="input" v-model="vValue" type="text" maxlength="24"
+  <base-button type="action" class="w-52 mb-2 px-2">
+    <input ref="input" v-model="vValue" type="text" maxlength="18"
            class="w-full bg-transparent text-base text-center text-white text-lg font-medium"
            @blur="onBlur"
     >

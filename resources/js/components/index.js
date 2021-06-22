@@ -24,7 +24,7 @@ import BarChart from './base/info/charts/BarChart';
 import TextualChart from './base/info/charts/TextualChart';
 import SurveyLimit from './common/SurveyLimit';
 import BaseSwitch from './base/inputs/BaseSwitch';
-import AuthView from './AuthView';
+import HomePage from './HomePage';
 import SurveyNotFound from './survey-preview/SurveyNotFound';
 
 export default {
@@ -60,7 +60,7 @@ export default {
     Vue.component('SurveyList', SurveyList);
 
     Vue.component('SurveyNotFound', SurveyNotFound);
-    //Auth
-    Vue.component('AuthView', AuthView);
+    //Home
+    Vue.component('HomePage', HomePage);
   },
 };

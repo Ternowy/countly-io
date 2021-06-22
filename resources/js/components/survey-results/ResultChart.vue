@@ -1,7 +1,5 @@
 <template>
-  <div class="">
-    <component :is="componentName" v-bind="componentData"/>
-  </div>
+  <component :is="componentName" v-bind="componentData"/>
 </template>
 
 <script>

@@ -36,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::prefix('survey')->group(function () {
+    Route::get('/join/{code}', [SharedSurveyController::class, 'joinSurvey'])->name('join-survey');
     Route::get('/{code}', [SharedSurveyController::class, 'load'])->name('load-survey');
     Route::post('/{code}', [SharedSurveyController::class, 'submit'])->name('submit-survey');
 });

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col bg-white rounded-3xl">
+  <div class="flex flex-col bg-white rounded-3xl shadow-md">
     <div class="flex w-full flex-row justify-between h-12 px-8 py-10 items-center border-b">
       <p class="text-base">{{ label }}</p>
       <div v-tooltip class="flex flex-row items-center" content="Total answers">

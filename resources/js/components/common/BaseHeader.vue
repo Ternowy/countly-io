@@ -9,7 +9,7 @@
     </div>
     <div class="item general">
       <slot name="general">
-        <header-logo :src="logo"/>
+        <header-logo :src="logo" :uri="logoUri"/>
       </slot>
     </div>
 
@@ -31,6 +31,7 @@ export default {
     answersLimit: String,
     answersNumber: String,
     logo: String,
+    logoUri: String,
     logoutLink: String,
     userPic: String,
   },

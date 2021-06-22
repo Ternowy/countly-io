@@ -5,7 +5,7 @@
     <preview-input v-for="(input, index) in inputs" :key="index" v-bind="input"
                    v-model="surveyData[input.name]"
     />
-    <base-button type="action" class="w-36" @click="onSubmit">
+    <base-button type="action" class="w-52" @click="onSubmit">
       <p class="text-base text-white text-lg font-medium">{{ ctaButton.label }}</p>
     </base-button>
   </preview>
