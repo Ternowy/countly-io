@@ -104,7 +104,9 @@ export default {
       this.updateStatus = status;
     },
     create() {
-      this.api.survey.create(this.$refs.editor.getState());
+      this.api.survey.create(this.$refs.editor.getState()).then(() => {
+        window.location.href = this.homeUri;
+      });
     },
     update: debounce(function(state) {
       this.setUpdateStatus('saving');

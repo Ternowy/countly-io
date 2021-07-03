@@ -37,12 +37,14 @@
         />
       </div>
     </div>
-    <div class="flex relative" style="left: 98%; cursor: grab">
+    <div class="flex relative handle" style="left: 98%; cursor: grab">
       <base-icon name="drag" fill="#BDBDBD"/>
     </div>
   </div>
-  <preview-input v-else v-bind="{label, options, required, type, name, placeholder}" class="cursor-pointer">
-    <div class="flex relative mt-2" style="left: 98%; cursor: grab">
+  <preview-input v-else v-bind="{label, options, required, type, name, placeholder}" class="cursor-pointer"
+                 @click.native="onActivate"
+  >
+    <div class="flex relative mt-2 handle" style="left: 98%; cursor: grab">
       <base-icon name="drag" fill="#BDBDBD"/>
     </div>
   </preview-input>
@@ -89,7 +91,7 @@ export default {
     disableTypeChange: Boolean,
     updated_at: String
   },
-  emits: ['input', 'copy', 'remove'],
+  emits: ['input', 'copy', 'remove', 'activate'],
   data() {
     return {
       inputTypes: ['checkbox', 'radio', 'select', 'text', 'textarea']
@@ -104,7 +106,7 @@ export default {
     },
     inputValue() {
       return this[this.relevantInputValue];
-    }
+    },
   },
   methods: {
     onInput(item, value) {
@@ -129,6 +131,9 @@ export default {
     },
     closeActionsPopover() {
       this.$refs.actionsPopover.close();
+    },
+    onActivate() {
+      this.$emit('activate');
     }
   },
 };

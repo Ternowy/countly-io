@@ -1,4 +1,4 @@
-export default ($axios, config) => ({
+export default ($axios, config = {}) => ({
   create: (survey) => {
     return new Promise((resolve, reject) => {
       $axios

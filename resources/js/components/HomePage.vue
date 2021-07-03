@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full flex-row justify-center content-center">
+  <div class="flex w-full flex-col justify-center content-center items-center">
     <div class="flex flex-col lg:w-4/12 sm:w-full items-center">
       <header-logo :src="logo"/>
       <div>
@@ -54,17 +54,26 @@
         </p>
       </div>
     </div>
+    <div class="w-full grid md:grid-cols-2 sm:grid-cols-1">
+      <div>
+        <survey-preview v-bind="welcomeSurvey"/>
+      </div>
+      <div>
+        <result-chart v-for="(result, index) in Object.values(welcomeSurveyResults)" :key="index" v-bind="result"/>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import JoinSurvey from './home-page/JoinSurvey';
 import survey from '../api/survey/survey';
+import ResultChart from './survey-results/ResultChart';
 import {getAxios} from '../api/axios';
 
 export default {
   name: 'HomePage',
-  components: {JoinSurvey},
+  components: {JoinSurvey, ResultChart},
   props: {
     googleLink: {
       type: String,
@@ -82,15 +91,13 @@ export default {
       type: String,
       required: true,
     },
-    joinSurveyLink: {
-      type: String,
-      required: true,
-    },
+    welcomeSurvey: Object,
+    welcomeSurveyResults: Object,
     isAuthenticated: Boolean,
     logo: String,
   },
   data() {
-    const surveyApi = survey(getAxios(), {join: this.joinSurveyLink});
+    const surveyApi = survey(getAxios());
 
     return {
       api: {

@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-row h-10 border-b border-gray-300 text-base items-center justify-between">
-    <base-input v-model.trim="vValue" :maxlength="40" class="w-10/12" @blur="onBlur"/>
+    <base-input v-model="vValue" :maxlength="40" class="w-10/12" @blur="onBlur"/>
     <base-icon name="trash" fill="#BDBDBD" size="small" class="mr-4" clickable @click.native="$emit('remove')"/>
   </div>
 </template>

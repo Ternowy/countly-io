@@ -1,5 +1,5 @@
 <template>
-  <draggable v-bind="$attrs" v-on="$listeners">
+  <draggable v-bind="$attrs" v-on="$listeners" :handle="handle">
     <transition-group>
       <slot/>
     </transition-group>
@@ -14,6 +14,12 @@ export default {
   components: {
     draggable
   },
+  props: {
+    handle: {
+      type: String,
+      default: '.handle'
+    }
+  }
 };
 </script>
 

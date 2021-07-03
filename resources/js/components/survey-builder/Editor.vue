@@ -12,7 +12,7 @@
                               @copy="copyInput(index)"
                               @input="onInput($event, index)"
                               @remove="removeInput(index)"
-                              @click.native="activateInput(index)"
+                              @activate="activateInput(index)"
         />
       </editor-preview-input-list>
 
