@@ -54,12 +54,16 @@
         </p>
       </div>
     </div>
-    <div class="w-full grid md:grid-cols-2 sm:grid-cols-1">
-      <div>
+    <div class="w-full grid md:grid-cols-2 sm:grid-cols-1 mt-8">
+      <div class="flex flex-col px-5">
+        <p class="font-normal text-3xl text-grey text-center my-8">How survey looks like?</p>
         <survey-preview v-bind="welcomeSurvey"/>
       </div>
-      <div>
-        <result-chart v-for="(result, index) in Object.values(welcomeSurveyResults)" :key="index" v-bind="result"/>
+      <div class="flex flex-col px-5">
+        <p class="font-normal text-3xl text-grey text-center my-8">How results look like?</p>
+        <result-chart v-for="(result, index) in Object.values(welcomeSurveyResults)" :key="index"
+                      v-bind="result" class="mb-8"
+        />
       </div>
     </div>
   </div>
