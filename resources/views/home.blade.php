@@ -1,4 +1,4 @@
-<x-main-layout title="survey software">
+<x-app-layout title="survey software">
     <div class="container pt-36">
         <home-page google-link="{{ route('auth', ['method' => 'google']) }}"
                    facebook-link="{{ route('auth', ['method' => 'facebook']) }}"
@@ -10,4 +10,4 @@
                    :welcome-survey-results="{{ json_encode($welcomeSurveyResults) }}"
         />
     </div>
-</x-main-layout>
+</x-app-layout>

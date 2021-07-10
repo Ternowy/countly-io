@@ -1,6 +1,6 @@
 <template>
   <div class="flex w-full flex-col justify-center content-center items-center">
-    <div class="flex flex-col lg:w-4/12 sm:w-full items-center">
+    <div class="flex flex-col lg:w-4/12 md:w-full items-center">
       <header-logo :src="logo"/>
       <div>
         <p>Surveys for communities 🌍</p>
@@ -54,9 +54,9 @@
         </p>
       </div>
     </div>
-    <div class="w-full grid md:grid-cols-2 sm:grid-cols-1 mt-8">
+    <div class="w-full grid md:grid-cols-2 sm:grid-cols-1 mt-8 mb-8">
       <div class="flex flex-col px-5">
-        <p class="font-normal text-3xl text-grey text-center my-8">How survey looks like?</p>
+        <p class="font-normal text-3xl text-grey text-center my-8">How survey  looks like?</p>
         <survey-preview v-bind="welcomeSurvey"/>
       </div>
       <div class="flex flex-col px-5">
