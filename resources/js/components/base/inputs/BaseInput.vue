@@ -1,5 +1,5 @@
 <template>
-  <input-base v-slot="{ errors }" v-bind="$attrs" :name="name">
+  <input-base ref="base" v-slot="{ errors }" v-bind="$attrs" :name="name">
     <div :class="[...classes, {'border border-red-400' : errors.length > 0}]">
       <input ref="input" :placeholder="placeholder" :value="value" type="text"
              :class="[...vClasses]"
@@ -52,6 +52,9 @@ export default {
     onInput(event) {
       this.$emit('input', event.target.value);
     },
+    validate() {
+      return this.$refs.base.validate();
+    }
   },
 };
 </script>

@@ -10,20 +10,20 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Socialite\Contracts\User;
 
-class AuthService
+class SocialMediaAuthService
 {
     public function validateMethod(string $method): void
     {
-        //TODO add custom message for hackers
         Validator::make(
-            ['method' => $method],
             [
-                'method' => [
-                    'required',
-                    Rule::in(['facebook', 'google', 'twitter']),
-                ]
+                'method' => $method
             ],
-            ['method' => __('auth.continueWith.methodNotAllowed')]
+            [
+                'method' => ['required', Rule::in(['facebook', 'google']),]
+            ],
+            [
+                'method' => __('auth.continueWith.methodNotAllowed')
+            ]
         )->validate();
     }
 

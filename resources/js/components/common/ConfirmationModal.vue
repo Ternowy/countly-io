@@ -5,30 +5,32 @@
               :height="modalHeight"
   >
     <div class="w-full flex flex-row justify-center items-center px-4 pt-2" style="height: 60px">
-      <base-button type="light-danger" rounded>
+      <base-button v-if="alert" type="light-danger" rounded>
         <base-icon name="alert" size="large" fill="#F95D51"/>
       </base-button>
       <p class="ml-2 text-center">{{ label }}</p>
     </div>
 
-    <div v-if="description" class="w-full flex py-2 text-center items-center justify-center font-normal" style="height: 60px">
-      {{ description }}
-    </div>
+    <slot name="description">
+      <div v-if="description" class="w-full flex py-2 text-center items-center justify-center font-normal"
+           style="height: 60px">
+        {{ description }}
+      </div>
+    </slot>
 
     <div class="w-full flex flex-row border-t cursor-pointer" style="height: 60px">
-      <div class="w-6/12 flex text-center items-center justify-center font-normal text-gray-500 border-r" @click="decline">
-        {{ declineText }}
-      </div>
-      <div class="w-6/12 flex text-center items-center justify-center font-normal" @click="confirm">
-        {{ confirmText }}
-      </div>
+      <modal-button class="text-gray-500 border-r" :text="declineText" @action="decline"/>
+      <modal-button :text="confirmText" :disabled="disableConfirmation" @action="confirm"/>
     </div>
   </base-modal>
 </template>
 
 <script>
+import ModalButton from './modal/ModalButton';
+
 export default {
   name: 'ConfirmationModal',
+  components: {ModalButton},
   props: {
     name: String,
     label: {
@@ -36,7 +38,10 @@ export default {
       default: 'Are You sure?',
     },
     description: String,
-    alert: Boolean,
+    alert: {
+      type: Boolean,
+      default: true,
+    },
     confirmText: {
       type: String,
       default: 'Yes',
@@ -53,6 +58,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    disableConfirmation: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -63,7 +72,7 @@ export default {
   computed: {
     modalHeight() {
       return this.description ? '240px' : '180px';
-    }
+    },
   },
   methods: {
     show() {
@@ -90,7 +99,9 @@ export default {
       this.$modal.hide(this.name);
     },
     confirm() {
-      this.resolvePromise();
+      if (!this.disableConfirmation) {
+        this.resolvePromise();
+      }
     },
     decline() {
       this.rejectPromise();

@@ -42,6 +42,11 @@
           </svg>
           <p class="ml-2.5 text-white font-normal text-lg">Continue with Facebook</p>
         </base-button>
+        <base-button type="passive" class="px-16 mt-5 w-full" @click.native="onLoginWithEmail">
+          <base-icon name="letter" size="large"/>
+          <p class="ml-2.5 text-grey font-normal text-lg">Continue with email</p>
+        </base-button>
+        <login-with-email-modal ref="loginWithEmailModal" @input="onEmailSubmit"/>
       </div>
       <div class="w-full text-center border-b mt-6 mr-0 border-gray-400" style="color: #949087">
         <span class="py-0 px-2.5 text-xl bg-main" style="line-height: 0.1em;">or</span>
@@ -56,7 +61,7 @@
     </div>
     <div class="w-full grid md:grid-cols-2 sm:grid-cols-1 mt-8 mb-8">
       <div class="flex flex-col px-5">
-        <p class="font-normal text-3xl text-grey text-center my-8">How survey  looks like?</p>
+        <p class="font-normal text-3xl text-grey text-center my-8">How survey looks like?</p>
         <survey-preview v-bind="welcomeSurvey"/>
       </div>
       <div class="flex flex-col px-5">
@@ -71,13 +76,15 @@
 
 <script>
 import JoinSurvey from './home-page/JoinSurvey';
-import survey from '../api/survey/survey';
+import survey from '../api/survey/survey.js';
+import auth from '../api/auth/auth.js';
 import ResultChart from './survey-results/ResultChart';
 import {getAxios} from '../api/axios';
+import LoginWithEmailModal from './home-page/LoginWithEmailModal';
 
 export default {
   name: 'HomePage',
-  components: {JoinSurvey, ResultChart},
+  components: {LoginWithEmailModal, JoinSurvey, ResultChart},
   props: {
     googleLink: {
       type: String,
@@ -95,6 +102,10 @@ export default {
       type: String,
       required: true,
     },
+    emailsAuthLink: {
+      type: String,
+      required: true,
+    },
     welcomeSurvey: Object,
     welcomeSurveyResults: Object,
     isAuthenticated: Boolean,
@@ -102,12 +113,14 @@ export default {
   },
   data() {
     const surveyApi = survey(getAxios());
+    const authApi = auth(getAxios(), {emailAuth: this.emailsAuthLink});
 
     return {
       api: {
         survey: surveyApi,
+        auth: authApi,
       },
-      surveyCodeError: null
+      surveyCodeError: null,
     };
   },
   methods: {
@@ -120,6 +133,14 @@ export default {
       }).catch(() => {
         this.surveyCodeError = 'Survey doesn\'t exists or is not available';
       });
+    },
+    onLoginWithEmail() {
+      this.$refs.loginWithEmailModal.open();
+    },
+    onEmailSubmit(email) {
+      this.api.auth.requestEmailAuth(email).then(() => {
+        alert('Login link sent');
+      })
     },
   },
 };

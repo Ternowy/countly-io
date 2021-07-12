@@ -4,6 +4,7 @@
                    facebook-link="{{ route('auth', ['method' => 'facebook']) }}"
                    logout-link="{{ route('logout') }}"
                    surveys-link="{{ route('surveys') }}"
+                   emails-auth-link="{{ route('quicklogin') }}"
                    logo="{{ url('/images/logo.svg') }}"
                    :is-authenticated="{{ Auth::check() ? 'true' : 'false' }}"
                    :welcome-survey="{{ json_encode($welcomeSurvey) }}"
