@@ -4,7 +4,7 @@
                   @input="onOptionInput($event, index)" @remove="removeOption(index)"
     />
     <base-button type="grey" size="small" class="p-4 text-sm mt-2" :disabled="!canAdd" @click.native="addOption">
-      + Add answer
+      + Add option
     </base-button>
   </div>
 </template>

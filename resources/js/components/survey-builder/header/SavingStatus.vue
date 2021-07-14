@@ -39,6 +39,7 @@ export default {
   height: 56px;
   width: 140px;
   position: relative;
+  z-index: 1005;
 }
 
 .description-wrapper {

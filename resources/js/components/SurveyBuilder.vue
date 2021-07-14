@@ -8,7 +8,7 @@
       <template #info>
         <base-button v-if="homeUri" :disabled="updateStatus === 'saving'" type="passive" class="exit-button" @click.native="exit">
           <base-icon name="left-arrow"/>
-          <p class="exit">Back to home</p>
+          <p class="exit md:flex sm:hidden">Back to home</p>
         </base-button>
 
         <saving-status v-if="isEditMode" v-tooltip :status="updateStatus"
@@ -34,7 +34,7 @@
           <p class="text-center text-lg text-white">Save</p>
         </base-button>
 
-        <user-picture :src="userPic"/>
+        <user-picture class="md:flex sm:hidden" :src="userPic"/>
       </template>
     </base-header>
 

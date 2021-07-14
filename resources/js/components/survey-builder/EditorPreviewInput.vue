@@ -13,7 +13,12 @@
         <div class="flex flex-row w-full justify-between">
           <span class="text-red-500 mr-4 ml-1">{{ required ? '*' : '' }}</span>
           <div class="flex flex-row justify-end">
-            <base-switch :value="required" class="" label="Required" @input="onInput('required', $event)"/>
+            <base-switch :value="required"
+                         label="Required"
+                         v-tooltip
+                         :content="required ? 'User can not submit answers without filling this field' : 'User can submit answers without filling this field'"
+                         @input="onInput('required', $event)"
+            />
             <base-popover ref="actionsPopover" class="ml-10" trigger="click">
               <template #trigger>
                 <button>
@@ -45,7 +50,7 @@
                  @click.native="onActivate"
   >
     <div class="flex relative mt-2 handle" style="left: 98%; cursor: grab">
-      <base-icon name="drag" fill="#BDBDBD"/>
+      <base-icon name="drag" fill="#BDBDBD" v-tooltip content="Drag to move"/>
     </div>
   </preview-input>
 </template>
@@ -81,20 +86,26 @@ export default {
     required: Boolean,
     options: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     placeholder: {
       type: String,
-      default: ''
+      default: '',
     },
     isActive: Boolean,
     disableTypeChange: Boolean,
-    updated_at: String
+    updated_at: String,
   },
   emits: ['input', 'copy', 'remove', 'activate'],
   data() {
     return {
-      inputTypes: ['checkbox', 'radio', 'select', 'text', 'textarea']
+      inputTypes: [
+        {value: 'checkbox', tooltip: 'Multiple choice'},
+        {value: 'radio', tooltip: 'Single choice'},
+        {value: 'select', tooltip: 'Dropdown'},
+        {value: 'text', tooltip: 'Short text'},
+        {value: 'textarea', tooltip: 'Long text'},
+      ],
     };
   },
   computed: {
@@ -116,7 +127,7 @@ export default {
         label: this.label,
         required: this.required,
         options: this.options,
-        placeholder: this.placeholder
+        placeholder: this.placeholder,
       }, {[item]: value});
 
       this.$emit('input', data);
@@ -134,7 +145,7 @@ export default {
     },
     onActivate() {
       this.$emit('activate');
-    }
+    },
   },
 };
 </script>

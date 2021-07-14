@@ -18,13 +18,12 @@
 
       <editor-preview-cta-button v-model="ctaButton.label" @input="onStateChange"/>
 
-      <base-button v-tooltip :disabled="inputs.length >= 15" type="action" size="large"
-                   content="Add new field"
+      <base-button :disabled="inputs.length >= 15" type="action" size="large"
                    class="shadow-md w-48 mt-7"
                    @click.native="addInput"
       >
         <base-icon name="plus" clickable fill="#fff"/>
-        <p class="ml-2 text-base text-base">Add new input</p>
+        <p class="ml-2 text-base text-base">Add new field</p>
       </base-button>
 
       <confirmation-modal ref="removalConfirmationModal" name="delete-input"/>
@@ -60,12 +59,7 @@ export default {
       label: 'This is a new input!',
       name: UniqueNameService.generate(),
       required: false,
-      options: [
-        'Option 1',
-        'Option 2',
-        'Option 3',
-      ],
-      placeholder: 'placeholder'
+      placeholder: 'Input text here'
     },
     activeInputIndex: null
   }),
@@ -111,7 +105,10 @@ export default {
       this.onStateChange();
     },
     addInput() {
-      this.inputs.push(Object.assign({}, this.defaultInput, {name: UniqueNameService.generate()}));
+      let newInput = Object.assign({}, this.defaultInput, {name: UniqueNameService.generate()});
+      newInput.options = ['1. ', '2. ', '3. '];
+      this.inputs.push(newInput);
+
       this.activeInputIndex = this.inputs.length - 1;
       this.onStateChange();
       this.$nextTick(this.scrollToLastItem);
@@ -139,6 +136,7 @@ export default {
     },
     onDrag() {
       this.onStateChange();
+      this.activateInput(null);
     },
     onStateChange() {
       this.$emit('input', this.getState());

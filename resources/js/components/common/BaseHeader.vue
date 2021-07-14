@@ -1,5 +1,5 @@
 <template>
-  <header class="header p-app sticky top-0 shadow-md">
+  <header class="header sticky top-0 shadow-md">
     <div class="item info">
       <slot name="info">
         <survey-limit v-tooltip :content="surveyLimitTooltip"
@@ -9,7 +9,7 @@
     </div>
     <div class="item general">
       <slot name="general">
-        <header-logo :src="logo" :uri="logoUri"/>
+        <header-logo class="md:flex sm:hidden" :src="logo" :uri="logoUri"/>
       </slot>
     </div>
 
@@ -49,7 +49,7 @@ export default {
 <style lang="scss" scoped>
 .header {
   border-bottom: rgba(183, 179, 170, 0.5) 1px;
-  z-index: 999999;
+  z-index: 1001;
 
   .actions {
     justify-content: flex-end;
