@@ -4,6 +4,7 @@
                       label="Email authorization"
                       :alert="false"
                       :disable-confirmation="!isEmailValid"
+                      submit-on-enter
   >
     <template #description>
       <base-input name="email" ref="input" :input-classes="['text-center', 'p-5']"
@@ -44,6 +45,10 @@ export default {
         this.isEmailValid = valid;
       });
     },
+    onEnter() {
+      debugger
+      this.$refs.loginWithEmailModal.confirm();
+    }
   },
 };
 </script>

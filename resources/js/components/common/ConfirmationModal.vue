@@ -62,6 +62,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    submitOnEnter: {
+      type: Boolean,
+      default: false,
+    }
   },
   data() {
     return {
@@ -73,6 +77,12 @@ export default {
     modalHeight() {
       return this.description ? '240px' : '180px';
     },
+  },
+  mounted() {
+    window.addEventListener('keydown', this.onKeydown);
+  },
+  destroyed() {
+    window.removeEventListener('keydown', this.onKeydown);
   },
   methods: {
     show() {
@@ -106,6 +116,14 @@ export default {
     decline() {
       this.rejectPromise();
     },
+    onKeydown({code}) {
+      if (code === 'Enter' && this.submitOnEnter) {
+        this.confirm();
+      }
+    },
+    onEnter() {
+      this.confirm();
+    }
   },
 };
 </script>

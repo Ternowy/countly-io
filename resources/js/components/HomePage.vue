@@ -139,7 +139,7 @@ export default {
     },
     onEmailSubmit(email) {
       this.api.auth.requestEmailAuth(email).then(() => {
-        alert('Login link sent');
+        alert('Login link is sent! Check Your inbox');
       })
     },
   },
