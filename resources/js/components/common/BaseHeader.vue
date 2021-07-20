@@ -9,7 +9,7 @@
     </div>
     <div class="item general">
       <slot name="general">
-        <header-logo class="md:flex sm:hidden" :src="logo" :uri="logoUri"/>
+        <header-logo class="lg:flex md:hidden" :src="logo" :uri="logoUri"/>
       </slot>
     </div>
 

@@ -1,45 +1,47 @@
 <template>
   <div v-if="isActive" class="flex w-full flex-col mb-8 bg-white px-7 pt-7 pb-5 rounded-3xl h-auto items-start">
-    <div class="flex w-full flex-row items-start">
-      <div class="flex flex-col w-7/12 h-full place-content-start">
-        <input-label-editor :value="label" class="w-full label-editor"
-                            @input="onInput('label', $event)"
-        />
+    <div class="flex w-full flex-col lg:flex-row items-start">
+      <div class="flex flex-col w-full lg:w-7/12 h-full place-content-start">
+        <div class="flex flex-row relative">
+          <input-label-editor :value="label" class="w-full label-editor"
+                              @input="onInput('label', $event)"
+          />
+          <span class="text-red-500 absolute" style="left: 101%">{{ required ? '*' : '' }}</span>
+        </div>
         <component :is="componentName" v-bind="$props" :value="inputValue" class="w-full mt-5"
                    @input="onInput(relevantInputValue, $event)"
         />
       </div>
-      <div class="flex flex-col w-5/12 h-full">
-        <div class="flex flex-row w-full justify-between">
-          <span class="text-red-500 mr-4 ml-1">{{ required ? '*' : '' }}</span>
-          <div class="flex flex-row justify-end">
-            <base-switch :value="required"
-                         label="Required"
-                         v-tooltip
-                         :content="required ? 'User can not submit answers without filling this field' : 'User can submit answers without filling this field'"
-                         @input="onInput('required', $event)"
-            />
-            <base-popover ref="actionsPopover" class="ml-10" trigger="click">
-              <template #trigger>
-                <button>
-                  <base-icon name="vertical-dots"/>
-                </button>
-              </template>
+      <div class="flex w-full flex-col-reverse lg:flex-col lg:w-5/12 h-full">
+        <div class="flex flex-row w-full justify-center items-center align-middle">
+          <base-switch :value="required"
+                       label="Required"
+                       v-tooltip
+                       :content="required ? 'User can not submit answers without filling this field' : 'User can submit answers without filling this field'"
+                       @input="onInput('required', $event)"
+          />
+          <base-popover ref="actionsPopover" class="ml-10" trigger="click">
+            <template #trigger>
+              <button>
+                <base-icon name="vertical-dots"/>
+              </button>
+            </template>
 
-              <base-item-list>
-                <base-item label="Copy" icon="copy" class="cursor-pointer px-2 py-1" fill="#828282"
-                           @click.native="copy"
-                />
-                <base-item label="Delete" icon="trash" class="cursor-pointer px-2 py-1"
-                           @click.native="remove"
-                />
-              </base-item-list>
-            </base-popover>
-          </div>
+            <base-item-list>
+              <base-item label="Copy" icon="copy" class="cursor-pointer px-2 py-1" fill="#828282"
+                         @click.native="copy"
+              />
+              <base-item label="Delete" icon="trash" class="cursor-pointer px-2 py-1"
+                         @click.native="remove"
+              />
+            </base-item-list>
+          </base-popover>
         </div>
-        <input-type-selector :value="type" :options="inputTypes" class="mt-8 justify-end" :disabled="!!updated_at"
-                             @input="onInput('type', $event)"
-        />
+        <div class="my-6 w-full">
+          <input-type-selector :value="type" :options="inputTypes" :disabled="!!updated_at"
+                               @input="onInput('type', $event)"
+          />
+        </div>
       </div>
     </div>
     <div class="flex relative handle" style="left: 98%; cursor: grab">
@@ -49,7 +51,7 @@
   <preview-input v-else v-bind="{label, options, required, type, name, placeholder}" class="cursor-pointer"
                  @click.native="onActivate"
   >
-    <div class="flex relative mt-2 handle" style="left: 98%; cursor: grab">
+    <div class="flex relative mt-2 handle justify-end" style="cursor: grab">
       <base-icon name="drag" fill="#BDBDBD" v-tooltip content="Drag to move"/>
     </div>
   </preview-input>

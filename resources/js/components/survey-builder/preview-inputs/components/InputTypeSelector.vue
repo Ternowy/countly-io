@@ -1,12 +1,12 @@
 <template>
-  <div class="flex flex-row grid-cols-5 gap-1.5">
+  <div class="flex flex-row grid-cols-5 gap-1.5 justify-center items-center align-middle">
     <base-square-button v-for="(option, index) in options" :key="index"
                         :selected="option.value === value"
                         :icon="`input-${option.value}`"
                         :class="[{'bg-activeGreen': value === option.value}, ...classes]"
                         v-tooltip
                         :content="disabled ? disabledTooltip : option.tooltip"
-                        class="w-9 h-9 rounded-md bg-grey"
+                        class="w-16 h-16 lg:w-9 lg:h-9 rounded-md bg-grey"
                         @click.native="onSelect(option.value)"
     />
   </div>

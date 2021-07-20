@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-4 mt-10">
+    <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-4 mt-10 mb-10">
       <result-chart v-for="(result, index) in Object.values(results)" :key="index" v-bind="result"/>
     </div>
     <base-button v-tooltip type="danger" fixed content="Delete all answers to free place in the database"

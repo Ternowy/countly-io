@@ -1,6 +1,6 @@
 <template>
   <div class="survey-list-wrapper p-app">
-    <div class="survey-list">
+    <div class="survey-list grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5">
       <survey v-for="(survey, index) in surveys" :key="`survey-${index}`" v-bind="survey"
               @remove="deleteSurvey(survey.removeLink, index)"
               @change-status="updateStatus(survey.updateStatusLink, index, $event)"
@@ -76,15 +76,6 @@ export default {
 
   .survey-list {
     padding: 50px 0 50px 0;
-    display: grid;
-    grid-gap: 40px;
-    grid-template-columns: 1fr 1fr 1fr;
-    @media (max-width: 1024px) {
-      grid-template-columns: 1fr 1fr;
-    }
-    @media (max-width: 600px) {
-      grid-template-columns: 1fr;
-    }
   }
 }
 

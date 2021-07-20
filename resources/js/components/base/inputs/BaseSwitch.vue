@@ -1,16 +1,19 @@
 <template>
-  <div v-bind="$attrs" class="interactive-btn flex flex-row" @click="onClick">
-    <p v-if="label">{{ label }}</p>
-    <div :class="buttonClasses" class="toggle-wrapper">
-      <div :class="toggleClass" class="toggle-inner"/>
-    </div>
-    <slot/>
+  <div v-bind="$attrs" class="flex flex-row align-middle justify-center items-center">
+    <p v-if="label" class="text-sm font-light px-3">{{ label }}</p>
+    <label class="switch">
+      <input type="checkbox" :id="`checkbox-${_uid}`" v-model="vValue">
+      <span class="slider round"></span>
+    </label>
   </div>
 </template>
 
 <script>
+import vValueMixin from '../../../mixins/helpers/v-value-mixin.js';
+
 export default {
   name: 'BaseSwitch',
+  mixins: [vValueMixin],
   props: {
     value: Boolean,
     background: {
@@ -30,91 +33,68 @@ export default {
       classes.push(this.value ? 'bg-' + this.background : 'bg-disabled');
       return classes;
     },
-    toggleClass() {
-      return this.value ? 'active' : 'inactive';
-    },
-  },
-  methods: {
-    onClick() {
-      this.$emit('input', !this.value);
-    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.interactive-btn {
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-weight: 300;
-  font-size: 14px;
-  line-height: 16px;
-  color: #828282;
-  display: flex;
-  column-gap: 5px;
-  align-items: center;
-
-  .toggle-wrapper {
-    position: relative;
-    border-radius: 30px;
-    width: 44px;
-    height: 24px;
-
-    .toggle-inner {
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      width: 20px;
-      height: 20px;
-      background: #FFFFFF;
-      box-shadow: 0 2px 5px rgba(85, 85, 85, 0.15);
-      border-radius: 30px;
-
-      &.inactive {
-        right: unset;
-        left: 2px;
-      }
-
-      &.active {
-        left: unset;
-        right: 2px;
-      }
-    }
-  }
-
-  .bg-green {
-    background-color: #29AD62;
-
-    &:hover {
-      background-color: #29AD62;
-    }
-
-    &:active,
-    &:focus {
-      background-color: #29AD62;
-    }
-  }
-
-  .bg-disabled {
-    background-color: #E0E0E0;
-  }
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 26px;
 }
 
-@media (max-width: 768px) {
-  .interactive-btn {
-    font-size: 10px;
-    line-height: 11px;
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
 
-    .toggle-wrapper {
-      width: 26px;
-      height: 14px;
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
 
-      .toggle-inner {
-        width: 10px;
-        height: 10px;
-      }
-    }
-  }
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #29AD62;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #29AD62;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }
 </style>
