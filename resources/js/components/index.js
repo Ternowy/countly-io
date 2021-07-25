@@ -26,6 +26,7 @@ import SurveyLimit from './common/SurveyLimit';
 import BaseSwitch from './base/inputs/BaseSwitch';
 import HomePage from './HomePage';
 import SurveyNotFound from './survey-preview/SurveyNotFound';
+import BaseLoader from './common/BaseLoader';
 
 export default {
   install(Vue) {
@@ -53,6 +54,7 @@ export default {
     Vue.component('UserPicture', UserPicture)
     Vue.component('ConfirmationModal', ConfirmationModal);
     Vue.component('SurveyLimit', SurveyLimit);
+    Vue.component('BaseLoader', BaseLoader);
     //modules
     Vue.component('SurveyBuilder', SurveyBuilder);
     Vue.component('SurveyResults', SurveyResults);

@@ -6,13 +6,15 @@
     />
     <base-header :logo="logo">
       <template #info>
-        <base-button v-if="homeUri" :disabled="updateStatus === 'saving'" type="passive" class="exit-button" @click.native="exit">
+        <base-button v-if="homeUri" :disabled="updateStatus === 'saving'" type="passive" class="exit-button lg:w-52"
+                     rounded @click.native="exit"
+        >
           <base-icon name="left-arrow"/>
-          <p class="exit md:flex sm:hidden">Back to home</p>
+          <p class="px-1 text-grey sm:hidden lg:flex">Back to home</p>
         </base-button>
 
         <saving-status v-if="isEditMode" v-tooltip :status="updateStatus"
-                       class="ml-8" content="Saving status"
+                       class="ml-2 lg:ml-8" content="Saving status"
         />
       </template>
 
@@ -24,7 +26,7 @@
         </base-button>
 
         <base-button v-if="isEditMode" v-tooltip type="action"
-                     class="w-36 mx-4" content="Click to open the survey"
+                     class="w-24 lg:w-36 mx-4" content="Click to open the survey"
                      @click.native="onShare"
         >
           <p class="text-center text-lg text-white">Share survey</p>
@@ -34,7 +36,7 @@
           <p class="text-center text-lg text-white">Save</p>
         </base-button>
 
-        <user-picture class="md:flex sm:hidden" :src="userPic"/>
+        <user-picture class="hidden lg:flex" :src="userPic"/>
       </template>
     </base-header>
 
@@ -88,6 +90,7 @@ export default {
   methods: {
     onInput(state) {
       if (this.isEditMode) {
+        this.setUpdateStatus('saving');
         this.update(state);
       }
     },
@@ -109,7 +112,6 @@ export default {
       });
     },
     update: debounce(function(state) {
-      this.setUpdateStatus('saving');
       this.api.survey.update(state).finally(() => {
         this.setUpdateStatus('saved');
       });
@@ -129,15 +131,6 @@ export default {
 
 <style lang="scss" scoped>
 .builder {
-  .exit-button {
-    height: 56px;
-    width: 228px;
-    border-radius: 50px;
-    color: #696352;
-    display: flex;
-    justify-content: space-evenly;
-    padding: 0 25px;
-  }
 
   .save-button {
     height: 56px;

@@ -3,7 +3,7 @@
     <base-button type="classic" :clickable="false" rounded>
       <base-icon :name="currentIcon" fill="#696352" size="large"/>
     </base-button>
-    <div class="description-wrapper flex items-center rounded-r-full h-full w-full justify-center">
+    <div class="description-wrapper flex w-28 items-center rounded-r-full h-full justify-end absolute">
       <p class="status-description text-base mr-4 text-center">{{ statusLabel }}</p>
     </div>
   </div>
@@ -36,25 +36,23 @@ export default {
 <style lang="scss" scoped>
 .wrapper {
   overflow: hidden;
-  height: 56px;
-  width: 140px;
   position: relative;
+  height: 56px;
   z-index: 1005;
 }
 
 .description-wrapper {
-  position: absolute;
-  left: -200px;
+  left: -5px;
   transition: 1s;
 }
 
 .button {
-  z-index: 2;
+  z-index: 1006;
 }
 
 .saving {
+  overflow: inherit;
   .description-wrapper {
-    transition: 1s;
     left: 30px;
     background-color: #E8E3D6;
   }

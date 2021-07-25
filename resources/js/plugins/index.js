@@ -5,6 +5,7 @@ import VeeValidate from './vee-validate.js';
 import WCharts from './wcharts.js';
 import Clipboard from 'v-clipboard';
 import ScrollTo from './scroll-to';
+import EventBus from './event-bus.js';
 
 export default {
   install (Vue) {
@@ -15,5 +16,6 @@ export default {
     Vue.use(WCharts);
     Vue.use(Clipboard);
     Vue.use(ScrollTo);
+    Vue.use(EventBus);
   }
 }

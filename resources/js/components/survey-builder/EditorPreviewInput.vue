@@ -43,6 +43,7 @@
           />
         </div>
       </div>
+
     </div>
     <div class="flex relative handle" style="left: 98%; cursor: grab">
       <base-icon name="drag" fill="#BDBDBD"/>

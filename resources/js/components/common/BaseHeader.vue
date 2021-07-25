@@ -1,19 +1,19 @@
 <template>
-  <header class="header sticky top-0 shadow-md">
-    <div class="item info">
+  <header class="header sticky top-0 shadow-md grid-cols-3">
+    <div class="flex flex-row align-middle items-center">
       <slot name="info">
         <survey-limit v-tooltip :content="surveyLimitTooltip"
                       :limit="answersLimit" :number="answersNumber"
         />
       </slot>
     </div>
-    <div class="item general">
+    <div class="flex-row sm:hidden lg:flex align-middle items-center">
       <slot name="general">
-        <header-logo class="lg:flex md:hidden" :src="logo" :uri="logoUri"/>
+        <header-logo class="flex" :src="logo" :uri="logoUri"/>
       </slot>
     </div>
 
-    <div class="item actions">
+    <div class="flex flex-row align-middle items-center">
       <slot name="actions">
         <user-picture :src="userPic" class="picture"/>
         <base-button v-tooltip type="passive" content="Logout" rounded @click.native="logout">
@@ -56,14 +56,6 @@ export default {
 
     .picture {
       margin-right: 15px;
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  .header {
-    .general {
-      display: none;
     }
   }
 }

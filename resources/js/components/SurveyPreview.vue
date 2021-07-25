@@ -59,7 +59,10 @@ export default {
         this.surveyValid = valid;
 
         if (valid) {
-          this.api.survey.submit(this.surveyData).then(() => this.isSubmitted = true);
+          this.$eventBus.$emit(this.$eventBusEvents.LOADING);
+          this.api.survey.submit(this.surveyData).
+              then(() => this.isSubmitted = true).
+              finally(() => this.$eventBus.$emit(this.$eventBusEvents.LOADED));
         }
       });
     },
