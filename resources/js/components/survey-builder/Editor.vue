@@ -1,6 +1,6 @@
 <template>
   <div class="container flex flex-col content-center justify-center items-center my-16">
-    <div class="flex flex-col xl:w-5/12 md:w-7/12 sm:w-9/12">
+    <div class="flex flex-col xl:w-5/12 md:w-7/12 sm:w-9/12 pb-10">
       <editor-preview-survey-description v-model="nameAndDescription"/>
 
       <editor-preview-input-list v-model="reactiveStructure" @input="onDrag">
@@ -19,7 +19,7 @@
       <editor-preview-cta-button v-model="ctaButton.label" @input="onStateChange"/>
 
       <base-button :disabled="inputs.length >= 15" type="action" size="large"
-                   class="shadow-md w-48 mt-7"
+                   class="shadow-md w-48 mt-7 shadow-lg" fixed
                    @click.native="addInput"
       >
         <base-icon name="plus" clickable fill="#fff"/>
@@ -56,10 +56,10 @@ export default {
     },
     defaultInput: {
       type: 'select',
-      label: 'This is a new input!',
+      label: 'Field name',
       name: UniqueNameService.generate(),
       required: false,
-      placeholder: 'Input text here'
+      placeholder: 'Type here'
     },
     activeInputIndex: null
   }),

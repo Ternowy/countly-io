@@ -10,7 +10,7 @@
                      rounded @click.native="exit"
         >
           <base-icon name="left-arrow"/>
-          <p class="px-1 text-grey sm:hidden lg:flex">Back to home</p>
+          <p class="px-1 text-grey xsm:hidden lg:flex">Back to home</p>
         </base-button>
 
         <saving-status v-if="isEditMode" v-tooltip :status="updateStatus"

@@ -1,21 +1,21 @@
 <template>
-  <header class="header sticky top-0 shadow-md grid-cols-3">
-    <div class="flex flex-row align-middle items-center">
+  <header class="header sticky top-0 shadow-md grid-cols-3 px-7">
+    <div class="flex flex-row align-middle items-center justify-center w-full">
       <slot name="info">
         <survey-limit v-tooltip :content="surveyLimitTooltip"
                       :limit="answersLimit" :number="answersNumber"
         />
       </slot>
     </div>
-    <div class="flex-row sm:hidden lg:flex align-middle items-center">
+    <div class="flex-row xsm:hidden lg:flex align-middle items-center justify-center w-full">
       <slot name="general">
         <header-logo class="flex" :src="logo" :uri="logoUri"/>
       </slot>
     </div>
 
-    <div class="flex flex-row align-middle items-center">
+    <div class="flex flex-row align-middle items-center justify-end w-full">
       <slot name="actions">
-        <user-picture :src="userPic" class="picture"/>
+        <user-picture :src="userPic" class="picture mx-2"/>
         <base-button v-tooltip type="passive" content="Logout" rounded @click.native="logout">
           <base-icon name="quit" size="large"/>
         </base-button>
