@@ -3,7 +3,7 @@
   <preview v-else ref="form" @submit.prevent="onSubmit">
     <preview-survey-description :name="name" :description="description"/>
     <preview-input v-for="(input, index) in inputs" :key="index" v-bind="input"
-                   v-model="surveyData[input.name]"
+                   v-model="surveyData[input.name]" :ref="input.name"
     />
     <base-button type="action" class="w-52" @click="onSubmit">
       <p class="text-base text-white text-lg font-medium">{{ ctaButton.label }}</p>
@@ -55,17 +55,27 @@ export default {
     onInput() {
     },
     onSubmit() {
-      this.$refs.form.validate().then(valid => {
-        this.surveyValid = valid;
+      this.$refs.form.validate().then(({isValid, errors}) => {
+        this.surveyValid = isValid;
 
-        if (valid) {
+        if (isValid) {
           this.$eventBus.$emit(this.$eventBusEvents.LOADING);
           this.api.survey.submit(this.surveyData).
               then(() => this.isSubmitted = true).
               finally(() => this.$eventBus.$emit(this.$eventBusEvents.LOADED));
+        } else {
+          this.scrollToFirstError(errors);
         }
       });
     },
+    scrollToFirstError(errors = {}) {
+      for (const name of Object.keys(errors)) {
+        if (errors[name].length > 0) {
+          this.$scrollTo(this.$refs[name][0].$el, 400, {});
+          break;
+        }
+      }
+    }
   },
 };
 </script>
