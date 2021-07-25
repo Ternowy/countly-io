@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-4 mt-10 mb-10">
+    <div class="grid md:grid-cols-2 xsm:grid-cols-1 gap-4 mt-10 pb-32">
       <result-chart v-for="(result, index) in Object.values(results)" :key="index" v-bind="result"/>
     </div>
     <base-button v-tooltip type="danger" fixed content="Delete all answers to free place in the database"
-                 @click.native="onClearData"
+                 @click.native="onClearData" :disabled="totalAnswers === 0"
     >
       Clear collected data
     </base-button>
@@ -26,6 +26,7 @@ export default {
   components: {ResultChart},
   props: {
     results: Object,
+    totalAnswers: Number,
     survey: Object,
   },
   data() {
@@ -42,9 +43,12 @@ export default {
       this.$refs.cleanupConfirmationModal.show().then(this.clearData);
     },
     clearData() {
-      this.api.survey.clearResults(this.survey.clearResultsLink).then(() => {
-        location.reload();
-      });
+      this.$eventBus.$emit(this.$eventBusEvents.LOADING);
+      this.api.survey.clearResults(this.survey.clearResultsLink).
+          then(() => {
+            location.reload();
+          }).
+          finally(() => this.$eventBus.$emit(this.$eventBusEvents.LOADED));
     },
   },
 };

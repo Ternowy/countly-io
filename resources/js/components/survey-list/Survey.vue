@@ -33,9 +33,9 @@
       <p>Your questions will be here. <br>The form is now empty.</p>
     </div>
 
-    <div v-else v-tooltip content="Survey mini-preview (first 3 questions)" class="questions">
-      <div v-for="(question, index) in structure.inputs.slice(0, 3)" :key="question.name" class="question">
-        {{ `${index + 1}. ${question.label}` }}
+    <div v-else v-tooltip content="Survey mini-preview (first 3 questions)" class="questions flex flex-col w-full">
+      <div v-for="question in structure.inputs.slice(0, 3)" :key="question.name" class="question">
+        <p class="w-full truncate">{{ question.label }}</p>
       </div>
     </div>
 
@@ -43,7 +43,7 @@
       <base-switch v-tooltip :content="status === 'active' ? 'Survey is available' : 'Survey is not available'"
                    :value="status === 'active'" @input="onStatusChange"
       >
-        {{ status }}
+        <p class="text-base px-1 capitalize">{{ status }}</p>
       </base-switch>
 
       <a v-tooltip content="Total survey answers" :href="resultsLink" target="_blank" class="stats-link">

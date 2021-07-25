@@ -44,7 +44,8 @@ class SurveyResultsController extends Controller
                 'survey' => $survey->toArray(),
                 'results' => $this->surveyResultsService->getResultsCollection($survey)->toArray(),
                 'answersLimit' => $this->surveyLimitsService->getAnswersLimit($user),
-                'answersNumber' => $this->surveyLimitsService->getAnswersStored($user)
+                'answersNumber' => $this->surveyLimitsService->getAnswersStored($user),
+                'totalAnswers' => $survey->answers()->count()
             ]
         );
     }

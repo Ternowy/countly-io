@@ -17,6 +17,11 @@ export default {
   computed: {
     progressBarCompletion() {
       const completion = this.number / 50;
+
+      if (completion < 1) {
+        return '1%';
+      }
+
       return `${completion}%`;
     }
   }

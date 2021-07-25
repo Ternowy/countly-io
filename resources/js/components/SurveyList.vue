@@ -1,6 +1,6 @@
 <template>
   <div class="survey-list-wrapper p-app">
-    <div class="survey-list grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5">
+    <div class="survey-list grid xsm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
       <survey v-for="(survey, index) in surveys" :key="`survey-${index}`" v-bind="survey"
               @remove="deleteSurvey(survey.removeLink, index)"
               @change-status="updateStatus(survey.updateStatusLink, index, $event)"

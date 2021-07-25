@@ -44,8 +44,13 @@ export default {
         width: {large: 'w-14', medium: 'w-12', small: 'w-8'},
         height: {large: 'h-14', medium: 'h-12', small: 'h-8'}
       };
+      const defaultTextStyle = ['text-white', 'text-lg', 'font-medium'];
+      const styleTypeSet = {
+        grey: ['bg-grey', 'hover:bg-darkGrey', 'text-gray-500'],
+        action: ['bg-actionGreen', 'hover:bg-greenHighlight', 'text-white', 'text-lg', 'font-medium']
+      };
 
-      let classes = ['button', `button-${this.type}`, 'rounded-full', styleSizeSet.height[this.size]];
+      let classes = ['button', 'rounded-full', styleSizeSet.height[this.size]];
 
       if (this.rounded) {
         classes.push(styleSizeSet.width[this.size]);
@@ -55,17 +60,12 @@ export default {
         classes.push('fixed-btn');
       }
 
-      const defaultTextStyle = ['text-white', 'text-lg', 'font-medium'];
-
       if (this.disabled) {
         classes.push(['bg-disabledGrey', 'cursor-default', ...defaultTextStyle]);
         return classes;
       }
 
-      const styleTypeSet = {
-        grey: ['bg-grey', 'hover:bg-darkGrey', 'text-gray-500'],
-        action: ['bg-actionGreen', 'hover:bg-greenHighlight', 'text-white', 'text-lg', 'font-medium']
-      };
+      classes.push(`button-${this.type}`);
 
       if (Object.keys(styleTypeSet).includes(this.type)) {
         classes.push(...styleTypeSet[this.type]);
@@ -73,11 +73,7 @@ export default {
         classes.push(defaultTextStyle);
       }
 
-      if (this.clickable) {
-        classes.push('cursor-pointer');
-      } else {
-        classes.push('cursor-default');
-      }
+      classes.push(this.clickable ? 'cursor-pointer' : 'cursor-default');
 
       return classes;
     },

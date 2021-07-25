@@ -5,6 +5,7 @@
       <input type="checkbox" :id="`checkbox-${_uid}`" v-model="vValue">
       <span class="slider round"></span>
     </label>
+    <slot/>
   </div>
 </template>
 
@@ -41,7 +42,7 @@ export default {
 .switch {
   position: relative;
   display: inline-block;
-  width: 52px;
+  width: 51.5px;
   height: 26px;
 }
 
@@ -66,8 +67,8 @@ export default {
 .slider:before {
   position: absolute;
   content: "";
-  height: 20px;
-  width: 20px;
+  height: 21px;
+  width: 21px;
   left: 3px;
   bottom: 3px;
   background-color: white;
@@ -84,9 +85,9 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+  -webkit-transform: translateX(24px);
+  -ms-transform: translateX(24px);
+  transform: translateX(24px);
 }
 
 /* Rounded sliders */

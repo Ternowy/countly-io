@@ -8,5 +8,8 @@
             logout-link="{{ route('logout') }}"
     ></base-header>
 
-    <survey-results :survey="{{ json_encode($survey) }}" :results="{{ json_encode($results) }}"/>
+    <survey-results :survey="{{ json_encode($survey) }}"
+                    :results="{{ json_encode($results) }}"
+                    :total-answers="{{ $totalAnswers }}"
+    ></survey-results>
 </x-app-layout>

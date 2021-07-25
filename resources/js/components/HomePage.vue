@@ -1,13 +1,9 @@
 <template>
   <div class="flex w-full flex-col justify-center content-center items-center">
-    <div class="flex flex-col lg:w-4/12 md:w-full items-center">
+    <div class="flex flex-col lg:w-4/12 xsm:w-full items-center justify-center">
       <header-logo :src="logo"/>
-      <div>
-        <p>Surveys for communities 🌍</p>
-      </div>
-      <div>
-        <p>Join for free to create surveys with up to 5000 records</p>
-      </div>
+      <h1 class="text-base text-3xl text-center mt-7">Surveys for communities 🌍</h1>
+      <h3 class="text-base text-xl text-center mt-7 mb-5">Join for free to create surveys with up to 5000 records</h3>
       <div v-if="isAuthenticated">
         <base-button type="action" class="px-16 mt-5" :action="surveysLink">
           Your surveys
@@ -59,7 +55,7 @@
         </p>
       </div>
     </div>
-    <div class="w-full grid md:grid-cols-2 sm:grid-cols-1 mt-8 mb-8">
+    <div class="w-full grid md:grid-cols-2 xsm:grid-cols-1 mt-8 mb-8">
       <div class="flex flex-col px-5">
         <p class="font-normal text-3xl text-grey text-center my-8">How survey looks like?</p>
         <survey-preview v-bind="welcomeSurvey"/>
