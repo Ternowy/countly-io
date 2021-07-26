@@ -6,6 +6,9 @@
     <base-button type="grey" size="small" class="p-4 text-sm mt-2" :disabled="!canAdd" @click.native="addOption">
       + Add option
     </base-button>
+    <confirmation-modal ref="deleteOptionConfirmationModal" :name="`delete-option-${_uid}`"
+                        description="All answers with selected option will be hidden"
+    />
   </div>
 </template>
 
@@ -18,6 +21,9 @@ export default {
   components: {InputOption},
   mixins: [vValueMixin],
   emits: ['input'],
+  props: {
+    disableTypeChange: Boolean
+  },
   computed: {
     canAdd() {
       return this.value.length < 10;
@@ -28,6 +34,15 @@ export default {
       this.$emit('input', [...this.value, 'Text']);
     },
     removeOption(index) {
+      if (this.disableTypeChange) {
+        this.$refs.deleteOptionConfirmationModal.show().
+          then(() => this.processOptionRemoval(index)).
+          catch(() => {});
+      } else {
+        this.processOptionRemoval(index);
+      }
+    },
+    processOptionRemoval(index) {
       const options = this.value;
       options.splice(index,1);
       this.$emit('input', options);
