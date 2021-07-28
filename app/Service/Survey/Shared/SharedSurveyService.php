@@ -51,11 +51,13 @@ class SharedSurveyService
         $preparedAnswers = [];
 
         foreach ($answers as $inputName => $value) {
-            $preparedAnswers[] = [
-                'survey_id' => $surveyId,
-                'input_name' => $inputName,
-                'value' => $value ?? ''
-            ];
+            if (!empty($value)) {
+                $preparedAnswers[] = [
+                    'survey_id' => $surveyId,
+                    'input_name' => $inputName,
+                    'value' => $value
+                ];
+            }
         }
 
         return $preparedAnswers;
