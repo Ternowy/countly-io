@@ -4,6 +4,7 @@
     <preview-survey-description :name="name" :description="description"/>
     <preview-input v-for="(input, index) in inputs" :key="index" v-bind="input"
                    v-model="surveyData[input.name]" :ref="input.name"
+                   @input="onInput"
     />
     <base-button type="action" class="w-52" @click="onSubmit">
       <p class="text-base text-white text-lg font-medium">{{ ctaButton.label }}</p>
@@ -44,6 +45,8 @@ export default {
       surveyData: {},
       surveyValid: false,
       isSubmitted: false,
+      startedAt: this.getCurrentTime(),
+      isDirty: false
     };
   },
   created() {
@@ -53,6 +56,12 @@ export default {
   },
   methods: {
     onInput() {
+      if (this.isDirty) {
+        return;
+      }
+
+      this.isDirty = true;
+      this.startedAt = this.getCurrentTime();
     },
     onSubmit() {
       this.$refs.form.validate().then(({isValid, errors}) => {
@@ -60,7 +69,7 @@ export default {
 
         if (isValid) {
           this.$eventBus.$emit(this.$eventBusEvents.LOADING);
-          this.api.survey.submit(this.surveyData).
+          this.api.survey.submit(this.surveyData, this.startedAt).
               then(() => this.isSubmitted = true).
               finally(() => this.$eventBus.$emit(this.$eventBusEvents.LOADED));
         } else {
@@ -75,6 +84,9 @@ export default {
           break;
         }
       }
+    },
+    getCurrentTime() {
+      return Math.trunc(Date.now() / 1000);
     }
   },
 };

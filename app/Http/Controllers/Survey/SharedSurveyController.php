@@ -47,7 +47,8 @@ class SharedSurveyController extends Controller
         return $this->sharedSurveyService->answer(
             $this->surveyRepository->getByCode($code),
             $request->get('answers'),
-            $request->ip()
+            $request->ip(),
+            $request->get('startedAt'),
         );
     }
 

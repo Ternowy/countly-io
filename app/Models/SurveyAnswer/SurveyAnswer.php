@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\SurveyAnswer;
 
+use App\Models\Survey\Survey;
+use App\Models\SurveyAnswerQuality;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,8 +23,18 @@ class SurveyAnswer extends Model
         'ip_address',
     ];
 
+    public function survey()
+    {
+        return $this->hasOne(Survey::class, 'id', 'survey_id');
+    }
+
     public function inputs()
     {
         return $this->hasMany(SurveyAnswerInput::class, 'answer_id');
+    }
+
+    public function quality()
+    {
+        return $this->hasOne(SurveyAnswerQuality::class, 'survey_answer_id');
     }
 }

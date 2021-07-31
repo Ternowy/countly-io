@@ -31,10 +31,10 @@ export default ($axios, config = {}) => ({
         .catch(reject);
     });
   },
-  submit: (answers) => {
+  submit: (answers, startedAt) => {
     return new Promise((resolve, reject) => {
       $axios
-        .post(config.submit, {answers})
+        .post(config.submit, {answers, startedAt})
         .then(({data}) => resolve(data))
         .catch(reject);
     });
