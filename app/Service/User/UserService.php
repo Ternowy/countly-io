@@ -11,6 +11,8 @@ class UserService
 {
     protected User $user;
 
+    protected UserRepository $userRepository;
+
     public function __construct(
         User $user,
         UserRepository $userRepository
@@ -24,12 +26,13 @@ class UserService
         return $this->user->create($data);
     }
 
-    public function findOrCreateUser(string $email, array $fields): User
+    public function firstOrCreateByEmail(string $email, array $fields): User
     {
         $user = $this->userRepository->getByEmail($email);
 
         if (empty($user)) {
             $user = $this->create($fields);
+            $user->wasRecentlyCreated = true;
         }
 
         return $user;

@@ -10,10 +10,12 @@ use Illuminate\Queue\SerializesModels;
 
 class QuickLoginRequestMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public function __construct(
-        private string $loginUrl
+        private string $loginUrl,
+        private bool $isRegistration
     ) {}
 
     public function build()
@@ -21,7 +23,8 @@ class QuickLoginRequestMail extends Mailable
         return $this->view('mail.auth.quick_login_request')
             ->with(
                 [
-                    'link' => $this->loginUrl
+                    'link' => $this->loginUrl,
+                    'isRegistration' => $this->isRegistration
                 ]
             );
     }

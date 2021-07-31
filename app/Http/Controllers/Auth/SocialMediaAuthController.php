@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\Auth\UserRegistered;
 use App\Http\Controllers\Controller;
 use App\Repository\User\UserRepository;
 use App\Service\Auth\SocialMediaAuthService;
@@ -48,7 +49,7 @@ class SocialMediaAuthController extends Controller
             $this->driverFactory->createInstance($method)
         );
 
-        $user = $this->userService->findOrCreateUser(
+        $user = $this->userService->firstOrCreateByEmail(
             $userData->getEmail(),
             [
                 'name' => $userData->getName(),
@@ -56,6 +57,10 @@ class SocialMediaAuthController extends Controller
                 'email' => $userData->getEmail()
             ]
         );
+
+        if ($user->wasRecentlyCreated) {
+            event(new UserRegistered($user));
+        }
 
         Auth::login($user, true);
 

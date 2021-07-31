@@ -11,6 +11,15 @@ use App\Http\Controllers\SurveyResults\SurveyResultsController;
 use App\Http\Controllers\Auth\SocialMediaAuthController;
 use App\Http\Controllers\Survey\SharedSurveyController;
 
+Route::get('/preview', function () {
+   return view('mail.auth.user_registered_email')
+       ->with(
+           [
+               'name' => 'Vorname Nachname'
+           ]
+       );
+});
+
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
 Route::middleware(['guest'])->group(function () {

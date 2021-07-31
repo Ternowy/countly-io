@@ -30,7 +30,7 @@ class QuickLoginController extends Controller
 
     public function requestLoginLink(QuickLoginRequest $request)
     {
-        $user = $this->userService->findOrCreateUser(
+        $user = $this->userService->firstOrCreateByEmail(
             $request->email,
             [
                 'name' => 'Customer',

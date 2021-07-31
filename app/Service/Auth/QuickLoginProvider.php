@@ -19,7 +19,10 @@ class QuickLoginProvider
         $urlToAutoLogin = MagicLink::create(new LoginAction($user), self::LINK_AVAILABLE_MINUTES)->url;
 
         Mail::to($user)->send(
-            new QuickLoginRequestMail($urlToAutoLogin)
+            new QuickLoginRequestMail(
+                $urlToAutoLogin,
+                $user->wasRecentlyCreated
+            )
         );
     }
 }
