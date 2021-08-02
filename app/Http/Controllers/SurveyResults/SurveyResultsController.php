@@ -35,7 +35,7 @@ class SurveyResultsController extends Controller
     {
         $user = Auth::user();
         $survey = $this->surveyDecorator->decorate(
-            $this->surveyRepository->getById($user, (int)$id)
+            $this->surveyRepository->getById($user, (int)$id, true)
         );
 
         return view(
@@ -50,7 +50,10 @@ class SurveyResultsController extends Controller
         );
     }
 
-    public function media($id)
+    public function resultsList($surveyId)
     {
+        $user = Auth::user();
+        $survey = $this->surveyRepository->getById($user, (int)$surveyId, true);
+        return $this->surveyResultsService->getResultsBuilder($survey)->paginate(30);
     }
 }

@@ -42,8 +42,8 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/{id}', [SurveyController::class, 'delete'])->name('delete-survey');
 
         Route::get('/{id}/results', [SurveyResultsController::class, 'results'])->name('survey-results');
+        Route::get('/{id}/results/list', [SurveyResultsController::class, 'resultsList'])->name('survey-results-list');
         Route::delete('/{id}/clear', [SurveyController::class, 'clear'])->name('clear-survey-results');
-        Route::get('/{id}/results/media', [SurveyResultsController::class, 'media'])->name('survey-results-media');
     });
 });
 

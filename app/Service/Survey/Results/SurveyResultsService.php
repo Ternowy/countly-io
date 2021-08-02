@@ -9,6 +9,7 @@ use App\Models\Survey\SurveyStructureInput;
 use App\Models\SurveyAnswer\SurveyAnswer;
 use App\Models\SurveyAnswer\SurveyAnswerInput;
 use App\Repository\Survey\SurveyAnswerRepository;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 class SurveyResultsService
@@ -105,5 +106,10 @@ class SurveyResultsService
         );
 
         //TODO create cleanup job queue to delete instantly
+    }
+
+    public function getResultsBuilder(Survey $survey): Builder
+    {
+        return $this->surveyAnswer->with(['inputs'])->where('survey_id', $survey->id);
     }
 }

@@ -10,13 +10,6 @@ use Illuminate\Support\Str;
 
 class SurveyAnswerReadTimeEstimator
 {
-    public function __construct()
-    {
-    }
-
-    /**
-     * For each input go through labels and count average word length and multiply with words amount
-     */
     public function estimate(Survey $survey): int
     {
         $totalEstimatedTime = 0;
@@ -27,22 +20,13 @@ class SurveyAnswerReadTimeEstimator
             }
         );
 
-        return $totalEstimatedTime;
+        return (int)$totalEstimatedTime;
     }
 
-    protected function estimateReadTime(string $text): int
+    protected function estimateReadTime(string $text): float
     {
-        $words = Str::of(str_replace(['\'', '"', ',', ';', '<', '>'], '', $text))
-            ->explode(' ')
-            ->map(fn(string $word) => Str::length($word));
+        $words = Str::of($text)->explode(' ')->count();
 
-        $averageLength = $words->sum() / $words->count();
-
-        return $this->estimateSentenceReadTime((int)$averageLength, $words->count());
-    }
-
-    protected function estimateSentenceReadTime(int $wordLength, int $wordsCount): int
-    {
-        return 1;
+        return ($words / 100) * 60;
     }
 }
