@@ -1,6 +1,6 @@
 <x-main-layout :title="$title">
-    <base-loader image="{{ url('/images/logo.svg') }}"></base-loader>
     {{ $slot }}
+    <base-loader image="{{ url('/images/logo.svg') }}"></base-loader>
     <!-- Messenger Chat Plugin Code -->
     <div id="fb-root"></div>
 

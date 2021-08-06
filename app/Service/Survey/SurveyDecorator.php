@@ -19,6 +19,7 @@ class SurveyDecorator
             $survey->updateStatusLink = route('update-survey-status', $routeData);
             $survey->clearResultsLink = route('clear-survey-results', $routeData);
             $survey->answersNumber = $survey->answers_count;
+            $survey->surveyAnswersList = route('survey-results-list', $routeData);
         }
         $survey->submitSurveyUri = route('submit-survey', ['code' => $survey->access_code]);
 

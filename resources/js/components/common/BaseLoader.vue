@@ -1,5 +1,5 @@
 <template>
-  <div v-show="isLoading" class="flex overflow-y-auto h-screen w-screen justify-center align-middle items-center absolute z-50 bg-black bg-opacity-40">
+  <div v-show="isLoading" class="flex fixed overflow-hidden h-screen w-screen justify-center align-middle items-center z-50 bg-black bg-opacity-40">
     <img :src="image" class="loading-image" alt="loader"/>
   </div>
 </template>
@@ -30,9 +30,11 @@ export default {
   },
   methods: {
     onLoading() {
+      document.body.style.overflow = 'hidden';
       this.instances++;
     },
     onLoaded() {
+      document.body.style.overflow = 'visible';
       this.instances--;
     }
   }

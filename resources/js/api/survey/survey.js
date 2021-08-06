@@ -47,6 +47,14 @@ export default ($axios, config = {}) => ({
         .catch(reject);
     });
   },
+  loadResults: (page) => {
+    return new Promise((resolve, reject) => {
+      $axios
+        .get(`${config.answersList}?page=${page}`)
+        .then(({data}) => resolve(data))
+        .catch(reject);
+    });
+  },
   join: (code) => {
     return new Promise((resolve, reject) => {
       $axios

@@ -23,6 +23,10 @@ class SurveyAnswer extends Model
         'ip_address',
     ];
 
+    protected $hidden = [
+        'ip_address',
+    ];
+
     public function survey()
     {
         return $this->hasOne(Survey::class, 'id', 'survey_id');
