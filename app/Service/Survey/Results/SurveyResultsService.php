@@ -110,6 +110,6 @@ class SurveyResultsService
 
     public function getResultsBuilder(Survey $survey): Builder
     {
-        return $this->surveyAnswer->with(['inputs'])->where('survey_id', $survey->id);
+        return $this->surveyAnswer->with(['inputs', 'quality'])->where('survey_id', $survey->id);
     }
 }
