@@ -35,9 +35,7 @@
             </div>
           </td>
           <td v-for="(answer, answerIndex) in inputs.value" :key="`answerIndex-${answerIndex}`">
-            <div class="cell-item">
-              <p class="text-xs text-">{{ answer.value }}</p>
-            </div>
+            <results-table-value-cell :value="answer.value"/>
           </td>
           <td class="content-td">
             <div class="cell-item">
@@ -58,10 +56,11 @@
 <script>
 import moment from "moment";
 import BaseBadge from '../base/info/BaseBadge'
+import ResultsTableValueCell from './ResultsTableValueCell'
 
 export default {
   name: 'ResultsTable',
-  components: { BaseBadge },
+  components: { ResultsTableValueCell, BaseBadge },
   props: {
     data: Array,
     structure: Object,
@@ -96,7 +95,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .cell-item {
   width: 100%;
   height: 100%;
