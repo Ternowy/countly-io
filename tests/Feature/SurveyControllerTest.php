@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use App\Enum\Survey\SurveyInputTypeEnum;
@@ -9,7 +11,7 @@ use Tests\TestCase;
 
 class SurveyControllerTest extends TestCase
 {
-    private function getUser()
+    private function getUser(): User
     {
         return User::factory()->create();
     }
@@ -24,63 +26,67 @@ class SurveyControllerTest extends TestCase
             );
     }
 
-    public function testCreateSuccess()
+    public function test_can_create_survey(): void
     {
-        $response = $this->processRequest(
-            $this->getUser(),
-            [
-                'name' => __('example-survey.survey.name'),
-                'description' => __('example-survey.survey.description'),
-                'structure' =>  [
-                    [
-                        'type' => SurveyInputTypeEnum::SELECT,
-                        'label' => __('example-survey.survey.input.select.label'),
-                        'options' => [
-                            __('example-survey.survey.input.select.option.a'),
-                            __('example-survey.survey.input.select.option.b'),
-                            __('example-survey.survey.input.select.option.c'),
+        $this
+            ->processRequest(
+                $this->getUser(),
+                [
+                    'name' => __('example-survey.survey.name'),
+                    'description' => __('example-survey.survey.description'),
+                    'structure' => [
+                        'inputs' => [
+                            [
+                                'type' => SurveyInputTypeEnum::SELECT,
+                                'label' => __('example-survey.survey.input.select.label'),
+                                'options' => [
+                                    __('example-survey.survey.input.select.option.a'),
+                                    __('example-survey.survey.input.select.option.b'),
+                                    __('example-survey.survey.input.select.option.c'),
+                                ],
+                            ],
+                            [
+                                'type' => SurveyInputTypeEnum::RADIO,
+                                'label' => __('example-survey.survey.input.radio.label'),
+                                'options' => [
+                                    __('example-survey.survey.input.radio.option.a'),
+                                    __('example-survey.survey.input.radio.option.b'),
+                                    __('example-survey.survey.input.radio.option.c'),
+                                ],
+                            ],
+                            [
+                                'type' => SurveyInputTypeEnum::CHECKBOX,
+                                'label' => __('example-survey.survey.input.checkbox.label'),
+                                'options' => [
+                                    __('example-survey.survey.input.checkbox.option.a'),
+                                    __('example-survey.survey.input.checkbox.option.b'),
+                                    __('example-survey.survey.input.checkbox.option.c'),
+                                ],
+                            ],
+                            [
+                                'type' => SurveyInputTypeEnum::TEXT,
+                                'label' => __('example-survey.survey.input.text.label'),
+                                'placeholder' => __('example-survey.survey.input.text.placeholder'),
+                            ],
+                            [
+                                'type' => SurveyInputTypeEnum::TEXTAREA,
+                                'label' => __('example-survey.survey.input.textarea.label'),
+                                'placeholder' => __('example-survey.survey.input.textarea.placeholder'),
+                            ]
                         ],
+                        'ctaButton' => [
+                            'label' => 'Test'
+                        ]
                     ],
-                    [
-                        'type' => SurveyInputTypeEnum::RADIO,
-                        'label' => __('example-survey.survey.input.radio.label'),
-                        'options' => [
-                            __('example-survey.survey.input.radio.option.a'),
-                            __('example-survey.survey.input.radio.option.b'),
-                            __('example-survey.survey.input.radio.option.c'),
-                        ],
-                    ],
-                    [
-                        'type' => SurveyInputTypeEnum::CHECKBOX,
-                        'label' => __('example-survey.survey.input.checkbox.label'),
-                        'options' => [
-                            __('example-survey.survey.input.checkbox.option.a'),
-                            __('example-survey.survey.input.checkbox.option.b'),
-                            __('example-survey.survey.input.checkbox.option.c'),
-                        ],
-                    ],
-                    [
-                        'type' => SurveyInputTypeEnum::TEXT,
-                        'label' => __('example-survey.survey.input.text.label'),
-                        'placeholder' => __('example-survey.survey.input.text.placeholder'),
-                    ],
-                    [
-                        'type' => SurveyInputTypeEnum::TEXTAREA,
-                        'label' => __('example-survey.survey.input.textarea.label'),
-                        'placeholder' => __('example-survey.survey.input.textarea.placeholder'),
-                    ]
-                ],
-            ]
-        );
-
-        $response->dump();
-        $response->assertStatus(201);
-        $response->assertJsonFragment(
-            [
-                'name' => __('example-survey.survey.name'),
-                'description' => __('example-survey.survey.description'),
-                'structure' => []
-            ]
-        );
+                ]
+            )
+            ->assertStatus(201)
+            ->assertJsonFragment(
+                [
+                    'name' => __('example-survey.survey.name'),
+                    'description' => __('example-survey.survey.description'),
+                    'structure' => []
+                ]
+            );
     }
 }

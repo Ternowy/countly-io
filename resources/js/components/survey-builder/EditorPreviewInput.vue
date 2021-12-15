@@ -1,22 +1,61 @@
 <template>
-  <div>
-    <input-label-editor v-model="inputData.label" @input="onInput"/>
-    <input-type-selector v-model="inputData.type" :options="inputTypes" @input="onInput"/>
-    <base-switch v-model="inputData.required" @input="onInput"/>
-    <component :is="componentName" v-bind="$props" v-model="inputValue" @input="onInput"/>
-    <base-popover>
-      <template #trigger>
-        <button>
-          <base-icon name="vertical-dots"/>
-        </button>
-      </template>
+  <div v-if="isActive" class="flex w-full flex-col mb-8 bg-white px-7 pt-7 pb-5 rounded-3xl h-auto items-start">
+    <div class="flex w-full flex-col lg:flex-row items-start">
+      <div class="flex flex-col w-full lg:w-7/12 h-full place-content-start">
+        <div class="flex flex-row relative">
+          <input-label-editor :value="label" class="w-full label-editor"
+                              @input="onInput('label', $event)"
+          />
+          <span class="text-red-500 absolute" style="left: 101%">{{ required ? '*' : '' }}</span>
+        </div>
+        <component :is="componentName" v-bind="$props" :value="inputValue" class="w-full mt-5"
+                   @input="onInput(relevantInputValue, $event)"
+        />
+      </div>
+      <div class="flex w-full flex-col-reverse lg:flex-col lg:w-5/12 h-full">
+        <div class="flex flex-row w-full justify-center items-center align-middle">
+          <base-switch :value="required"
+                       label="Required"
+                       v-tooltip
+                       :content="required ? 'User can not submit answers without filling this field' : 'User can submit answers without filling this field'"
+                       @input="onInput('required', $event)"
+          />
+          <base-popover ref="actionsPopover" class="ml-10" trigger="click">
+            <template #trigger>
+              <button>
+                <base-icon name="vertical-dots"/>
+              </button>
+            </template>
 
-      <base-item-list>
-        <base-item label="copy" icon="copy" @click.native="copy"/>
-        <base-item label="delete" icon="delete" @click.native="remove"/>
-      </base-item-list>
-    </base-popover>
+            <base-item-list>
+              <base-item label="Copy" icon="copy" class="cursor-pointer px-2 py-1" fill="#828282"
+                         @click.native="copy"
+              />
+              <base-item label="Delete" icon="trash" class="cursor-pointer px-2 py-1"
+                         @click.native="remove"
+              />
+            </base-item-list>
+          </base-popover>
+        </div>
+        <div class="my-6 w-full">
+          <input-type-selector :value="type" :options="inputTypes" :disabled="!!updated_at"
+                               @input="onInput('type', $event)"
+          />
+        </div>
+      </div>
+
+    </div>
+    <div class="flex relative handle" style="left: 98%; cursor: grab">
+      <base-icon name="drag" fill="#BDBDBD"/>
+    </div>
   </div>
+  <preview-input v-else v-bind="{label, options, required, type, name, placeholder}" class="cursor-pointer"
+                 @click.native="onActivate"
+  >
+    <div class="flex relative mt-2 handle justify-end" style="cursor: grab">
+      <base-icon name="drag" fill="#BDBDBD" v-tooltip content="Drag to move"/>
+    </div>
+  </preview-input>
 </template>
 
 <script>
@@ -28,10 +67,12 @@ import InputTextarea from './preview-inputs/InputTextarea.vue';
 import InputLabelEditor from './preview-inputs/components/InputLabelEditor.vue';
 import InputTypeSelector from './preview-inputs/components/InputTypeSelector.vue';
 import BaseSwitch from '../base/inputs/BaseSwitch.vue';
+import PreviewInput from '../survey-preview/PreviewInput';
 
 export default {
   name: 'EditorPreviewInput',
   components: {
+    PreviewInput,
     BaseSwitch,
     InputTypeSelector,
     InputLabelEditor,
@@ -48,25 +89,28 @@ export default {
     required: Boolean,
     options: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     placeholder: {
       type: String,
-      default: ''
-    }
-  },
-  emits: ['input', 'copy', 'remove'],
-  data: () => ({
-    inputData: {
-      name: null,
-      type: null,
-      label: null,
-      required: null,
-      options: null,
-      placeholder: null
+      default: '',
     },
-    inputTypes: ['checkbox', 'radio', 'select', 'text', 'textarea']
-  }),
+    isActive: Boolean,
+    disableTypeChange: Boolean,
+    updated_at: String,
+  },
+  emits: ['input', 'copy', 'remove', 'activate'],
+  data() {
+    return {
+      inputTypes: [
+        {value: 'checkbox', tooltip: 'Multiple choice'},
+        {value: 'radio', tooltip: 'Single choice'},
+        {value: 'select', tooltip: 'Dropdown'},
+        {value: 'text', tooltip: 'Short text'},
+        {value: 'textarea', tooltip: 'Long text'},
+      ],
+    };
+  },
   computed: {
     componentName() {
       return `input-${this.type}`;
@@ -74,39 +118,43 @@ export default {
     relevantInputValue() {
       return ['text', 'textarea'].includes(this.type) ? 'placeholder' : 'options';
     },
-    inputValue: {
-      get() {
-        return this.inputData[this.relevantInputValue];
-      },
-      set(value) {
-        this.inputData[this.relevantInputValue] = value;
-      }
-    }
-  },
-  created() {
-    this.inputData = {
-      name: this.name,
-      type: this.type,
-      label: this.label,
-      required: this.required,
-      options: this.options,
-      placeholder: this.placeholder
-    }
+    inputValue() {
+      return this[this.relevantInputValue];
+    },
   },
   methods: {
-    onInput() {
-      this.$emit('input', this.inputData);
+    onInput(item, value) {
+      const data = Object.assign({
+        name: this.name,
+        type: this.type,
+        label: this.label,
+        required: this.required,
+        options: this.options,
+        placeholder: this.placeholder,
+      }, {[item]: value});
+
+      this.$emit('input', data);
     },
     copy() {
+      this.closeActionsPopover();
       this.$emit('copy');
     },
     remove() {
+      this.closeActionsPopover();
       this.$emit('remove');
-    }
+    },
+    closeActionsPopover() {
+      this.$refs.actionsPopover.close();
+    },
+    onActivate() {
+      this.$emit('activate');
+    },
   },
 };
 </script>
 
-<style scoped>
-
+<style lang="scss">
+.good-shadow {
+  box-shadow: 0px 2px 15px rgba(85, 85, 85, 0.15);
+}
 </style>

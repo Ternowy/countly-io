@@ -29,11 +29,11 @@ class SurveyRepository
     public function getById(Authenticatable $user, int $id, bool $strict = false): Survey
     {
         $query = $this->survey->where(
-                [
-                    'id' => $id,
-                    'created_by' => $user->id
-                ]
-            );
+            [
+                'id' => $id,
+                'created_by' => $user->id
+            ]
+        )->withCount('answers');
 
         if ($strict) {
             return $query->firstOrFail();
@@ -42,7 +42,7 @@ class SurveyRepository
         return $query->first();
     }
 
-    public function getByCode(string $code, array $columns = ['*']): Survey
+    public function getByCode(string $code, array $columns = ['*']): ?Survey
     {
         return $this->survey
             ->where(

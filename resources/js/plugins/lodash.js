@@ -1,8 +1,8 @@
-import VueLodash from 'vue-lodash';
-//import copyArray from 'lodash/_copyArray.js';
+//import VueLodash from 'vue-lodash';
+//import isEqual from 'lodash/_baseIsEqual.js';
 
 export default {
   install(Vue) {
-    //Vue.use(VueLodash, { name: 'custom', lodash: { copyArray } });
+    //Vue.use(VueLodash, { name: 'custom', lodash: { isEqual } });
   }
 };

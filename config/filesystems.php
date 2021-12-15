@@ -52,6 +52,10 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
+        'content' => [
+            'driver' => 'local',
+            'root' => storage_path('content')
+        ]
     ],
 
     /*

@@ -1,6 +1,10 @@
 <template>
-  <base-textarea v-bind="Object.assign({}, $attrs, $props, {rules: vRules})" :maxlength="vRules.max" v-on="$listeners">
-    <base-counter :limit="vRules.max" :value="vLength"/>
+  <base-textarea v-bind="Object.assign({}, $attrs, validationData)" :maxlength="validationData.rules.max"
+                 :value="value"
+                 :classes="['w-full flex flex-col good-shadow rounded-lg px-4 py-2 text-gray-600 font-light text-base']"
+                 v-on="$listeners"
+  >
+    <base-counter :limit="validationData.rules.max" :value="vLength"/>
   </base-textarea>
 </template>
 
@@ -12,10 +16,16 @@ export default {
     value: String
   },
   computed: {
-    vRules() {
+    validationData() {
       return {
-        required: this.required,
-        max: 1000,
+        rules: {
+          required: this.required,
+          max: 1000
+        },
+        rulesMessages: {
+          required: 'This field is required',
+          max: 'Must be not longer then 1000 characters'
+        }
       };
     },
     vLength() {

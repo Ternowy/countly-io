@@ -1,3 +1,53 @@
+$grey: #4F4F4F;
+$dark-clubhouse: #F2EFE4;
+$light-clubhouse: #FAF7EC;
+
+*,
+*:after,
+*:before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Ubuntu', sans-serif;
+  outline: none;
+}
+
 body {
-  background-color: #fff;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 17px;
+  color: $grey;
+}
+
+a {
+  text-decoration: none;
+  color: $grey;
+}
+
+.header {
+  height: 70px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  background-color: $light-clubhouse;
+  justify-content: space-between;
+
+  .item {
+    display: flex;
+    flex: 1;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.p-app {
+  padding: 0 120px;
+}
+
+@media (max-width: 768px) {
+  .p-app {
+    padding: 0 20px;
+  }
 }

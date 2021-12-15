@@ -1,5 +1,16 @@
 <template>
-  <component :is="componentName" v-model="vValue" v-bind="$attrs" v-on="$listeners"/>
+  <div class="flex w-full flex-col mb-8 bg-white px-7 pt-7 pb-5 rounded-3xl h-auto items-start good-shadow">
+    <p class="text-base font-normal mb-2 relative">
+      {{ label }}
+      <span class="text-red-500 absolute" style="left: 101%">{{ required ? '*' : '' }}</span>
+    </p>
+    <component :is="componentName" v-model="vValue" v-bind="$attrs" :required="required"
+               v-on="$listeners"
+    />
+    <div class="w-full" @click.prevent="() => null">
+      <slot/>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -21,7 +32,9 @@ export default {
   },
   mixins: [vValueMixin],
   props: {
-    type: String
+    type: String,
+    label: String,
+    required: Boolean
   },
   emits: ['input'],
   computed: {

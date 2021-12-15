@@ -26,7 +26,7 @@ class SurveyService
         Survey $survey,
         UniqueIdService $uniqueIdService,
         SurveyRepository $surveyRepository,
-        SurveyResultsService $surveyResultsService
+        SurveyResultsService $surveyResultsService,
     ) {
         $this->survey = $survey;
         $this->uniqueIdService = $uniqueIdService;
@@ -40,16 +40,22 @@ class SurveyService
         SurveyStructure $structure,
         $user
     ): Survey {
-        return $this->survey->create(
+        $survey = $this->survey->create(
             [
                 'name' => $name,
                 'description' => $description,
                 'structure' => $structure,
                 'created_by' => $user->id,
-                'access_code' => $this->uniqueIdService->encode($user->id, rand(1, 10), rand(1, 10)),
+                'access_code' => '',
                 'status' => SurveyStatusEnum::ACTIVE,
             ]
         );
+
+        $survey->access_code = $this->uniqueIdService->encode($user->id, $survey->id, rand(1, 10));
+
+        $survey->save();
+
+        return $survey;
     }
 
     public function update(

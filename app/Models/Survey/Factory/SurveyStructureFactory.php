@@ -10,6 +10,6 @@ class SurveyStructureFactory
 {
     public function createInstance(array $data): SurveyStructure
     {
-        return new SurveyStructure($data);
+        return new SurveyStructure($data['inputs'], $data['ctaButton']);
     }
 }
