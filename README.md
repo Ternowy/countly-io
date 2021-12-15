@@ -13,6 +13,7 @@ cp .env.example .env
 3. Install dependencies with ```composer install``` in order to get [sail](https://laravel.com/docs/8.x/sail) 
 Open the project folder and start sail
 ```bash
+composer install
 ./vendor/bin/sail up
 ```
 You can add alias to avoid full path typing
@@ -34,7 +35,7 @@ sail artisan migrate
 1. Codestyle - PSR12
 2. Services and repositories. Services are providing inserting/deleting. Repositories are providing only the obtaining.
 3. Abstractions instead of primitive types.
-4. Enums instead of string values. For sets of Enums, use Helpers.
+4. Enums instead of string values.
 
 ### JS
 
