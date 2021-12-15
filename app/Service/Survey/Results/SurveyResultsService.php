@@ -104,8 +104,6 @@ class SurveyResultsService
                 $surveyAnswer->delete();
             }
         );
-
-        //TODO create cleanup job queue to delete instantly
     }
 
     public function getResultsBuilder(Survey $survey): Builder
