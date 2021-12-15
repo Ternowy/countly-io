@@ -1,7 +1,10 @@
 <template>
-  <div>
-    <base-input v-show="active" ref="input" v-model="vValue" :maxlength="100" @blur="toggleActive"/>
-    <div v-show="!active" @click="activate">>{{ vValue }}</div>
+  <div v-bind="$attrs" class="w-full flex flex-row overflow-hidden overflow-ellipsis">
+    <base-input ref="input" v-model="vValue" :maxlength="100" class="w-full"
+                :input-classes="classes"
+                @blur="toggleActive"
+    />
+    <slot/>
   </div>
 </template>
 
@@ -19,6 +22,11 @@ export default {
     active: false,
     vValue: null
   }),
+  computed: {
+    classes() {
+      return ['p-2', 'bg-grey', 'border-b', 'border-gray-300'];
+    }
+  },
   watch: {
     value: {
       immediate: true,
@@ -39,14 +47,12 @@ export default {
 
       this.active = !this.active;
     },
-    activate() {
-      this.toggleActive();
-      this.$nextTick(() => this.$refs.input.focus());
-    },
   },
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  .label-input {
 
+  }
 </style>

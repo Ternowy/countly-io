@@ -1,30 +1,19 @@
 <template>
-  <input-base v-bind="$attrs" :name="name">
-    <template v-if="multiple">
-      <checkbox-group :options="options" :value="value" @input="onChange"/>
-    </template>
-    <template v-else>
-      <div v-for="(option, index) in options" :key="index">
-        <label :for="`radio-${index}-${_uid}`">
-          <input :id="`radio-${index}-${_uid}`" :checked="option === value" :name="name"
-                 type="radio" @input="onChange(option)"
-          >
-          <div class="indicator"/>
-          <div class="label">
-            {{ option }}
-          </div>
-        </label>
-      </div>
-    </template>
+  <input-base v-slot="{ errors }" v-bind="$attrs" :name="name" :rules="rules" :rules-messages="rulesMessages">
+    <component :is="componentName"
+               :options="options" :value="value" :name="name" :errors="errors"
+               @input="onChange"
+    />
   </input-base>
 </template>
 
 <script>
 import CheckboxGroup from './CheckboxGroup';
+import RadioGroup from './RadioGroup';
 
 export default {
   name: 'BaseOptions',
-  components: {CheckboxGroup},
+  components: {RadioGroup, CheckboxGroup},
   props: {
     name: String,
     options: Array,
@@ -33,8 +22,21 @@ export default {
       default: false,
     },
     value: [String, Array],
+    rules: {
+      type: Object,
+      default: () => ({}),
+    },
+    rulesMessages: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   emits: ['input'],
+  computed: {
+    componentName() {
+      return this.multiple ? 'CheckboxGroup' : 'RadioGroup';
+    }
+  },
   methods: {
     onChange(value) {
       this.$emit('input', value);
@@ -42,7 +44,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-
-</style>

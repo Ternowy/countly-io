@@ -1,28 +1,64 @@
-export default ($axios, config) => ({
+export default ($axios, config = {}) => ({
   create: (survey) => {
     return new Promise((resolve, reject) => {
-      $axios.post(config.create, survey)
+      $axios
+        .post(config.create, survey)
         .then(({data}) => resolve(data))
         .catch(reject);
     });
   },
   update: (survey) => {
     return new Promise((resolve, reject) => {
-      $axios.put(config.update, survey)
+      $axios
+        .put(config.update, survey)
+        .then(({data}) => resolve(data))
+        .catch(reject);
+    });
+  },
+  updateStatus: (endpoint, status) => {
+    return new Promise((resolve, reject) => {
+      $axios
+        .put(endpoint, {status})
         .then(({data}) => resolve(data))
         .catch(reject);
     });
   },
   delete: (endpoint) => {
     return new Promise((resolve, reject) => {
-      $axios.delete(endpoint)
+      $axios
+        .delete(endpoint)
         .then(({data}) => resolve(data))
         .catch(reject);
     });
   },
-  submit: (answers) => {
+  submit: (answers, startedAt) => {
     return new Promise((resolve, reject) => {
-      $axios.post(config.submit, {answers})
+      $axios
+        .post(config.submit, {answers, startedAt})
+        .then(({data}) => resolve(data))
+        .catch(reject);
+    });
+  },
+  clearResults: (endpoint) => {
+    return new Promise((resolve, reject) => {
+      $axios
+        .delete(endpoint)
+        .then(({data}) => resolve(data))
+        .catch(reject);
+    });
+  },
+  loadResults: (page) => {
+    return new Promise((resolve, reject) => {
+      $axios
+        .get(`${config.answersList}?page=${page}`)
+        .then(({data}) => resolve(data))
+        .catch(reject);
+    });
+  },
+  join: (code) => {
+    return new Promise((resolve, reject) => {
+      $axios
+        .get(`/survey/join/${code}`)
         .then(({data}) => resolve(data))
         .catch(reject);
     });

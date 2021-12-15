@@ -38,8 +38,11 @@ class Survey extends Model
         return $this->hasMany(SurveyAnswer::class, 'survey_id');
     }
 
+    /**
+     * used in the frontend to display access link
+     */
     public function getAccessLinkAttribute(): string
     {
-        return $this->getAttribute('access_code');
+        return route('load-survey', ['code' => $this->getAttribute('access_code')]);
     }
 }

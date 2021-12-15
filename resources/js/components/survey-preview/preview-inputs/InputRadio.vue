@@ -1,5 +1,5 @@
 <template>
-  <base-options v-bind="Object.assign({}, $attrs, {rules: vRules})" :options="options"
+  <base-options v-bind="Object.assign({}, $attrs, validationData)" :options="options"
                 v-on="$listeners"
   />
 </template>
@@ -12,12 +12,18 @@ export default {
     required: Boolean
   },
   computed: {
-    vRules() {
+    validationData() {
       return {
-        oneOf: this.options,
-        required: this.required
+        rules: {
+          required: this.required,
+          oneOf: this.options
+        },
+        rulesMessages: {
+          required: 'This field is required',
+          oneOf: 'Valid option must be selected'
+        }
       };
-    }
+    },
   }
 };
 </script>

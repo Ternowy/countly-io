@@ -9,6 +9,7 @@ use App\Models\Survey\SurveyStructureInput;
 use App\Models\SurveyAnswer\SurveyAnswer;
 use App\Models\SurveyAnswer\SurveyAnswerInput;
 use App\Repository\Survey\SurveyAnswerRepository;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 class SurveyResultsService
@@ -39,12 +40,14 @@ class SurveyResultsService
                 );
 
                 if ($surveyStructureInput->isTextInput()) {
-                    $allInputs->each(function (SurveyAnswerInput $surveyAnswerInput) use (&$statistics) {
-                        $value = $surveyAnswerInput->value;
-                        if (is_string($value)) {
-                            $statistics[] = $value;
+                    $allInputs->each(
+                        function (SurveyAnswerInput $surveyAnswerInput) use (&$statistics) {
+                            $value = $surveyAnswerInput->value;
+                            if (is_string($value)) {
+                                $statistics[] = $value;
+                            }
                         }
-                    });
+                    );
                 } elseif ($surveyStructureInput->isInputWithOptions()) {
                     foreach ($surveyStructureInput->getOptions() as $option) {
                         $statistics[$option] = 0;
@@ -78,7 +81,7 @@ class SurveyResultsService
                 $preparedAnswers[$surveyStructureInput->getName()] = [
                     'label' => $surveyStructureInput->getLabel(),
                     'type' => $surveyStructureInput->getType(),
-                    'answers_number' => $allInputs->count(),
+                    'answersNumber' => $allInputs->count(),
                     'answers' => $statistics
                 ];
             }
@@ -88,14 +91,25 @@ class SurveyResultsService
         return collect($preparedAnswers);
     }
 
-    public function clearSurveyResults(Survey $survey): ?bool
+    /**
+     * Delete all survey submissions
+     */
+    public function clearSurveyResults(Survey $survey): void
     {
-        $surveyAnswer = $this->surveyAnswer->where('survey_id', $survey->id)->firstOrFail();
+        $surveyAnswers = $this->surveyAnswer->where('survey_id', $survey->id)->get();
 
-        $surveyAnswer->inputs()->delete();
+        $surveyAnswers->each(
+            function (SurveyAnswer $surveyAnswer) {
+                $surveyAnswer->inputs()->delete();
+                $surveyAnswer->delete();
+            }
+        );
 
         //TODO create cleanup job queue to delete instantly
-        //if needed
-        return (bool)$surveyAnswer->delete();
+    }
+
+    public function getResultsBuilder(Survey $survey): Builder
+    {
+        return $this->surveyAnswer->with(['inputs', 'quality'])->where('survey_id', $survey->id);
     }
 }

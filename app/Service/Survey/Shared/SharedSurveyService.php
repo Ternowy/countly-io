@@ -7,6 +7,7 @@ namespace App\Service\Survey\Shared;
 use App\Models\Survey\Survey;
 use App\Models\SurveyAnswer\SurveyAnswer;
 use App\Service\Survey\SurveyInputValidationService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class SharedSurveyService
@@ -15,15 +16,19 @@ class SharedSurveyService
 
     protected SurveyAnswer $surveyAnswer;
 
+    protected SurveyAnswerQualityService $surveyAnswerQualityService;
+
     public function __construct(
         SurveyInputValidationService $inputValidationService,
-        SurveyAnswer $surveyAnswer
+        SurveyAnswer $surveyAnswer,
+        SurveyAnswerQualityService $surveyAnswerQualityService
     ) {
         $this->inputValidationService = $inputValidationService;
         $this->surveyAnswer = $surveyAnswer;
+        $this->surveyAnswerQualityService = $surveyAnswerQualityService;
     }
 
-    public function answer(Survey $survey, array $answers, string $ip): SurveyAnswer
+    public function answer(Survey $survey, array $answers, string $ip, int $surveyStartedAt): SurveyAnswer
     {
         Validator::validate(
             $answers,
@@ -32,6 +37,7 @@ class SharedSurveyService
             )
         );
 
+        //todo transaction
         $surveyAnswer = $this->surveyAnswer->create(
             [
                 'survey_id' => $survey->id,
@@ -43,6 +49,13 @@ class SharedSurveyService
             $this->prepareAnswersToSave($answers, $survey->id)
         );
 
+        $inputTime = Carbon::now()->unix() - $surveyStartedAt;
+
+        $surveyAnswer->quality()->create([
+            'quality_rating' => $this->surveyAnswerQualityService->getQuality($survey, $inputTime),
+            'input_time' => $inputTime
+        ]);
+
         return $surveyAnswer;
     }
 
@@ -51,11 +64,13 @@ class SharedSurveyService
         $preparedAnswers = [];
 
         foreach ($answers as $inputName => $value) {
-            $preparedAnswers[] = [
-                'survey_id' => $surveyId,
-                'input_name' => $inputName,
-                'value' => $value
-            ];
+            if (!empty($value)) {
+                $preparedAnswers[] = [
+                    'survey_id' => $surveyId,
+                    'input_name' => $inputName,
+                    'value' => $value
+                ];
+            }
         }
 
         return $preparedAnswers;

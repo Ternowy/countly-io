@@ -1,0 +1,71 @@
+{
+  "inputs": [
+    {
+      "name": "a46287d80ec1db149b60fa06884c760f",
+      "type": "checkbox",
+      "label": "1. How did You find out about us?",
+      "options": [
+        "Via search engine",
+        "Through personal contact",
+        "From a blog post or a mention"
+      ],
+      "required": true,
+      "updated_at": "Sat Jul 03 2021 14:40:49 GMT+0000",
+      "placeholder": "placeholder"
+    },
+    {
+      "name": "bbdb04c70ad25406410c9c6349cc43d8",
+      "type": "radio",
+      "label": "2. How much experience do You have with survey software",
+      "options": [
+        "None, I'm beginner",
+        "I've already worked with such software"
+      ],
+      "required": true,
+      "updated_at": "Sat Jul 03 2021 14:40:49 GMT+0000",
+      "placeholder": "placeholder"
+    },
+    {
+      "name": "62786d09f27f4311b714c55b6688a83e",
+      "type": "radio",
+      "label": "3. Do you sell products or services?",
+      "options": [
+        "Freelancer",
+        "NGO"
+      ],
+      "required": true,
+      "updated_at": "Sat Jul 03 2021 14:40:49 GMT+0000",
+      "placeholder": "placeholder"
+    },
+    {
+      "name": "1faae68aa7af63b142c26a969640dc7b",
+      "type": "checkbox",
+      "label": "4. What is Your role?",
+      "options": [
+        "Freelancer",
+        "NGO",
+        "Marketing or sales staff member",
+        "Product manager",
+        "Student"
+      ],
+      "required": false,
+      "updated_at": "Sat Jul 03 2021 14:40:49 GMT+0000",
+      "placeholder": "placeholder"
+    },
+    {
+      "name": "bf382d5f2e879246648fdca261ef8195",
+      "type": "textarea",
+      "label": "5. Are You looking for special functions?",
+      "options": [
+        "Freelancer",
+        "NGO"
+      ],
+      "required": false,
+      "updated_at": "Sat Jul 03 2021 14:40:49 GMT+0000",
+      "placeholder": "Tell us about them"
+    }
+  ],
+  "ctaButton": {
+    "label": "Submit"
+  }
+}

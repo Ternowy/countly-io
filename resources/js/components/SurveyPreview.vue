@@ -1,11 +1,14 @@
 <template>
-  <success-window v-if="isSubmitted"/>
+  <success-window v-if="isSubmitted" :link="homeUri"/>
   <preview v-else ref="form" @submit.prevent="onSubmit">
     <preview-survey-description :name="name" :description="description"/>
-    <preview-input v-for="(input, index) in structure" :key="index" v-bind="input"
-                   v-model="surveyData[input.name]" @input="onInput"
+    <preview-input v-for="(input, index) in inputs" :key="index" v-bind="input"
+                   v-model="surveyData[input.name]" :ref="input.name"
+                   @input="onInput"
     />
-    <base-button :disabled="!surveyValid" label="🖐 Submit" @click="onSubmit"/>
+    <base-button type="action" class="w-52" @click="onSubmit">
+      <p class="text-base text-white text-lg font-medium">{{ ctaButton.label }}</p>
+    </base-button>
   </preview>
 </template>
 
@@ -23,9 +26,10 @@ export default {
   props: {
     name: String,
     description: String,
-    structure: Array,
+    structure: Object,
     accessCode: String,
     submitSurveyUri: String,
+    homeUri: String,
   },
   data() {
     const surveyApi = survey(getAxios(), {
@@ -36,25 +40,54 @@ export default {
       api: {
         survey: surveyApi,
       },
+      inputs: this.structure.inputs,
+      ctaButton: this.structure.ctaButton,
       surveyData: {},
       surveyValid: false,
-      isSubmitted: false
+      isSubmitted: false,
+      startedAt: this.getCurrentTime(),
+      isDirty: false
     };
   },
   created() {
-    this.structure.forEach(({name, type}) => {
+    this.inputs.forEach(({name, type}) => {
       this.$set(this.surveyData, name, type === 'checkbox' ? [] : null);
     });
   },
   methods: {
     onInput() {
-      this.$nextTick(
-          () => this.$refs.form.validate().then(valid => this.surveyValid = valid)
-      );
+      if (this.isDirty) {
+        return;
+      }
+
+      this.isDirty = true;
+      this.startedAt = this.getCurrentTime();
     },
     onSubmit() {
-      this.api.survey.submit(this.surveyData).then(() => this.isSubmitted = true);
+      this.$refs.form.validate().then(({isValid, errors}) => {
+        this.surveyValid = isValid;
+
+        if (isValid) {
+          this.$eventBus.$emit(this.$eventBusEvents.LOADING);
+          this.api.survey.submit(this.surveyData, this.startedAt).
+              then(() => this.isSubmitted = true).
+              finally(() => this.$eventBus.$emit(this.$eventBusEvents.LOADED));
+        } else {
+          this.scrollToFirstError(errors);
+        }
+      });
     },
+    scrollToFirstError(errors = {}) {
+      for (const name of Object.keys(errors)) {
+        if (errors[name].length > 0) {
+          this.$scrollTo(this.$refs[name][0].$el, 400, {});
+          break;
+        }
+      }
+    },
+    getCurrentTime() {
+      return Math.trunc(Date.now() / 1000);
+    }
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex w-full text-right justify-items-end justify-end">
     {{ value }} / {{ limit }}
   </div>
 </template>

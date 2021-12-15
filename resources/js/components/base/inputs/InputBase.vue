@@ -1,11 +1,11 @@
 <template>
-  <validation-provider v-slot="{ errors }" :custom-messages="rulesMessages"
-                       :name="name" :rules="rules" tag="div"
+  <validation-provider ref="provider" v-slot="{ errors }" :custom-messages="rulesMessages"
+                       :name="name" :rules="rules" tag="div" class="w-full"
   >
     <label v-if="label" :class="{error: errors.length > 0}">
       {{ label }}
     </label>
-    <slot/>
+    <slot v-bind="{ errors }"/>
   </validation-provider>
 </template>
 
@@ -24,6 +24,11 @@ export default {
       default: () => ({}),
     },
   },
+  methods: {
+    validate() {
+      return this.$refs.provider.validate();
+    }
+  }
 };
 </script>
 

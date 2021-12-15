@@ -1,17 +1,16 @@
 <template>
-  <input-base :label="label" :name="name" :rules="rules" :rules-messages="rulesMessages" class="checkbox-group">
-    <base-checkbox v-for="(option, index) in options" :key="index" v-model="vValue"
-                   :item-value="option" :label="option"
+  <div class="checkbox-group">
+    <base-checkbox v-for="(option, index) in options" :key="index" v-model="vValue" :name="name"
+                   :item-value="option" :label="option" :errors="errors"
     />
-  </input-base>
+  </div>
 </template>
 
 <script>
-import InputBase from './InputBase';
 import BaseCheckbox from './BaseCheckbox';
 
 export default {
-  components: {InputBase, BaseCheckbox},
+  components: {BaseCheckbox},
   props: {
     name: String,
     value: [Array, Object],
@@ -20,15 +19,12 @@ export default {
       required: true,
     },
     label: String,
-    rules: {
-      type: Object,
-      default: () => ({}),
-    },
-    rulesMessages: {
-      type: Object,
-      default: () => ({}),
-    },
+    errors: {
+      type: Array,
+      default: () => []
+    }
   },
+  emits: ['input'],
   computed: {
     vValue: {
       get() {
